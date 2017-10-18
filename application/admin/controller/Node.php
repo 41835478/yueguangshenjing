@@ -11,4 +11,9 @@ class Node extends Base
     {
         return view('node/index');
     }
+
+    public function nodeView()//加载添加节点视图
+    {
+        return view('node/addNode');
+    }
 }
