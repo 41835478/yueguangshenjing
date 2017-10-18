@@ -7,7 +7,7 @@ class Index extends controller
 {
     public function index()
     {
-    	dump(1);
+    	dump(123);
     	return $this->fetch("index/index");  
     }
 }
