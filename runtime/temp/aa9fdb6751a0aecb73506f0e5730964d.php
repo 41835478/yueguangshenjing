@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:90:"C:\xampp\htdocs\yueguang\yueguangshenjing\public/../application/home\view\index\index.html";i:1508312816;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

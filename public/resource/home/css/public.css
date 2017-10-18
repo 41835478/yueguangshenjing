@@ -1,0 +1,105 @@
+/*
+* @Author: Administrator
+* @Date:   2017-05-04 18:15:10
+* @Last Modified by:   Administrator
+* @Last Modified time: 2017-09-27 16:04:12
+*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,aside,figure,figcaption,blockquote,th,td,a
+{
+margin: 0;
+padding: 0;
+outline:none;
+font-family:"Microsoft YaHei";
+}
+/* a标签去除点击背景 */
+a,i,li,p{
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+input[type=radio]{margin: 0;}
+h1,h2,h3,h4,h5,h6,label {
+font-weight: normal;
+}
+ul,li{
+list-style: none;
+}
+a {
+text-decoration: none;
+color: #333;
+}
+body{ max-width: 640px; min-width: 300px; margin: 0 auto; padding: 0; }
+input[type="button"], input[type="submit"], input[type="reset"] {
+-webkit-appearance: none;
+}
+textarea { -webkit-appearance: none;}
+i,em{
+font-style:normal;
+}
+
+button,input{
+	outline: none;
+}
+button{
+	border: none;
+}
+input{border-radius:0;outline: none;}
+input[type="button"], input[type="submit"], input[type="reset"] {
+-webkit-appearance: none;
+outline: none;
+border: none;
+}
+body{
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+
+/* tan */
+
+.popBox{
+	width: 100%;
+	min-height: 100vh;
+	background: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+.popBox .pop{
+	width: 80%;
+	/* height: 30vh; */
+	background: #fff;
+	border-radius: 20px;
+	margin: 30vh auto;
+	overflow: hidden;
+}
+.popBox .pop .p_top{
+	text-align: center;
+	line-height: 45px;
+	font-size: 16px;
+	margin: 0 8%;
+	border-bottom: 1px solid #eaeaea;
+}
+.popBox .pop .p_cot{
+	font-size: 14px;
+	padding: 20px 8%;
+}
+.popBox .pop .btnBox{
+	overflow: hidden;
+	border-top: 1px solid #eaeaea;
+}
+.popBox .pop button{
+	width: 50%;
+	height: 45px;
+	float: left;
+	font-size: 15px;
+	padding: 0;
+}
+.popBox .pop .btn1{
+	background: #fff;
+	color: #333;
+}
+.popBox .pop .btn2{
+	background: #2d3238;
+	color: #fff;
+}
