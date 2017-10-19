@@ -16,7 +16,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/framework/926c9edb0c2682b14f563cac2c8a93f42f729016.zip",
+                "url": "https://api.github.com/repos/top-think/framework/zipball/926c9edb0c2682b14f563cac2c8a93f42f729016",
                 "reference": "926c9edb0c2682b14f563cac2c8a93f42f729016",
                 "shasum": ""
             },
@@ -67,7 +67,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/think-installer/1be326e68f63de4e95977ed50f46ae75f017556d.zip",
+                "url": "https://api.github.com/repos/top-think/think-installer/zipball/1be326e68f63de4e95977ed50f46ae75f017556d",
                 "reference": "1be326e68f63de4e95977ed50f46ae75f017556d",
                 "shasum": ""
             },
@@ -110,7 +110,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/top-think/think-captcha/0c55455df26a1626a60d0dc35d2d89002b741d44.zip",
+                "url": "https://api.github.com/repos/top-think/think-captcha/zipball/0c55455df26a1626a60d0dc35d2d89002b741d44",
                 "reference": "0c55455df26a1626a60d0dc35d2d89002b741d44",
                 "shasum": ""
             },
