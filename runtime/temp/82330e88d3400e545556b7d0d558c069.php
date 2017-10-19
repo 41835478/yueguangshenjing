@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508331166;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -15,7 +16,10 @@
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
 
-    {include file="public/header"}
+    <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/animate.css" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/style.css?v=4.1.0" rel="stylesheet">
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
@@ -31,11 +35,11 @@
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                     <span class="block m-t-xs" style="font-size:20px;">
-                                        {if condition="$Think.session.pic neq ''"}
-                                        <img src="__PUBLIC__{$Think.session.pic}" style="border-radius:40px" width="80px" height="80px">
-                                        {else/}
+                                        <?php if(\think\Session::get('pic') != ''): ?>
+                                        <img src="__PUBLIC__<?php echo \think\Session::get('pic'); ?>" style="border-radius:40px" width="80px" height="80px">
+                                        <?php else: ?>
                                         <img src="__PUBLIC__/admin/headPic/a5.jpg" style="border-radius:40px" width="80px" height="80px">
-                                        {/if}
+                                        <?php endif; ?>
                                     </span>
                                 </span>
                         </a>
@@ -47,7 +51,7 @@
                     <span class="ng-scope">分类</span>
                 </li>
                 <li>
-                    <a class="J_menuItem" href="{:url('main/base')}">
+                    <a class="J_menuItem" href="<?php echo url('main/base'); ?>">
                         <i class="fa fa-home"></i>
                         <span class="nav-label">主页</span>
                     </a>
@@ -63,10 +67,10 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="{:url('role/index')}">角色管理</a>
+                            <a class="J_menuItem" href="<?php echo url('role/index'); ?>">角色管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="{:url('node/index')}">节点管理</a>
+                            <a class="J_menuItem" href="<?php echo url('node/index'); ?>">节点管理</a>
                         </li>
                     </ul>
                 </li>
@@ -82,10 +86,10 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="{:url('member/index')}">修改管理员信息</a>
+                            <a class="J_menuItem" href="<?php echo url('member/index'); ?>">修改管理员信息</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="{:url('member/pwd')}">修改管理员密码</a>
+                            <a class="J_menuItem" href="<?php echo url('member/pwd'); ?>">修改管理员密码</a>
                         </li>
                     </ul>
                 </li>
@@ -94,34 +98,11 @@
                     <span class="ng-scope">分类</span>
                 </li>
                 <li>
-                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">首页轮播图</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="{:url('goods/index')}">轮播图列表</a>
-                        </li>
-                        <li><a class="J_menuItem" href="{:url('goods/goodsList')}">添加轮播图</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
                     <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">商品管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="{:url('goods/index')}">添加商品</a>
+                        <li><a class="J_menuItem" href="<?php echo url('goods/index'); ?>">添加商品</a>
                         </li>
-                        <li><a class="J_menuItem" href="{:url('goods/goodsList')}">商品列表</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">内容管理</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="{:url('goods/index')}">平台介绍</a>
-                        </li>
-                        <li><a class="J_menuItem" href="{:url('goods/goodsList')}">新手指南</a>
-                        </li>
-                        <li><a class="J_menuItem" href="{:url('goods/goodsList')}">最新公告</a>
-                        </li>
-                        <li><a class="J_menuItem" href="{:url('goods/goodsList')}">客服中心</a>
+                        <li><a class="J_menuItem" href="<?php echo url('goods/goodsList'); ?>">商品列表</a>
                         </li>
                     </ul>
                 </li>
@@ -256,7 +237,7 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
-                        <a href="{:url('index/layout')}">
+                        <a href="<?php echo url('index/layout'); ?>">
                             <i class="fa fa-power-off">
                             </i>退出
                         </a>
@@ -265,14 +246,18 @@
             </nav>
         </div>
         <div class="row J_mainContent" id="content-main">
-            <iframe id="J_iframe" width="100%" height="100%" src="{:url('main/base')}" frameborder="0" data-id="{:url('main/base')}" seamless></iframe>
+            <iframe id="J_iframe" width="100%" height="100%" src="<?php echo url('main/base'); ?>" frameborder="0" data-id="<?php echo url('main/base'); ?>" seamless></iframe>
         </div>
     </div>
     <!--右侧部分结束-->
 </div>
 
 <!-- 全局js -->
-{include file="public/foot"}
+<script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="__PUBLIC__/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="__PUBLIC__/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="__PUBLIC__/admin/js/plugins/layer/layer.min.js"></script>
 
 <!-- 自定义js -->
 <script src="__PUBLIC__/admin/js/hAdmin.js?v=4.1.0"></script>
