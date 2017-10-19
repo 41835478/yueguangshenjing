@@ -30,7 +30,22 @@ class Users extends Controller
     	$this->assign('user',$user);
     	return $this->fetch();
     }
-
+    public function editdata(){
+    	$uid=Session::get('uid');
+    	$user=$this->user->where('id',$uid)->find();
+    	if(request()->isPost()){
+    		$post=input('param.');
+    		$data=[];
+    		$data['nickname']=$post['nickname'];
+    		$data['nickname']=$post['nickname'];
+    		$data['nickname']=$post['nickname'];
+    		$this->user->where('id',$uid)->update();
+    	}
+    	$user=$this->user->where('id',$uid)->find();
+    	$user['mobile']=substr_replace($user['mobile'],'****',3,4);
+    	$this->assign('user',$user);
+    	return $this->fetch();
+    }
 
 
 
