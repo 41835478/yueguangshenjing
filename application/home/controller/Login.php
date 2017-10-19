@@ -11,7 +11,7 @@ class Login extends Controller
     public function _initialize()
     {
         parent::_initialize();
-        $this->user = new User;  //别名：避免与控制名冲突
+        $this->user = new User;  
     }
 
     public function register()
@@ -154,5 +154,9 @@ class Login extends Controller
     	
         return jsonp(['status'=>200,'message'=>'发送成功,验证码十分钟内有效']);
     	
+    }
+    #注册协议页面
+    public function registerProtocol(){
+    	return $this->fetch();
     }
 }

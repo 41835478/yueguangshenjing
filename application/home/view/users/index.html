@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>个人中心</title>
+<meta charset="utf-8">
+<meta name="author" content="yy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="yy">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" type="text/css" href="/resource/home/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/public.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/ly.css">
+<script type="text/javascript" src="/resource/home/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/public.js"></script>
+<style type="text/css">
+	body{
+		background: #f5f5f5;
+	}
+	.sC_type img{
+		top: 1px;
+	}
+	.sC_name{
+		margin-right: 10px;
+	}
+	.shopCenter_6 a span.shopCenter_span1{
+		color: #e99b01;
+	}
+	.shopCenter_3{ margin: 16px 0 5px 0; }
+	.shopCenter_4_2 {
+	    font-size: 12px;
+	    color: #b6b8b9;
+	}
+</style>
+</head>
+<div class="shopCenter_head">
+	<a href="Edit-Profile.html"><img src="/resource/home/images/ly_17.png" class="shopCenter_img1"></a>
+	<div class="shopCenter_1">
+		<img src="{$user['user_pic']}" class="shopCenter_img2">
+		<div class="shopCenter_2">
+			<div class="shopCenter_3"><span class="sC_name">{$user['nickname']}</span><span class="sC_type"><img src="/resource/home/images/ly_18.png"/>省会代理商</span></div>
+			<div class="agentCenter_1"><i class="iconfont icon-ditu"></i>代理区域：郑州市</div>
+			<div class="shopCenter_4">推荐人：<span class="sC_phone">{$user['pphone']}</span></div>
+			<div class="shopCenter_4 shopCenter_4_2">团队业绩：<span class="sC_phone">1000</span>台</div>
+		</div>
+	</div>
+</div>
+
+<ul class="shopCenter_nav">
+	<li><a href="obligation.html"><img src="/resource/home/images/ly_19.png">待付款</a></li>
+	<li><a href="Shipment-one.html"><img src="/resource/home/images/ly_20.png">待发货</a></li>
+	<li><a href="delivery.html"><img src="/resource/home/images/ly_21.png">待收货</a></li>
+	<li><a href="stocks.html"><img src="/resource/home/images/ly_22.png">已完成</a></li>
+</ul>
+<div class="shopCenter_5">
+		<div class="shopCenter_6">
+		<a href="customerOrder.html"><img src="/resource/home/images/ly_23.png"><span>客户订单</span><i class="iconfont icon-arrow-right"></i></a>
+	</div>
+	<div class="shopCenter_6">
+		<a href="myAccount.html"><img src="/resource/home/images/ly_24.png"><span>我的账户</span><i class="iconfont icon-arrow-right"></i></a>
+	</div>
+		<div class="shopCenter_6">
+		<a href="myInventory.html"><img src="/resource/home/images/ly_59.png"><span>我的库存</span><i class="iconfont icon-arrow-right"></i></a>
+	</div>
+	<div class="shopCenter_6">
+		<a href="myTeam.html"><img src="/resource/home/images/ly_25.png"><span>我的团队</span><i class="iconfont icon-arrow-right"></i></a>
+	</div>
+</div>
+<div class="shopCenter_5" style="margin-top: 10px;">
+	<div class="shopCenter_6">
+		<a href="alipayBound.html"><img src="/resource/home/images/ly_26.png"><span>账户绑定</span><i class="iconfont icon-arrow-right"></i><span class="shopCenter_span1">已绑定支付宝</span></a>
+	</div>
+	<div class="shopCenter_6">
+		<a href="manageAddress.html"><img src="/resource/home/images/ly_27.png"><span>收货地址</span><i class="iconfont icon-arrow-right"></i></a>
+	</div>
+	<div class="shopCenter_6">
+		<a href="modifyPwd.html"><img src="/resource/home/images/ly_28.png"><span>修改密码</span><i class="iconfont icon-arrow-right"></i></a>
+	</div>
+</div>
+<div class="shopCenter_5" style="margin-top: 10px; margin-bottom: 50px;">
+	<div class="shopCenter_6">
+		<a href="login.html"><img src="/resource/home/images/ly_30.png"><span>退出账号</span><i class="iconfont icon-arrow-right"></i></a>
+	</div>
+</div>
+
+
+<!-- tan -->
+<div class="popBox" style="display:none;">
+	<div class="pop">
+		<p class="p_top">提示</p>
+		<p class="p_cot">需成为消费会员后，才能查看个人专属二维码。</p>
+		<div class="btnBox">
+			<button class="btn1" type="button">忽略</button>
+			<button class="btn2" type="button">确定</button>
+		</div>
+	</div>
+</div>
+
+<footer>
+	<a href="index.html"><img src="/resource/home/images/ly_31.png">首页</a>
+	<a class="QR_li" href="javascript:void(0);"><img src="/resource/home/images/ly_33.png">二维码</a>
+	<a href="javascript:void(0);"><img src="/resource/home/images/ly_35.png">我的</a>
+</footer>
+<script type="text/javascript">
+	$("footer a").eq(2).find('img').attr({
+		src: '/resource/home/images/ly_36.png'
+	});
+</script>
+</body>
+</html>
