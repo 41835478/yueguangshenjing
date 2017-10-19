@@ -4,8 +4,9 @@ namespace app\admin\controller;
 
 use think\Controller;
 use think\Request;
+use app\admin\model\BannersModel;
 
-class Banners extends Controller
+class Banners extends Base
 {
     /**
      * 显示资源列表
@@ -15,6 +16,7 @@ class Banners extends Controller
     public function index()
     {
         //
+        dump("轮播图列表");
     }
 
     /**
@@ -25,6 +27,7 @@ class Banners extends Controller
     public function create()
     {
         //
+        return $this->fetch("banners/add");  
     }
 
     /**
@@ -36,6 +39,30 @@ class Banners extends Controller
     public function save(Request $request)
     {
         //
+        $input = input("param.");
+        if(!isUrl($input["links"]) && $input["links"] != "#"){
+            $Url=popBox('error','链接不合法!');
+            $this->redirect($Url);
+        }
+
+
+        if(!$input["img"]){
+            $Url=popBox('error','图片不能为空!');
+            $this->redirect($Url);
+        }
+
+        $input["sort"]= $input["sort"] == "" ? 0 : $input["sort"];
+
+        // dump($input);
+        $banners = new BannersModel();
+        $banners->data($input);
+        $ob = $banners->save();
+        if($ob){
+            $Url=popBox('success','添加成功!');
+            $this->redirect($Url);
+        }
+
+
     }
 
     /**

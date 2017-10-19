@@ -38,4 +38,16 @@ function getUserInfo(Request $request,$userId)//利用tp5的方法注入得到�
     $res=model('Admin')->get($userId);
     return $res;
 }
+//判断url是否合法
+function isUrl($url){
+
+    if(!preg_match('/http:\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is',$url)){
+
+        return false;
+
+    }
+
+    return true;
+
+}
 ?>

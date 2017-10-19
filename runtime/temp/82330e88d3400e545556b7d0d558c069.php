@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508331166;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508376880;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508331166;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -98,11 +98,34 @@
                     <span class="ng-scope">分类</span>
                 </li>
                 <li>
+                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">首页轮播图</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<?php echo url('banners/index'); ?>">轮播图列表</a>
+                        </li>
+                        <li><a class="J_menuItem" href="<?php echo url('banners/create'); ?>">添加轮播图</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
                     <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">商品管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<?php echo url('goods/index'); ?>">添加商品</a>
                         </li>
                         <li><a class="J_menuItem" href="<?php echo url('goods/goodsList'); ?>">商品列表</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">内容管理</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>">平台介绍</a>
+                        </li>
+                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>">新手指南</a>
+                        </li>
+                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>">最新公告</a>
+                        </li>
+                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>">客服中心</a>
                         </li>
                     </ul>
                 </li>
