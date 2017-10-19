@@ -221,10 +221,11 @@ $('#code').on('click',function(){
                 				 
                 	 		if(data.status==200){
                 	 			alert(data.message); 
-                	 			window.location.href="/";
+                	 			window.location.href="/home/Login/login.html";
                 	 		}
                 	 		if(data.status==401){
-                	 			alert(data.message);                 	 			
+                	 			alert(data.message);
+                	 			window.location.reload();                 	 			
                 	 		}                 	
                            
                         }else{
