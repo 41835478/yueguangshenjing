@@ -35,14 +35,14 @@ class Member extends Base
         if(input('?file.pic')){
             $img=$mod->field(['pic'])->where(['id'=>$id])->find();
             $file = request()->file('pic');
-            $info = $file->move(ROOT_PATH . 'public' .DS . 'static'. DS . 'admin'.DS.'headPic');
+            $info = $file->move(ROOT_PATH . 'public' .DS . 'resource'. DS . 'admin'.DS.'headPic');
             if ($info) {
                 $flag=1;
                 $saveName = $info->getSaveName();
                 $arr = explode("\\", $saveName);
                 $str = implode('/', $arr);
                 $date['pic']='/admin/headPic/'.$str;
-                session('pic',$date['pic']);
+                session('pic',$date['pic'],'admin');
             } else {
                 $this->error($file->getError());
             }
@@ -55,7 +55,7 @@ class Member extends Base
                 $arr[0]=$data['mobile'];
                 $str=implode('-',$arr);
                 $info=$mod->getEncrypt($str);
-                session('info',$info);
+                session('info',$info,'admin');
             }
             if($flag==1){
                 if(file_exists('static'.$img['pic'])){
@@ -128,7 +128,7 @@ class Member extends Base
 
     static private function getUserInfo()
     {
-        $res=model('Admin')->getDecrypt(session('info'));
+        $res=model('Admin')->getDecrypt(session('info','','admin'));
         if($res){
             $arr=explode('-',$res);
             return $arr;

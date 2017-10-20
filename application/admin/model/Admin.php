@@ -5,24 +5,29 @@ use think\Model;
 
 class Admin extends Model
 {
-    protected $autoWriteTimestamp=true;
-    protected $createTime='create_at';
+    protected $autoWriteTimestamp = true;
+    protected $createTime = 'create_at';
     protected $updateTime = false;
     protected $update = ['update_at'];
 
     protected $token = '';
-    private $key='huaLove1314';
-    protected $rand='ILoveYou';
+    private $key = 'huaLove1314';
+    protected $rand = 'ILoveYou';
+
+    public function setPwdAttr($value)
+    {
+        return md5($value);
+    }
 
     public function setToken()
     {
-        if(session('token')&&session('expire')>time()){
-            $this->token=session('token');
-        }else{
-            $token=md5(rand(1000,9999).$this->rand.uniqid().time());
-            session('token',$token);
-            session('expire',time()+7200);
-            $this->token=$token;
+        if (session('token') && session('expire') > time()) {
+            $this->token = session('token');
+        } else {
+            $token = md5(rand(1000, 9999) . $this->rand . uniqid() . time());
+            session('token', $token);
+            session('expire', time() + 7200);
+            $this->token = $token;
         }
     }
 
@@ -88,19 +93,19 @@ class Admin extends Model
         return $str;
     }
 
-    public function updateAdmin($ip,$id,$current_time)//更新数据表
+    public function updateAdmin($ip, $id, $current_time)//更新数据表
     {
-        $res=$this->field(['current_time','current_ip'])->where(['id'=>$id])->find();
-        $date['last_time']=$res['current_time'];
-        $date['current_time']=$current_time;
-        $date['last_ip']=$res['current_ip'];
-        $date['current_ip']=$ip;
-        $date['status']=1;
-        $date['update_at']=time();
-        $res1=$this->allowField(['last_time','current_time','last_ip','current_ip','status'])->save($date,array('id'=>$id));
-        if($res1){
+        $res = $this->field(['current_time', 'current_ip'])->where(['id' => $id])->find();
+        $date['last_time'] = $res['current_time'];
+        $date['current_time'] = $current_time;
+        $date['last_ip'] = $res['current_ip'];
+        $date['current_ip'] = $ip;
+        $date['status'] = 1;
+        $date['update_at'] = time();
+        $res1 = $this->allowField(['last_time', 'current_time', 'last_ip', 'current_ip', 'status'])->save($date, array('id' => $id));
+        if ($res1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

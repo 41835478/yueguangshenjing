@@ -29,7 +29,7 @@ do{
 
 //开始移动文件到相应的文件夹
 if(move_uploaded_file($file['tmp_name'],$upload_path.$str.'.'.$type)){
-  exit(json_encode(['status'=>1,'message'=>'上传成功','url'=>'http://'.$_SERVER['HTTP_HOST'].'/resource/admin/Upload/'.$str.'.'.$type]));
+  exit(json_encode(['status'=>1,'message'=>'上传成功','url'=>'/resource/admin/Upload/'.$str.'.'.$type]));
 }else{
   exit(json_encode(['status'=>0,'message'=>'上传失败'])) ;
 }

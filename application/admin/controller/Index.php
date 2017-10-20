@@ -36,8 +36,9 @@ class Index extends Controller
                         if ($updateRes) {
                             $str = $date['mobile'] . '-' . $res['id'] . '-' . request()->header('user-agent') . '-' . uniqid() . time();
                             $info = $mod->getEncrypt($str);
-                            session('info', $info);
-                            session('pic', $res['pic']);
+                            session('info', $info,'admin');
+                            session('pic', $res['pic'],'admin');
+                            session('name',$res['name'],'admin');
                             $this->redirect(url('main/index'));
                         } else {
                             $this->error('登录失败', 'index/index');
@@ -56,15 +57,36 @@ class Index extends Controller
 
     public function layout()//退出后台
     {
-        $res=action('member/getStatic');
+        $res=$this->getStatic();
         $date['update_at']=time();
         $date['status']=2;
         $result=model('Admin')->where(['id'=>$res[1],'mobile'=>$res[0]])->setField($date);
         if($result){
-            session(null);
+            session(null,'admin');
             $this->redirect(url('index/index'));
         }else{
             $this->error('退出失败');
         }
+    }
+
+    public function getStatic()
+    {
+        return self::getUserInfo();
+    }
+
+    static private function getUserInfo()
+    {
+        $res=model('Admin')->getDecrypt(session('info','','admin'));
+        if($res){
+            $arr=explode('-',$res);
+            return $arr;
+        }else{
+            return false;
+        }
+    }
+
+    public function rulePage()//没有权限的页面
+    {
+        return view('main/rulePage');
     }
 }

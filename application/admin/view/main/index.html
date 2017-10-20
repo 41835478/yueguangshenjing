@@ -31,8 +31,8 @@
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                     <span class="block m-t-xs" style="font-size:20px;">
-                                        {if condition="$Think.session.pic neq ''"}
-                                        <img src="__PUBLIC__{$Think.session.pic}" style="border-radius:40px" width="80px" height="80px">
+                                        {if condition="$_SESSION['admin']['pic'] neq ''"}
+                                        <img src="__PUBLIC__{$_SESSION['admin']['pic']}" style="border-radius:40px" width="80px" height="80px">
                                         {else/}
                                         <img src="__PUBLIC__/admin/headPic/a5.jpg" style="border-radius:40px" width="80px" height="80px">
                                         {/if}
@@ -67,6 +67,9 @@
                         </li>
                         <li>
                             <a class="J_menuItem" href="{:url('node/index')}">节点管理</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="{:url('administrator/index')}">管理员管理</a>
                         </li>
                     </ul>
                 </li>
@@ -115,13 +118,13 @@
                 <li>
                     <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">内容管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="{:url('contents/index')}">平台介绍</a>
+                        <li><a class="J_menuItem" href="{:url('contents/index')}?type=1">平台介绍</a>
                         </li>
-                        <li><a class="J_menuItem" href="{:url('contents/index')}">新手指南</a>
+                        <li><a class="J_menuItem" href="{:url('contents/index')}?type=2">新手指南</a>
                         </li>
-                        <li><a class="J_menuItem" href="{:url('contents/index')}">最新公告</a>
+                        <li><a class="J_menuItem" href="{:url('contents/index')}?type=3">最新公告</a>
                         </li>
-                        <li><a class="J_menuItem" href="{:url('contents/index')}">客服中心</a>
+                        <li><a class="J_menuItem" href="{:url('contents/index')}?type=4">客服中心</a>
                         </li>
                     </ul>
                 </li>
