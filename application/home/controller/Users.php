@@ -2,10 +2,11 @@
 namespace app\home\controller;
 use think\Controller;
 use app\admin\model\User;
+use app\admin\model\Alipay;
 use think\Cache;
 use think\Session;
 use think\File;
-class Users extends Controller
+class Users extends Base
 {
 
 	public function _initialize()
@@ -69,10 +70,37 @@ class Users extends Controller
     	return $this->fetch();
     }
 
+    /****账户模块*************************************************************************************************************************************************************************************************************************************************************************************************/
+    #我的账户
+    public function myaccount(){
+    	$uid=Session::get('uid');
+    	$user=$this->user->where('id',$uid)->find();
 
+    	$this->assign('user',$user);
+    	return $this->fetch();
+    }
+    #提现
+    public function withdrawal(){
+    	$uid=Session::get('uid');
+    	$user=$this->user->where('id',$uid)->find();
+    	#查询支付宝
+    	$alipay=Alipay::where('user_id',$uid)->find();
+    	$alipay['alipay_account']=
+    	
+    	$this->assign('alipay',$alipay);
+    	$this->assign('user',$user);
+    	return $this->fetch();
+    }
 
+  /*****************************************************************************************************************************************************************************************************************************************************************************************************/
 
+    #退出
+    public function logout(){
+    	Session::delete('uid');
 
+    	exit('<script>alert("退出成功");location.href = "/"</script>');
+
+    }
 }
 
 

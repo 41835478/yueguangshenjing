@@ -47,30 +47,61 @@
 	<div class="shopCenter_1">
 		<img src="{$user['user_pic']}" class="shopCenter_img2">
 		<div class="shopCenter_2">
-			<div class="shopCenter_3"><span class="sC_name">{$user['nickname']}</span><span class="sC_type"><img src="/resource/home/images/ly_18.png"/>省会代理商</span></div>
-			<div class="agentCenter_1"><i class="iconfont icon-ditu"></i>代理区域：郑州市</div>
+			<div class="shopCenter_3"><span class="sC_name">{$user['nickname']}</span><span class="sC_type"><img src="/resource/home/images/ly_18.png"/>
+
+
+				{if condition="$user['level'] eq 1"/} 普通会员
+				{elseif condition="$user['level'] eq 2"/}消费会员
+				{elseif condition="$user['level'] eq 3"/}县级城市代理商
+				{elseif condition="$user['level'] eq 4"/}地级城市代理商
+				{elseif condition="$user['level'] eq 5"/}省会城市代理商
+				{elseif condition="$user['level'] eq 6"/}一线城市代理商
+				{elseif condition="$user['level'] eq 7"/}一级店面
+				{elseif condition="$user['level'] eq 8"/}一级店面
+				{/if}
+
+			</span></div>
+
+			{in name="$user['level']" value="3,4,5,6"}
+				<div class="agentCenter_1"><i class="iconfont icon-ditu"></i>代理区域：{$user['area']}</div>
+			{else/}
+				
+			{/in}
+			
+			
 			<div class="shopCenter_4">推荐人：<span class="sC_phone">{$user['pphone']}</span></div>
 			<div class="shopCenter_4 shopCenter_4_2">团队业绩：<span class="sC_phone">1000</span>台</div>
 		</div>
 	</div>
 </div>
-
+<!-- 判断订单 -->
+{in name="$user['level']" value="3,4,5,6"}
+				
+			{else/}
 <ul class="shopCenter_nav">
 	<li><a href="obligation.html"><img src="/resource/home/images/ly_19.png">待付款</a></li>
 	<li><a href="Shipment-one.html"><img src="/resource/home/images/ly_20.png">待发货</a></li>
 	<li><a href="delivery.html"><img src="/resource/home/images/ly_21.png">待收货</a></li>
 	<li><a href="stocks.html"><img src="/resource/home/images/ly_22.png">已完成</a></li>
 </ul>
+{/in}
+
+<!-- 判断客户订单 -->
+{in name="$user['level']" value="1,2"}				
+	{else/}
 <div class="shopCenter_5">
 		<div class="shopCenter_6">
 		<a href="customerOrder.html"><img src="/resource/home/images/ly_23.png"><span>客户订单</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
-	<div class="shopCenter_6">
-		<a href="myAccount.html"><img src="/resource/home/images/ly_24.png"><span>我的账户</span><i class="iconfont icon-arrow-right"></i></a>
-	</div>
 		<div class="shopCenter_6">
 		<a href="myInventory.html"><img src="/resource/home/images/ly_59.png"><span>我的库存</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
+{/in}
+
+	<div class="shopCenter_6">
+		<a href="{:url('Users/myaccount')}"><img src="/resource/home/images/ly_24.png"><span>我的账户</span><i class="iconfont icon-arrow-right"></i></a>
+	</div>
+
 	<div class="shopCenter_6">
 		<a href="myTeam.html"><img src="/resource/home/images/ly_25.png"><span>我的团队</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
@@ -88,7 +119,7 @@
 </div>
 <div class="shopCenter_5" style="margin-top: 10px; margin-bottom: 50px;">
 	<div class="shopCenter_6">
-		<a href="login.html"><img src="/resource/home/images/ly_30.png"><span>退出账号</span><i class="iconfont icon-arrow-right"></i></a>
+		<a href="javascript:void(0);" class="person_aa"><img src="/resource/home/images/ly_30.png"><span>退出账号</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
 </div>
 
@@ -110,10 +141,16 @@
 	<a class="QR_li" href="javascript:void(0);"><img src="/resource/home/images/ly_33.png">二维码</a>
 	<a href="javascript:void(0);"><img src="/resource/home/images/ly_35.png">我的</a>
 </footer>
+
+
 <script type="text/javascript">
-	$("footer a").eq(2).find('img').attr({
-		src: '/resource/home/images/ly_36.png'
-	});
+	
+		$(".person_aa").click(function(){
+		if(confirm("确认要退出吗？")){
+		window.location.href="/home/Users/logout";
+		}
+		return false;
+		});
 </script>
 </body>
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>我的账户</title>
+<meta charset="utf-8">
+<meta name="author" content="yy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="yy">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" type="text/css" href="/resource/home/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/public.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/ly.css">
+<script type="text/javascript" src="/resource/home/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/public.js"></script>
+<style type="text/css">
+	body{
+		background: #f5f5f5;
+	}
+</style>
+</head>
+<body style="padding-bottom: 20px;">
+<div class="shopAccount_head">
+	<div class="shopAccount_1">
+		<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='my.html'"></i>我的账户
+	</div>
+	<div class="shopAccount_2">总额（元）<span>{$user['account']}</span></div>
+	<a href="{:url('Users/withdrawal')}" class="shopAccount_tx">提现</a>
+</div>
+<div class="shopAccount_3">账户明细</div>
+<ul class="shopAccount_ul1">
+	<li><a href="IncomeBreakdown.html"><img src="/resource/home/images/ly_4.png">收入明细</a></li>
+	<li><a href="expenditureDetails.html"><img src="/resource/home/images/ly_5.png">支出明细</a></li>
+	<li><a href="withdrawalsRecord.html"><img src="/resource/home/images/ly_6.png">提现记录</a></li>
+</ul>
+<div class="shopAccount_3">奖金</div>
+<ul class="shopAccount_ul1">
+	<li><a href="distributionAward.html"><img src="/resource/home/images/ly_7.png">分销奖</a></li>
+	<li><a href="InvestmentPromotionAward.html"><img src="/resource/home/images/ly_8.png">招商升级奖</a></li>
+	<li><a href="merchantsSalesAward.html"><img src="/resource/home/images/ly_9.png">招商销售奖</a></li>
+	<li><a href="installRedPackets.html"><img src="/resource/home/images/ly_10.png">安装红包</a></li>
+</ul>
+
+
+
+</body>
+</html>
