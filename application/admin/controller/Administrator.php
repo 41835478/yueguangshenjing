@@ -23,24 +23,33 @@ class Administrator extends Base
     public function addUser()//添加管理员
     {
         $date=input('post.');
-        if($date['id']){//说明是修改管理员
-
-        }else{//说明是添加管理员
-            $validate=validate('Administrator');
-            if(!$validate->check($date)){
-                $url=popBox('error',$validate->getError());
+        $validate=validate('Administrator');
+        if(!$validate->check($date)){
+            $url=popBox('error',$validate->getError());
+        }else{
+            $data['name']=$date['name'];
+            $data['mobile']=$date['mobile'];
+            $data['pwd']=$date['pwd'];
+            $data['role_id']=$date['role'];
+            $res=model('Admin')->create($data);
+            if($res){
+                $url=popBox('success','添加管理员成功');
             }else{
-                $data['name']=$date['name'];
-                $data['mobile']=$date['mobile'];
-                $data['pwd']=$date['pwd'];
-                $data['role_id']=$date['role'];
-                $res=model('Admin')->create($data);
-                if($res){
-                    $url=popBox('success','添加管理员成功');
-                }else{
-                    $url=popBox('error','添加管理员失败');
-                }
+                $url=popBox('error','添加管理员失败');
             }
+        }
+        $this->redirect($url);
+    }
+
+    public function editRole()//修改角色
+    {
+        $date=input('post.');
+        $user=model('Admin')->get($date['id']);
+        $user->role_id=$date['role'];
+        if($user->save()){
+            $url=popBox('success','修改角色成功');
+        }else{
+            $url=popBox('error','修改角色失败');
         }
         $this->redirect($url);
     }
