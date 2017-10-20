@@ -4,6 +4,7 @@ use think\Controller;
 use app\admin\model\User;
 use think\Cache;
 use think\Session;
+use think\File;
 class Users extends Controller
 {
 
@@ -30,16 +31,37 @@ class Users extends Controller
     	$this->assign('user',$user);
     	return $this->fetch();
     }
-    public function editdata(){
+    #修改个人资料
+    public function editdata()
+    {
     	$uid=Session::get('uid');
     	$user=$this->user->where('id',$uid)->find();
     	if(request()->isPost()){
     		$post=input('param.');
     		$data=[];
-    		$data['nickname']=$post['nickname'];
-    		$data['nickname']=$post['nickname'];
-    		$data['nickname']=$post['nickname'];
-    		$this->user->where('id',$uid)->update();
+    		 	// 获取表单上传文件 
+    		if(!empty(request()->file("user_pic"))){
+    			 $file = request()->file("user_pic");
+			    // 移动到框架应用根目录/public/uploads/ 目录下
+			    $info = $file->validate(['size'=>10485756,'ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS . 'uploads');
+			    if($info){
+			        // 成功上传后 获取上传信息
+			        $data['user_pic']='/uploads/'.$info->getSaveName();
+			    }else{
+			        // 上传失败获取错误信息
+			        $error= $file->getError() ;
+			        $this->error("$error");
+			    } 
+			    }  		
+	    		$data['nickname']=$post['nickname'];   
+	    		$data['sex']=$post['sex'];
+	    		$data['updated_at']=time();
+	    		$res=$this->user->where('id',$uid)->update($data);
+	    		 if($res){
+		            $this->success('修改成功', 'Users/index');
+		        } else {
+		            $this->error('修改失败');
+		        }
     	}
     	$user=$this->user->where('id',$uid)->find();
     	$user['mobile']=substr_replace($user['mobile'],'****',3,4);

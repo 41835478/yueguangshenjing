@@ -155,6 +155,28 @@
     .down i.icon-weixuanzhong{
         color: #666;
     }
+
+    .bcbtn{
+        display: block;
+        width: 80%;
+        height: 50px;
+        background-color: #2d3238;
+        color: #fff;
+        line-height: 50px;
+        text-align: center;
+        font-size: 17px;
+        margin: 10%;
+        border-radius: 5px;
+    }
+    .head66_img{
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        float: left;
+        margin-top: 15px;
+        margin-left: 20px;
+        border-radius: 4px;
+    }
 </style>
 </head>
 <body>
@@ -162,9 +184,11 @@
     <i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>
     编辑资料
 </div>
+   <form action="{:url('users/editdata')}" enctype="multipart/form-data" method="post"> 
 <div class="datum">
     <div class="line"></div>
     <div class="account">
+     
         <ul>
             <li>
                 <span>账 &nbsp;&nbsp;&nbsp; 号 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -179,134 +203,89 @@
                 <span class="left">性 &nbsp;&nbsp;&nbsp; 别 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
                 <div class="down">
+                    
 
-                    <label>
-                    <i class="iconfont icon-selected-copy"></i>
-                        <!-- <div class="box"><div class="id1"></div></div>
-                        <input type="radio" name="sex" value="" id="nv"> -->
+                     <!--    <input type="hidden" name="sex" id="ccid" value="2"> -->
+                    {if condition="($user['sex'] == 2)  "}
+                    <input type="hidden" name="sex" id="ccid" value="2">
+                        <label data-sex="2">
+                          <i class="iconfont icon-selected-copy"></i>
+                         <img src="/resource/home/images/woman.png" alt="">
+                        {else /}
+                        <label data-sex="2">
+                        <i class="iconfont icon-weixuanzhong"></i> 
                         <img src="/resource/home/images/woman.png" alt="">
+                        {/if}                       
                     </label>
-                    <label>
-                        <i class="iconfont icon-weixuanzhong"></i>
-                        <!-- <div class="box2"><div class="id2"></div></div>
-                        <input type="radio" name="sex" value="" id="nan"> -->
+                   
+                        {if condition="($user['sex'] == 1)  "}
+                        <input type="hidden" name="sex" id="ccid" value="1">
+                        <label data-sex="1">
+                        <i class="iconfont icon-selected-copy"></i>                        
                         <img src="/resource/home/images/man.png" alt="">
+                        {else /} 
+                         <label data-sex="1">
+                         <i class="iconfont icon-weixuanzhong"></i>
+                         <img src="/resource/home/images/man.png" alt="">
+                        {/if}
+                        
                     </label>
                 </div>
             </li>
         </ul>
+
     </div>
 </div>
 <div class="upload">
     <span class="left">修改头像</span>
     <div class="revise">
         <label class="lab">
-           <img id="imgurl" name="imgurl" class="ED_headimg ED_right" src="{{asset('home/images/editData01.png')}}" alt="">
-        <input type="file" name="picname" id="picname"/>
-        <input type="hidden" name="headimg" id="headimg"/>
+            <input type="file" name="user_pic" multiple id="inputs" value="">
+            {if condition="($user['user_pic'] == '')  "}
+            <img class="head66_img" src="/resource/home/images/head66_img.png">
+                        {else /} 
 
- <!--  <input type="file" id="imgurl" name="pic"> -->
-            <i class="iconfont icon-shangchuantouxiang left"></i>
+            <div id='dd'>
+                <img class="head66_img" src="{$user['user_pic']}">
+            </div>
+            {/if}           
             <i class="shang">上传头像</i>
         </label>
 
     </div>
 </div>
-<a href="my.html">保存</a>
+<button class="bcbtn">保存</button>
 
-
+</form>
 <script>
-
+    
     $(".down label").click(function(){
         $(".down label").children('i').removeClass('icon-selected-copy').addClass('icon-weixuanzhong');
         $(this).children('i').removeClass('icon-weixuanzhong').addClass('icon-selected-copy');
+        sex = $(this).attr("data-sex");
+        document.getElementById("ccid").value=sex;
+
     })
-
-
 </script>
-
-
-<script type="text/javascript" src="'/resource/home/lay/layui/layui.js'"></script>
 <script>
-      var head_url = '';
-      $(document).ready(function(){
-            layui.use('upload', function(){
-                layui.upload({
-                  elem:'#picname',
-                  url: "/resource/home/lay/upload.php",
-                  success: function(res){
-                    if(res.status==0){
-                        console.log(res.message);
-                    }
-                    if(res.status==1){
-                        //console.log(111);
-                        $('#imgurl').attr('src',res.url);
-                        $('#headimg').attr('value',res.url);
-                        head_url = res.url;
-                        //console.log(head_url);
-                    }
-                  }
-                });
-            });
-        });
-
-</script>
-
-<script type="text/javascript">
-
-
-
-window.onload=function(){
-    document.getElementById('btn1').onclick=function(){
-        this.disabled=true;
-        setTimeout(function (){
-            document.getElementById('btn1').disabled=false;
-        },5000);
+    $(document).ready(function () {
+    $("#inputs").change(function () {
+    var fil = this.files;
+    for (var i = 0; i < fil.length; i++) {
+    reads(fil[i]);
     }
-     
-}
-      $('.true').click(function(){
-            var name=$('#name').val();
-            var sex=$('#sex').val();
-            var login_name=$('#login_name').val();
-            var pic=head_url;
-            if(name==""){
-                alert("请输入会员昵称！");
-                return false;
-            }           
-            if(login_name==""){
-                alert('请输入真实姓名');
-                return false;
-            }
-            var data={
-                'pic':pic,
-                'name':name,
-                'sex':sex,
-                'login_name':login_name,
-            }
-            var url="{{url('users/editdata')}}";
-        
-            $.ajax({
-                'url':url,
-                'data':data,
-                'async':true,
-                'type':'post',
-                'dataType':'json',
-                success:function(data){
-                     if(data.status){                       
-                            alert(data.message); 
-                             if(data.data.flag==1)  {
-                                window.location.href="{{url('users/index')}}";
-                             }                                             
-                        }else{
-                            alert(data.message);
-                            window.location.reload();
-                        }                 
-                },
-             
-            })
-              })
- 
+    });
+    });
+    function reads(fil){
+    var reader = new FileReader();
+    reader.readAsDataURL(fil);
+    reader.onload = function()
+    {
+        $("#dd").html("");
+        document.getElementById("dd").innerHTML += "<img  class='head66_img' src='"+reader.result+"'>";
+    };
+    }
 </script>
+
 </body>
 </html>
