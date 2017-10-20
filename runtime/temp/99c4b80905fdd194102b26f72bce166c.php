@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:91:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\contents\guide.html";i:1508487306;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:91:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\contents\guide.html";i:1508488872;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
 <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/animate.css" rel="stylesheet">
@@ -80,7 +80,7 @@
                             <td><?php echo $v['content']; ?></td>
                             <td><?php echo $v['created_at']; ?></td>
                             <td>
-                                <a href="<?php echo url('contents/edit'); ?>?id=<?php echo $v['id']; ?>">修改</a>  | <a onclick="delBanner('<?php echo $v['id']; ?>')">删除</a></td>
+                                <a href="<?php echo url('contents/edit'); ?>?id=<?php echo $v['id']; ?>">修改</a>  | <a onclick="delGuide('<?php echo $v['id']; ?>')">删除</a></td>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -121,10 +121,9 @@
 
     });
 
-    //删除商品
-    function delBanner(bannerId) {
+    function delGuide(id) {
         if (confirm('确认删除此图片吗?')) {
-            window.location.href = "<?php echo url('banners/delete'); ?>?id=" + bannerId;
+            window.location.href = "<?php echo url('contents/delete'); ?>?id=" + id;
         }
     }
 

@@ -57,7 +57,7 @@
                             <td>{$v.content}</td>
                             <td>{$v.created_at}</td>
                             <td>
-                                <a href="{:url('contents/edit')}?id={$v.id}">修改</a>  | <a onclick="delBanner('{$v.id}')">删除</a></td>
+                                <a href="{:url('contents/edit')}?id={$v.id}">修改</a>  | <a onclick="delGuide('{$v.id}')">删除</a></td>
                             </td>
                         </tr>
                         {/foreach}
@@ -87,10 +87,9 @@
 
     });
 
-    //删除商品
-    function delBanner(bannerId) {
+    function delGuide(id) {
         if (confirm('确认删除此图片吗?')) {
-            window.location.href = "{:url('banners/delete')}?id=" + bannerId;
+            window.location.href = "{:url('contents/delete')}?id=" + id;
         }
     }
 

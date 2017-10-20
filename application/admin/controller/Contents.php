@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Request;
 use app\admin\model\ContentsModel;
+use think\Paginator;
 
 class Contents extends Base
 {
@@ -160,5 +161,10 @@ class Contents extends Base
     public function delete($id)
     {
         //
+        $content = ContentsModel::get($id);
+        $content->delete();
+
+        $Url = popBox('success', '删除成功!');
+        $this->redirect($Url);
     }
 }
