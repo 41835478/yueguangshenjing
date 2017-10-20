@@ -2,11 +2,8 @@
 
 namespace app\admin\controller;
 
-use app\admin\model\Admin;
-use app\admin\model\Roles;
 use think\Controller;
 use think\Request;
-use think\Route;
 
 class Administrator extends Base
 {
