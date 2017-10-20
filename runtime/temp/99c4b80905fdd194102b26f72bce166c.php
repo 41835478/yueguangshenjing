@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:91:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\contents\guide.html";i:1508488872;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:91:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\contents\guide.html";i:1508495775;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
 <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/animate.css" rel="stylesheet">
@@ -44,6 +44,7 @@
     .img1 {
         cursor: pointer;
     }
+    .auto {width: 70%; text-overflow:ellipsis; white-space: nowrap;}
 </style>
 <div class="imgBox">
     <img id="imgSrc" src=""/>
@@ -77,7 +78,7 @@
                         <tr class="gradeX">
                             <td><?php echo $v['id']; ?></td>
                             <td><?php echo $v['title']; ?></td>
-                            <td><?php echo $v['content']; ?></td>
+                            <td style="width: 60%;"><?php echo $v['content']; ?></td>
                             <td><?php echo $v['created_at']; ?></td>
                             <td>
                                 <a href="<?php echo url('contents/edit'); ?>?id=<?php echo $v['id']; ?>">修改</a>  | <a onclick="delGuide('<?php echo $v['id']; ?>')">删除</a></td>

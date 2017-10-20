@@ -21,6 +21,7 @@
     .img1 {
         cursor: pointer;
     }
+    .auto {width: 70%; text-overflow:ellipsis; white-space: nowrap;}
 </style>
 <div class="imgBox">
     <img id="imgSrc" src=""/>
@@ -54,7 +55,7 @@
                         <tr class="gradeX">
                             <td>{$v.id}</td>
                             <td>{$v.title}</td>
-                            <td>{$v.content}</td>
+                            <td style="width: 60%;">{$v.content}</td>
                             <td>{$v.created_at}</td>
                             <td>
                                 <a href="{:url('contents/edit')}?id={$v.id}">修改</a>  | <a onclick="delGuide('{$v.id}')">删除</a></td>

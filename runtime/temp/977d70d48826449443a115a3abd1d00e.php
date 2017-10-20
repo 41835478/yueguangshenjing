@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:91:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\aboutUs.html";i:1508491743;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:91:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\aboutUs.html";i:1508494287;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +37,7 @@
 	<div class="content">
 		<div class="fenge"></div>
 		<div class="aboutUs_body">
-			<img src="__IMG__/about_img.png" alt="平台简介">
+			<?php echo $content['content']; ?>
 		</div>	
 	</div>
 </body>

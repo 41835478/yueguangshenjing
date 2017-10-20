@@ -9,7 +9,8 @@ class Content extends controller
     public function index()
     {
         #平台介绍
-        return $this->fetch("content/aboutUs");
+        $content = ContentsModel::get(1);
+        return $this->fetch("content/aboutUs",["content"=>$content]);
     }
     public function beginnerGuide()
     {
