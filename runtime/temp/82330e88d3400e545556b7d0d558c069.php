@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508376880;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508463673;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508482131;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -119,13 +119,13 @@
                 <li>
                     <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">内容管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>">平台介绍</a>
+                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>?type=1">平台介绍</a>
                         </li>
-                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>">新手指南</a>
+                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>?type=2">新手指南</a>
                         </li>
-                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>">最新公告</a>
+                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>?type=3">最新公告</a>
                         </li>
-                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>">客服中心</a>
+                        <li><a class="J_menuItem" href="<?php echo url('contents/index'); ?>?type=4">客服中心</a>
                         </li>
                     </ul>
                 </li>
@@ -283,6 +283,11 @@
 <script src="__PUBLIC__/admin/js/plugins/layer/layer.min.js"></script>
 <script src="__PUBLIC__/admin/js/plugins/dataTables/jquery.dataTables.js"></script>
 <script src="__PUBLIC__/admin/layui-2.0/layui.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+
 
 <!-- 自定义js -->
 <script src="__PUBLIC__/admin/js/hAdmin.js?v=4.1.0"></script>
