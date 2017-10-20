@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>编辑资料</title>
+<meta charset="utf-8">
+<meta name="author" content="yy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="yy">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" type="text/css" href="/resource/home/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/public.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/font/iconfont.css">
+<script type="text/javascript" src="/resource/home/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/public.js"></script>
+<style type="text/css">
+    body{
+        background-color: #fff;
+       /*  height: 1000px; */
+    }
+    .public_head{
+        width: 100%;
+        overflow: hidden;
+        height: 45px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        text-align: center;
+        font-size: 18px;
+        color: #333333;
+        line-height: 45px;
+        z-index: 1000;
+        background: #FFF;
+    }
+    .public_head i{ position: absolute; top: 0; left: 0; font-size: 18px; display: block; padding: 0 2%; font-weight: bold; }
+    .datum{
+        margin-top: 45px;
+        width: 100%;
+
+    }
+    .line{
+        width: 100%;
+        height: 10px;
+        background-color: #f5f5f5;
+    }
+    .datum ul li{
+        width: 97%;
+        height: 70px;
+        line-height: 70px;
+        border-bottom: 1px solid #e6e6e6;
+        padding-left: 3%;
+    }
+    .clearfix:after{
+        content: "";
+        display: block;
+        clear: both;
+    }
+    .clearfix{
+        zoom: 1;
+    }
+    .left{
+       float: left;
+    }
+    .right{
+       float: right;
+    }
+    .datum .account input{
+        display: inline-block;
+        border: none;
+        font-size: 16px;
+    }
+    .datum .account div{
+        display: inline-block;
+    }
+    .datum .account div img{
+        width: 28px;
+        height: 40px;
+        vertical-align: middle;
+        margin-left: 20px;
+    }
+    .datum .account .down:nth-of-type(2){
+        margin-left: 30px;
+    }
+    .upload{
+        width: 100%;
+        height: 150px;
+    }
+
+    .upload span{
+        font-size: 16px;
+        margin-top: 15px;
+        margin-left: 3%;
+        display: inline-block;
+    }
+    .revise .iconfont{
+        font-size: 50px;
+        line-height: 95px;
+        color: #FFF;
+        text-align: center;
+        margin-top: 15px;
+    }
+    .down label:nth-of-type(2){
+        margin-left: 20px;
+    }
+    .revise i{
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        margin-left: 20px;
+        background-color: #b0b0b0;
+        float: left;
+        border-radius: 4px;
+    }
+    input[type="file"]{
+        display: none;
+    }
+    .lab .shang{
+        width: 90px;
+        height: 30px;
+        line-height: 30px;
+        background-color: #2d3238;
+        color: #fff;
+        display: inline-block;
+        text-align: center;
+        margin-top: 30px;
+        margin-left: 18px;
+   }
+    a{
+        display:block;
+        width: 80%;
+        height: 50px;
+        background-color: #2d3238;
+        color: #fff;
+        line-height: 50px;
+        text-align: center;
+        font-size: 17px;
+        margin: 10%;
+        border-radius: 5px;
+    }
+    .down label{
+        display: block;
+        float:left;
+    }
+    .down i.icon-selected-copy{
+        color: #e99b01;
+    }
+    .down i.icon-weixuanzhong{
+        color: #666;
+    }
+
+    .bcbtn{
+        display: block;
+        width: 80%;
+        height: 50px;
+        background-color: #2d3238;
+        color: #fff;
+        line-height: 50px;
+        text-align: center;
+        font-size: 17px;
+        margin: 10%;
+        border-radius: 5px;
+    }
+    .head66_img{
+        width: 100px;
+        height: 100px;
+        display: inline-block;
+        float: left;
+        margin-top: 15px;
+        margin-left: 20px;
+        border-radius: 4px;
+    }
+</style>
+</head>
+<body>
+<div class="public_head">
+    <i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>
+    编辑资料
+</div>
+   <form action="{:url('users/editdata')}" enctype="multipart/form-data" method="post"> 
+<div class="datum">
+    <div class="line"></div>
+    <div class="account">
+     
+        <ul>
+            <li>
+                <span>账 &nbsp;&nbsp;&nbsp; 号 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input type="text" name="phone" readonly value="{$user['mobile']}">
+            </li>
+            <li>
+                <span>用 户 名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span></span>
+                <input type="text" name="nickname" value="{$user['nickname']}" placeholder="给自己起一个喜欢的名字" />
+            </li>
+            <li>
+                <span class="left">性 &nbsp;&nbsp;&nbsp; 别 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+                <div class="down">
+                    
+
+                     <!--    <input type="hidden" name="sex" id="ccid" value="2"> -->
+                    {if condition="($user['sex'] == 2)  "}
+                    <input type="hidden" name="sex" id="ccid" value="2">
+                        <label data-sex="2">
+                          <i class="iconfont icon-selected-copy"></i>
+                         <img src="/resource/home/images/woman.png" alt="">
+                        {else /}
+                        <label data-sex="2">
+                        <i class="iconfont icon-weixuanzhong"></i> 
+                        <img src="/resource/home/images/woman.png" alt="">
+                        {/if}                       
+                    </label>
+                   
+                        {if condition="($user['sex'] == 1)  "}
+                        <input type="hidden" name="sex" id="ccid" value="1">
+                        <label data-sex="1">
+                        <i class="iconfont icon-selected-copy"></i>                        
+                        <img src="/resource/home/images/man.png" alt="">
+                        {else /} 
+                         <label data-sex="1">
+                         <i class="iconfont icon-weixuanzhong"></i>
+                         <img src="/resource/home/images/man.png" alt="">
+                        {/if}
+                        
+                    </label>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<div class="upload">
+    <span class="left">修改头像</span>
+    <div class="revise">
+        <label class="lab">
+            <input type="file" name="user_pic" multiple id="inputs" value="">
+            {if condition="($user['user_pic'] == '')  "}
+            <img class="head66_img" src="/resource/home/images/head66_img.png">
+                        {else /} 
+
+            <div id='dd'>
+                <img class="head66_img" src="{$user['user_pic']}">
+            </div>
+            {/if}           
+            <i class="shang">上传头像</i>
+        </label>
+
+    </div>
+</div>
+<button class="bcbtn">保存</button>
+
+</form>
+<script>
+    
+    $(".down label").click(function(){
+        $(".down label").children('i').removeClass('icon-selected-copy').addClass('icon-weixuanzhong');
+        $(this).children('i').removeClass('icon-weixuanzhong').addClass('icon-selected-copy');
+        sex = $(this).attr("data-sex");
+        document.getElementById("ccid").value=sex;
+
+    })
+</script>
+<script>
+    $(document).ready(function () {
+    $("#inputs").change(function () {
+    var fil = this.files;
+    for (var i = 0; i < fil.length; i++) {
+    reads(fil[i]);
+    }
+    });
+    });
+    function reads(fil){
+    var reader = new FileReader();
+    reader.readAsDataURL(fil);
+    reader.onload = function()
+    {
+        $("#dd").html("");
+        document.getElementById("dd").innerHTML += "<img  class='head66_img' src='"+reader.result+"'>";
+    };
+    }
+</script>
+
+</body>
+</html>
