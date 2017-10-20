@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\index\index.html";i:1508331166;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\index\index.html";i:1508493646;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,21 +31,13 @@
 	<div class="header_banner">
 		<div class="swiper-container">
 	        <div class="swiper-wrapper">
+				<?php foreach($content["banner"] as $v): ?>
 	            <div class="swiper-slide">
-	            	<a class="a_jump" href="javascript:void(0)">
-	            		<img class="content-banner" src="__IMG__/banner.jpg" />
+	            	<a class="a_jump" href="<?php echo $v['links']; ?>">
+	            		<img class="content-banner" src="<?php echo $v['img']; ?>" />
 	        		</a>
 	        	</div>
-	            <div class="swiper-slide">
-	            	<a class="a_jump" href="javascript:void(0)">
-	            		<img class="content-banner" src="__IMG__/banner1.jpg" />
-	        		</a>
-	        	</div>
-	        	<div class="swiper-slide">
-	            	<a class="a_jump" href="javascript:void(0)">
-	            		<img class="content-banner" src="__IMG__/banner2.jpg" />
-	        		</a>
-	        	</div>
+				<?php endforeach; ?>
 	        </div>
 	        <!-- 如果需要分页器 -->
 	        <div class="swiper-pagination"></div>
@@ -56,19 +48,19 @@
 	<div class="header_nav">
 		<ul>
 			<li class="nav_li">
-				<a href="aboutUs.html">
+				<a href="<?php echo url('content/index'); ?>">
 					<img class="img" src="__IMG__/about.png" alt="平台介绍">
 					<p>平台介绍</p>
 				</a>
 			</li>
 			<li class="nav_li">
-				<a href="beginnerGuide.html">
+				<a href="<?php echo url('content/beginnerGuide'); ?>">
 					<img class="img" src="__IMG__/guide.png" alt="新手指南">
 					<p>新手指南</p>
 				</a>
 			</li>
 			<li class="nav_li gonggao_li">
-				<a href="notice.html">
+				<a href="<?php echo url('content/notice'); ?>">
 					<img class="img" src="__IMG__/news.png" alt="最新公告">
 					<p>最新公告</p>
 
@@ -76,7 +68,7 @@
 				</a>
 			</li>
 			<li class="nav_li">
-				<a href="kefu.html">
+				<a href="<?php echo url('content/kefu'); ?>">
 					<img class="img" src="__IMG__/kefu.png" alt="客服中心">
 					<p>客服中心</p>
 				</a>

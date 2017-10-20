@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508482131;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508491848;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -35,8 +35,8 @@
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                     <span class="block m-t-xs" style="font-size:20px;">
-                                        <?php if(\think\Session::get('pic') != ''): ?>
-                                        <img src="__PUBLIC__<?php echo \think\Session::get('pic'); ?>" style="border-radius:40px" width="80px" height="80px">
+                                        <?php if($_SESSION['admin']['pic'] != ''): ?>
+                                        <img src="__PUBLIC__<?php echo $_SESSION['admin']['pic']; ?>" style="border-radius:40px" width="80px" height="80px">
                                         <?php else: ?>
                                         <img src="__PUBLIC__/admin/headPic/a5.jpg" style="border-radius:40px" width="80px" height="80px">
                                         <?php endif; ?>
@@ -71,6 +71,9 @@
                         </li>
                         <li>
                             <a class="J_menuItem" href="<?php echo url('node/index'); ?>">节点管理</a>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="<?php echo url('administrator/index'); ?>">管理员管理</a>
                         </li>
                     </ul>
                 </li>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:89:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\banners\edit.html";i:1508468312;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:89:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\banners\edit.html";i:1508491367;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
 <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/animate.css" rel="stylesheet">
@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">排序:</label>
                                 <div class="col-sm-6">
-                                    <input type="number" placeholder="数字越大越靠前" class="form-control" name="sort" value="<?php echo $banner['sort']; ?>">
+                                    <input type="number" placeholder="数字越大越靠前(0~9)" class="form-control" name="sort" value="<?php echo $banner['sort']; ?>">
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>

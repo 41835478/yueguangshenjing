@@ -55,6 +55,11 @@ class Banners extends Base
             $this->redirect($Url);
         }
 
+        if($input["sort"] < 0 || $input["sort"] > 9){
+            $Url=popBox('error','排序数字不合法!');
+            $this->redirect($Url);
+        }
+
         $input["sort"]= $input["sort"] == "" ? 0 : $input["sort"];
 
         $banners = new BannersModel();
@@ -111,6 +116,11 @@ class Banners extends Base
 
         if(!$input["img"]){
             $Url=popBox('error','图片不能为空!');
+            $this->redirect($Url);
+        }
+
+        if($input["sort"] < 0 || $input["sort"] > 9){
+            $Url=popBox('error','排序数字不合法!');
             $this->redirect($Url);
         }
 
