@@ -85,7 +85,7 @@ class Users extends Base
     	$user=$this->user->where('id',$uid)->find();
     	#查询支付宝
     	$alipay=Alipay::where('user_id',$uid)->find();
-    	$alipay['alipay_account']=
+    	$alipay['alipay_account']=substr_replace($alipay['alipay_account'],'****',3,4);
     	
     	$this->assign('alipay',$alipay);
     	$this->assign('user',$user);
