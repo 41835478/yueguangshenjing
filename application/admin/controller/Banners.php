@@ -16,7 +16,11 @@ class Banners extends Base
     public function index()
     {
         //
-        dump("轮播图列表");
+        $banner = BannersModel::all(function($query){
+            $query->order("sort","desc");
+        });
+        return $this->fetch("banners/index",["banner"=>$banner]);
+
     }
 
     /**
@@ -36,15 +40,15 @@ class Banners extends Base
      * @param  \think\Request  $request
      * @return \think\Response
      */
-    public function save(Request $request)
+    public function save()
     {
-        //
-        $input = input("param.");
+
+        $input = Request::instance()->only('links,sort,img');
+
         if(!isUrl($input["links"]) && $input["links"] != "#"){
             $Url=popBox('error','链接不合法!');
             $this->redirect($Url);
         }
-
 
         if(!$input["img"]){
             $Url=popBox('error','图片不能为空!');
@@ -53,15 +57,13 @@ class Banners extends Base
 
         $input["sort"]= $input["sort"] == "" ? 0 : $input["sort"];
 
-        // dump($input);
         $banners = new BannersModel();
         $banners->data($input);
         $ob = $banners->save();
-        if($ob){
-            $Url=popBox('success','添加成功!');
+        if($ob) {
+            $Url = popBox('success', '添加成功!');
             $this->redirect($Url);
         }
-
 
     }
 
@@ -85,6 +87,9 @@ class Banners extends Base
     public function edit($id)
     {
         //
+        $banner = BannersModel::get($id);
+
+        return $this->fetch("banners/edit",["banner"=>$banner]);
     }
 
     /**
@@ -97,6 +102,24 @@ class Banners extends Base
     public function update(Request $request, $id)
     {
         //
+        $input = Request::instance()->only('links,sort,img');
+
+        if(!isUrl($input["links"]) && $input["links"] != "#"){
+            $Url=popBox('error','链接不合法!');
+            $this->redirect($Url);
+        }
+
+        if(!$input["img"]){
+            $Url=popBox('error','图片不能为空!');
+            $this->redirect($Url);
+        }
+
+        $input["sort"]= $input["sort"] == "" ? 0 : $input["sort"];
+
+        $banner = new BannersModel();
+        $banner->save($input,["id"=>$id]);
+        $Url = popBox('success', '修改成功!');
+        $this->redirect($Url);
     }
 
     /**
@@ -107,6 +130,10 @@ class Banners extends Base
      */
     public function delete($id)
     {
-        //
+        $banner = BannersModel::get($id);
+        $banner->delete();
+        $Url = popBox('success', '删除成功!');
+        $this->redirect($Url);
+
     }
 }

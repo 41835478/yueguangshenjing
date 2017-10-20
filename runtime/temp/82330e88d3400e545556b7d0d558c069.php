@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508376880;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508331166;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508376880;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508463673;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -281,6 +281,8 @@
 <script src="__PUBLIC__/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="__PUBLIC__/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="__PUBLIC__/admin/js/plugins/layer/layer.min.js"></script>
+<script src="__PUBLIC__/admin/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="__PUBLIC__/admin/layui-2.0/layui.js"></script>
 
 <!-- 自定义js -->
 <script src="__PUBLIC__/admin/js/hAdmin.js?v=4.1.0"></script>
