@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 管理员管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    {include file="public/header"}
+    <link href="__PUBLIC__/admin/css/plugins/jsTree/style.min.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+{include file="public/popBox"}
+<div class="col-sm-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>管理员管理</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link" href="javascript:;">
+                    <button type="button" onclick="modalRole(0)" class="btn btn-outline btn-success" data-toggle="modal" data-target="#myModal5">
+                        添加管理员
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <table class="footable table table-stripped" data-page-size="10" data-filter=#filter>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>管理员名称</th>
+                    <th>管理员头像</th>
+                    <th>管理员手机号</th>
+                    <th>管理员角色</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="gradeX">
+                    {foreach name="data" item="v" }
+                    <td class="did" >{$v->id}</td>
+                    <td>{$v->name}</td>
+                    <td>
+                        <img id="img" style="border: 1px dashed #c0c0c0" src="__PUBLIC__{$v->pic|default='/admin/headPic/a5.jpg'}" width="50px" height="50px">
+                    </td>
+                    <td>{$v->mobile}</td>
+                    <td>{$v->role_name}</td>
+                    <td>
+                        <a onclick="modalRole('{$v->id}')">修改</a> |
+                        <a onclick="delRole('{$v->id}')">删除</a>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">添加管理员</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="form-horizontal" action="{:url('administrator/addUser')}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">管理员名称</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="name" placeholder="">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">管理员手机号</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="mobile">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">管理员密码</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="password" name="pwd">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">确认密码</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="password" name="re_pwd">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">角色</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="role" type="text" id="mallType">
+                                <option value="">--请选择角色--</option>
+                                {if condition="count($role)>0"}
+                                    {foreach $role as $v}
+                                        <option value="{$v->id}">{$v->role_name}</option>
+                                    {/foreach}
+                                {/if}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <input type="hidden" id="myId" name="id" value="">
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">添加</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-white" type="reset">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/editor/kindeditor.js"></script>
+
+<script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
+<!--<script src="__PUBLIC__/admin/js/jquery.min.js"></script>-->
+<script>
+    $('.close').click(function(){
+        $(this).parent().parent().remove();
+    })
+</script>
+<script>
+    function modalRole(id)
+    {
+        $('#myId').val(id);
+        if(id){
+
+        }
+    }
+</script>
+</body>
+</html>

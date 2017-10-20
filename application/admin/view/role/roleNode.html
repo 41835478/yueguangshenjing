@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 分配权限</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    {include file="public/header"}
+    <style type="text/css">
+        .fenpeiUl{
+            list-style: none;
+        }
+        .fenpeiUl li{
+            border-bottom: 1px solid #e6e6e6;
+        }
+        .fenpeiUl li .top{
+            overflow: hidden;
+        }
+        .fenpeiUl li .top input{
+            display: block;
+            float: left;
+            outline: none;
+        }
+        .fenpeiUl li .top p{
+            display: block;
+            float: left;
+            padding-left: 10px;
+        }
+        .fenpeiUl li .conBox{
+            overflow: hidden;
+        }
+        .fenpeiUl li .conBox .con{
+            overflow: hidden;
+            margin-left: 20px;
+            float: left;
+        }
+        .fenpeiUl li .conBox .con input{
+            display: block;
+            float: left;
+            outline: none;
+        }
+        .fenpeiUl li .conBox .con p{
+            display: block;
+            float: left;
+            padding-left: 10px;
+        }
+        .clear{
+            clear: both;
+        }
+        .sanBox{
+            display: block;
+            overflow: hidden;
+            margin-left:20px;
+        }
+        .sanBox input{
+            display: block;
+            float: left;
+            outline: none;
+        }
+        .sanBox p{
+            display: block;
+            float: left;
+            padding-left: 10px;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+{include file="public/popBox"}
+<div class="col-sm-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>分配权限</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link" href="{:url('role/index')}">
+                    <button type="button" class="btn btn-outline btn-success">
+                        添加角色
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <form action="{:url('role/accessRule')}" class="form-horizontal" method="post">
+            <ul class="fenpeiUl">
+                {if condition="count($data)>0"}
+                {foreach $data as $v}
+                <li>
+                    {if condition="$v->pid==0"}
+                    <div class="top">
+                        <input type="checkbox" value="{$v->id}">
+                        <p>{$v->node_name}</p>
+                    </div>
+                    <div class="conBox">
+                        {foreach $data as $val}
+                        {if condition="$val->pid==$v->id"}
+                        <div class="con">
+                            <input type="checkbox" name="checkbox[]" value="{$val->id}">
+                            <p>{$val->node_name}</p>
+                            <div class="clear"></div>
+                                {foreach $data as $value}
+                                    {if condition="$val->id==$value->pid"}
+                                    <div class="sanBox">
+                                        <input type="checkbox" name="checkbox[]" value="{$value->id}">
+                                        <p>{$value->node_name}</p>
+                                    </div>
+                                    {/if}
+                                {/foreach}
+
+                        </div>
+                        {/if}
+                        {/foreach}
+                    </div>
+                    {/if}
+                </li>
+                {/foreach}
+                {/if}
+            </ul>
+                <input type="hidden" name="id" value="{$id}">
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <button class="btn btn-primary" type="submit">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-white" type="reset">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
+<!--<script src="__PUBLIC__/admin/js/jquery.min.js"></script>-->
+<script>
+    $('.close').click(function(){
+        $(this).parent().parent().remove();
+    })
+    $(".fenpeiUl").children("li").children(".top").children("input").on("click",function  () {
+        if($(this).is(":checked")){
+            $(this).parent().parent().children(".conBox").children(".con").children("input").prop("checked","true");
+            $(this).parent().parent().find(".sanBox").children("input").prop("checked","true");
+        }else{
+            $(this).parent().parent().children(".conBox").children(".con").children("input").removeAttr("checked","true");
+            $(this).parent().parent().find(".sanBox").children("input").removeAttr("checked","true");
+        }
+    });
+    $(".conBox").children(".con").children("input").on("click",function  () {
+        var len = $(this).parent().parent().children(".con").length;
+        for (var i = 0 ; i < len ; i++) {
+            if($(this).parent().parent().children(".con").eq(i).children("input").is(":checked")){
+                $(this).parent().parent().prev(".top").children("input").prop("checked","true");
+            }
+        };
+    })
+</script>
+</body>
+</html>
