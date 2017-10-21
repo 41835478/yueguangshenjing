@@ -10,7 +10,8 @@ class Goods extends Model
     use SoftDelete;
     protected $autoWriteTimestamp=true;
     protected $createTime='created_at';
+    protected $deleteTime = 'deleted_at';
     protected $updateTime = false;
     protected $update = ['updated_at'];
-    protected $deleteTime = 'deleted_at';
+    protected $table="ygsj_goods";
 }
