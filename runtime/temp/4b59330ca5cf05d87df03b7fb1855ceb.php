@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:93:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\statistics\index.html";i:1508555768;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508555543;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:93:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\statistics\index.html";i:1508557270;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508555543;}*/ ?>
 <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/animate.css" rel="stylesheet">
@@ -28,7 +28,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5 class="m-b-md">Q1 销量</h5>
+                    <h5 class="m-b-md">累计会员总量</h5>
                     <h2 class="text-navy">
                         <i class="fa fa-play fa-rotate-270"></i> 上升
                     </h2>
@@ -39,7 +39,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content ">
-                    <h5 class="m-b-md">Q2 销量</h5>
+                    <h5 class="m-b-md">今日新增会员量</h5>
                     <h2 class="text-navy">
                         <i class="fa fa-play fa-rotate-270"></i> 上升
                     </h2>
@@ -50,7 +50,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5 class="m-b-md">Q3 销量</h5>
+                    <h5 class="m-b-md">历史累计收入总额</h5>
                     <h2 class="text-danger">
                         <i class="fa fa-play fa-rotate-90"></i> 下降
                     </h2>
@@ -61,7 +61,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5 class="m-b-md">Q4 销量</h5>
+                    <h5 class="m-b-md">历史累计发货总量</h5>
                     <h2 class="text-danger">
                         <i class="fa fa-play fa-rotate-90"></i> 下降
                     </h2>
@@ -74,7 +74,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5>本日访问量</h5>
+                    <h5>历史累计订单总量</h5>
                     <h2>198 009</h2>
                     <div id="sparkline1"></div>
                 </div>
@@ -83,7 +83,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5>本周访问量</h5>
+                    <h5>会员账户余额总计</h5>
                     <h2>65 000</h2>
                     <div id="sparkline2"></div>
                 </div>
@@ -92,7 +92,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5>本月访问量</h5>
+                    <h5>今日新增会员量统计</h5>
                     <h2>680 900</h2>
                     <div id="sparkline3"></div>
                 </div>
@@ -101,7 +101,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5>平均停留时间</h5>
+                    <h5>今日订单统计</h5>
                     <h2>00:06:40</h2>
                     <div id="sparkline4"></div>
                 </div>
@@ -112,7 +112,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5>百分比</h5>
+                    <h5>已发放提现总额</h5>
                     <h2>42/20</h2>
                     <div class="text-center">
                         <div id="sparkline5"></div>
@@ -123,7 +123,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5>百分比</h5>
+                    <h5>提现申请总额</h5>
                     <h2>100/54</h2>
                     <div class="text-center">
                         <div id="sparkline6"></div>
@@ -134,7 +134,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5>百分比</h5>
+                    <h5>粉丝数量统计</h5>
                     <h2>685/211</h2>
                     <div class="text-center">
                         <div id="sparkline7"></div>
@@ -145,11 +145,67 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-content">
-                    <h5>百分比</h5>
+                    <h5>会员数量统计</h5>
                     <h2>240/32</h2>
                     <div class="text-center">
                         <div id="sparkline8"></div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h5>县级市代理数量统计</h5>
+                    <h2>65%</h2>
+                    <div class="progress progress-mini">
+                        <div style="width: 68%;" class="progress-bar"></div>
+                    </div>
+
+                    <div class="m-t-sm small">4:32更新</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h5>地级市代理数量统计</h5>
+                    <h2>10%</h2>
+                    <div class="progress progress-mini">
+                        <div style="width: 78%;" class="progress-bar"></div>
+                    </div>
+                    <div class="m-t-sm small">4:32更新</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h5>省会城市代理数量统计</h5>
+                    <h2>14%</h2>
+                    <div class="progress progress-mini">
+                        <div style="width: 38%;" class="progress-bar progress-bar-danger"></div>
+                    </div>
+
+                    <div class="m-t-sm small">4:32更新</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h5>一线城市代理数量统计</h5>
+                    <h2>20%</h2>
+                    <div class="progress progress-mini">
+                        <div style="width: 28%;" class="progress-bar progress-bar-danger"></div>
+                    </div>
+
+                    <div class="m-t-sm small">4:32更新</div>
                 </div>
             </div>
         </div>
