@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>收入明细</title>
+<meta charset="utf-8">
+<meta name="author" content="yy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="yy">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" type="text/css" href="/resource/home/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/public.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/ly.css">
+<script type="text/javascript" src="/resource/home/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/public.js"></script>
+</head>
+<body>
+<div class="public_head">
+	<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>
+	收入明细
+</div>
+<div class="shopIncomeBreakdown_c">
+
+
+
+	{foreach $incomedetails as $v}
+	<div class="sib_1">
+		<img src="/resource/home/images/ly_12.png">
+		<div>
+			<span class="sib_name">{$v['record_info']}</span><span class="sib_time">{$v['created_at']|date="Y-m-d",###}</span>
+		</div>
+		<span class="sib_price">￥{$v['money']}</span>
+	</div>
+	{/foreach}
+	<!-- <div class="sib_1">
+		<img src="/resource/home/images/ly_12.png">
+		<div>
+			<span class="sib_name">分销奖</span><span class="sib_time">2017-09-16</span>
+		</div>
+		<span class="sib_price">+￥20.00</span>
+	</div>
+	<div class="sib_1">
+		<img src="/resource/home/images/ly_13.png">
+		<div>
+			<span class="sib_name">招商升级奖</span><span class="sib_time">2017-09-16</span>
+		</div>
+		<span class="sib_price">+￥20.00</span>
+	</div>
+	<div class="sib_1">
+		<img src="/resource/home/images/ly_14.png">
+		<div>
+			<span class="sib_name">招商销售奖</span><span class="sib_time">2017-09-16</span>
+		</div>
+		<span class="sib_price">+￥20.00</span>
+	</div>
+	<div class="sib_1">
+		<img src="/resource/home/images/ly_15.png">
+		<div>
+			<span class="sib_name">安装红包</span><span class="sib_time">2017-09-16</span>
+		</div>
+		<span class="sib_price">+￥20.00</span>
+	</div>
+	<div class="sib_1">
+		<img src="/resource/home/images/ly_62.png">
+		<div>
+			<span class="sib_name">代理补助奖</span><span class="sib_time">2017-09-16</span>
+		</div>
+		<span class="sib_price">+￥20.00</span>
+	</div>
+	<div class="sib_1">
+		<img src="/resource/home/images/ly_63.png">
+		<div>
+			<span class="sib_name">代理发货奖</span><span class="sib_time">2017-09-16</span>
+		</div>
+		<span class="sib_price">+￥20.00</span>
+	</div> -->
+</div>
+</body>
+</html>

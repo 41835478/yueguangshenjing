@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>提现记录</title>
+<meta charset="utf-8">
+<meta name="author" content="yy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="yy">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" type="text/css" href="/resource/home/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/public.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/ly.css">
+<script type="text/javascript" src="/resource/home/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/public.js"></script>
+</head>
+<body>
+<div class="public_head">
+	<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='myAccount.html'"></i>
+	提现记录
+</div>
+<div class="shopIncomeBreakdown_c">
+
+
+	{foreach $withdrawaldetails as $v}
+	<div class="wR">
+		<img src="/resource/home/images/ly_45.png">
+		<div>
+			<span class="wR_name">提现</span><span class="wR_time">{$v['created_at']|date="Y-m-d",###}</span>
+		</div>
+		<div><span class="wR_price">￥{$v['money']}</span><span class="wR_ffbh">
+			{if condition="$v['status'] eq 1"/} 待审核
+				{elseif condition="$v['status'] eq 2"/}已同意
+				{elseif condition="$v['status'] eq 3"/}已驳回
+			{/if}</span></div>
+	</div>
+	{/foreach}
+
+	
+</div>
+</body>
+</html>
