@@ -37,30 +37,16 @@
 <div class="content">
 	<div class="Notice_body">
 		<ul>
+			{foreach $notice as $v}
 			<li class="li">
-				<a href="{:url('content/noticeDetails')}">
-					<span>系统更新</span>
+				<a href="{:url('content/noticeDetails')}?id={$v.id}">
+					<span>{$v.title}</span>
 					<i class="iconfont icon-arrow-right"></i>
 				</a>
-				<p class="content">系统将于今晚十二点进行维护更新，预计更新时间7个小时系统将于今晚十二点进行维护更新，预计更新时间7个小时</p>
-				<p class="time">2017-06-21</p>
+				<p class="content">{$v.content}</p>
+				<p class="time">{$v.created_at}</p>
 			</li>
-			<li class="li">
-				<a href="{:url('content/noticeDetails')}">
-					<span>智能后视镜上新了！</span>
-					<i class="iconfont icon-arrow-right"></i>
-				</a>
-				<p class="content">越光神镜智能后视镜将于今日12点整开售，新款发布专题.越光神镜智能后视镜将于今日12点整开售，新款发布专题.</p>
-				<p class="time">2017-06-21</p>
-			</li>
-			<li class="li">
-				<a href="{:url('content/noticeDetails')}">
-					<span>欢迎注册</span>
-					<i class="iconfont icon-arrow-right"></i>
-				</a>
-				<p class="content">欢迎来到本平台，越光神镜，为您的安全驾驶保驾护航欢迎来到本平台，越光神镜，为您的安全驾驶保驾护航</p>
-				<p class="time">2017-06-21</p>
-			</li>
+			{/foreach}
 		</ul>
 
 		<p class="btm_p">已经到底了... ...</p>

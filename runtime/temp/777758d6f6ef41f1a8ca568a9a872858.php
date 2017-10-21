@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\kefu.html";i:1508493660;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\kefu.html";i:1508549813;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="__CSS__/main.css">
 <style type="text/css">
 	body{background-color:#f5f5f5;}
+	img{width: 100%;}
 </style>
 </head>
 <body>
@@ -39,18 +40,18 @@
 		</div>
 		<div class="codeBox">
 			<div class="codeImg">
-				<img src="__IMG__/code.png" alt=""/>
+				<img src="<?php echo $service['content']; ?>" alt=""/>
 			</div>
 		</div>
 	</div>
 	<div class="kefuBox">
 		<div class="kefuList">
-			<h2><span>人工客服</span><span class="tel">400-000-0000</span></h2>
+			<h2><span>人工客服</span><span class="tel"><?php echo $service['telephone']; ?></span></h2>
 			
 		</div>
 		<div class="codeBox" style="padding:20px 0">
 			<img src="__IMG__/kefu_img.png" alt=""/>
-			<p>人工客服在线时间为 9：00-22：00</p>
+			<p>人工客服在线时间为 <?php echo $service['worktime']; ?></p>
 		</div>
 	</div>
 </div>

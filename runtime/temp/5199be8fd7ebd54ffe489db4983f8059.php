@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:97:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\beginnerGuide.html";i:1508493791;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:97:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\beginnerGuide.html";i:1508547109;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,18 +35,14 @@
 <div class="content">
 	<div class="BGuide_body">
 		<ul>
+			<?php foreach($content as $v): ?>
 			<li class="li">
-				<a href="<?php echo url('content/registerRules'); ?>">
-					<span>注册规则</span>
+				<a href="<?php echo url('content/registerRules'); ?>?id=<?php echo $v['id']; ?>">
+					<span><?php echo $v['title']; ?></span>
 					<i class="iconfont icon-arrow-right"></i>
 				</a>
 			</li>
-			<li class="li">
-				<a href="cashRules.html">
-					<span>提现规则</span>
-					<i class="iconfont icon-arrow-right"></i>
-				</a>
-			</li>
+			<?php endforeach; ?>
 		</ul>
 	</div>
 </div>

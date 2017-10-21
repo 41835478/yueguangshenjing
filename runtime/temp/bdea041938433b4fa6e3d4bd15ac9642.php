@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:97:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\registerRules.html";i:1508493722;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:97:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\registerRules.html";i:1508547282;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,17 +30,12 @@
 <body>
 <div class="public_head">
 	<a class="iconfont icon-mjiantou-copy" href="javascript:history.go(-1);"></a>
-	<h3>注册规则</h3>
+	<h3><?php echo $conDetail['title']; ?></h3>
 </div>
 <div class="content">
 	<div class="fenge"></div>
 	<div class="noticeDetail_body">
-		<div class="notice_tit">注册规则</div>
-
-		<div class="ND_content">
-			<p>A推广B，B扫码关注微信公众号，系统自动锁定上下级关系，B在未注册情况下，可以浏览查看，但是购买时，系统提示需先注册绑定个人手机号码。（注册页面，获取106短信验证码验证手机号，此手机号用来在APP端和WAP手机网页端登录时使用，注册时先勾选我已阅读并同意该用户协议），关注微信公众号即可浏览公司介绍，项目简介，产品详情，新手必看等内容页面（除个人中心，支付，二维码页面，其余页面均可浏览）。</p>
-			<p>会员=ID=微信号=手机号</p>
-		</div>
+		<?php echo $conDetail['content']; ?>
 	</div>
 </div>
 
