@@ -12,7 +12,7 @@
     <meta name="description" content="">
 
     <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html" />
+    <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
 
     {include file="public/header"}
@@ -32,9 +32,11 @@
                                 <span class="clear">
                                     <span class="block m-t-xs" style="font-size:20px;">
                                         {if condition="$_SESSION['admin']['pic'] neq ''"}
-                                        <img src="__PUBLIC__{$_SESSION['admin']['pic']}" style="border-radius:40px" width="80px" height="80px">
+                                        <img src="__PUBLIC__{$_SESSION['admin']['pic']}" style="border-radius:40px"
+                                             width="80px" height="80px">
                                         {else/}
-                                        <img src="__PUBLIC__/admin/headPic/a5.jpg" style="border-radius:40px" width="80px" height="80px">
+                                        <img src="__PUBLIC__/admin/headPic/a5.jpg" style="border-radius:40px"
+                                             width="80px" height="80px">
                                         {/if}
                                     </span>
                                 </span>
@@ -97,13 +99,12 @@
                     <span class="ng-scope">分类</span>
                 </li>
                 <li>
-                    <a class="J_menuItem" href="{:url('statistics/index')}"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">数据统计</span></a>
-                </li>
-                <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                    <span class="ng-scope">分类</span>
+                    <a class="J_menuItem" href="{:url('statistics/index')}"><i class="fa fa fa-bar-chart-o"></i> <span
+                            class="nav-label">数据统计</span></a>
                 </li>
                 <li>
-                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">首页轮播图</span><span class="fa arrow"></span></a>
+                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">首页轮播图</span><span
+                            class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="{:url('banners/index')}">轮播图列表</a>
                         </li>
@@ -111,11 +112,9 @@
                         </li>
                     </ul>
                 </li>
-                <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                    <span class="ng-scope">分类</span>
-                </li>
                 <li>
-                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">内容管理</span><span class="fa arrow"></span></a>
+                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">内容管理</span><span
+                            class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="{:url('contents/index')}?type=1">平台介绍</a>
                         </li>
@@ -131,7 +130,8 @@
                     <span class="ng-scope">分类</span>
                 </li>
                 <li>
-                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">商品管理</span><span class="fa arrow"></span></a>
+                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">商品管理</span><span
+                            class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="{:url('goods/index')}">添加商品</a>
                         </li>
@@ -144,124 +144,52 @@
                     <span class="ng-scope">分类</span>
                 </li>
                 <li>
-                    <a class="J_menuItem" href="{:url('configs/index')}"><i class="fa fa-user"></i> <span class="nav-label">参数设置</span></a>
+                    <a class="J_menuItem" href="{:url('configs/index')}"><i class="fa fa-user"></i> <span
+                            class="nav-label">参数设置</span></a>
                 </li>
-                <!--<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">-->
-                <!--<span class="ng-scope">分类</span>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="#"><i class="fa fa-flask"></i> <span class="nav-label">UI元素</span><span class="fa arrow"></span></a>-->
-                <!--<ul class="nav nav-second-level">-->
-                <!--<li><a class="J_menuItem" href="typography.html">排版</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="#">字体图标 <span class="fa arrow"></span></a>-->
-                <!--<ul class="nav nav-third-level">-->
-                <!--<li>-->
-                <!--<a class="J_menuItem" href="fontawesome.html">Font Awesome</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a class="J_menuItem" href="glyphicons.html">Glyphicon</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a class="J_menuItem" href="iconfont.html">阿里巴巴矢量图标库</a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="#">拖动排序 <span class="fa arrow"></span></a>-->
-                <!--<ul class="nav nav-third-level">-->
-                <!--<li><a class="J_menuItem" href="draggable_panels.html">拖动面板</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="agile_board.html">任务清单</a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="buttons.html">按钮</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="tabs_panels.html">选项卡 &amp; 面板</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="notifications.html">通知 &amp; 提示</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="badges_labels.html">徽章，标签，进度条</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a class="J_menuItem" href="grid_options.html">栅格</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="plyr.html">视频、音频</a>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="#">弹框插件 <span class="fa arrow"></span></a>-->
-                <!--<ul class="nav nav-third-level">-->
-                <!--<li><a class="J_menuItem" href="layer.html">Web弹层组件layer</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="modal_window.html">模态窗口</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="sweetalert.html">SweetAlert</a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="#">树形视图 <span class="fa arrow"></span></a>-->
-                <!--<ul class="nav nav-third-level">-->
-                <!--<li><a class="J_menuItem" href="jstree.html">jsTree</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="tree_view.html">Bootstrap Tree View</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="nestable_list.html">nestable</a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="toastr_notifications.html">Toastr通知</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="diff.html">文本对比</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="spinners.html">加载动画</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="widgets.html">小部件</a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a href="#"><i class="fa fa-table"></i> <span class="nav-label">表格</span><span class="fa arrow"></span></a>-->
-                <!--<ul class="nav nav-second-level">-->
-                <!--<li><a class="J_menuItem" href="table_basic.html">基本表格</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="table_data_tables.html">DataTables</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="table_jqgrid.html">jqGrid</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="table_foo_table.html">Foo Tables</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="table_bootstrap.html">Bootstrap Table-->
-                <!--<span class="label label-danger pull-right">推荐</span></a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
+                <li>
+                    <a href="#"><i class="fa fa-table"></i> <span class="nav-label">表格</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="table_basic.html">基本表格</a>
+                        </li>
+                        <li><a class="J_menuItem" href="table_data_tables.html">DataTables</a>
+                        </li>
+                        <li><a class="J_menuItem" href="table_jqgrid.html">jqGrid</a>
+                        </li>
+                        <li><a class="J_menuItem" href="table_foo_table.html">Foo Tables</a>
+                        </li>
+                        <li><a class="J_menuItem" href="table_bootstrap.html">Bootstrap Table
+                            <span class="label label-danger pull-right">推荐</span></a>
+                        </li>
+                    </ul>
+                </li>
                 <!--<li class="line dk"></li>-->
                 <!--<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">-->
-                <!--<span class="ng-scope">分类</span>-->
+                    <!--<span class="ng-scope">分类</span>-->
                 <!--</li>-->
                 <!--<li>-->
-                <!--<a href="#"><i class="fa fa-picture-o"></i> <span class="nav-label">相册</span><span class="fa arrow"></span></a>-->
-                <!--<ul class="nav nav-second-level">-->
-                <!--<li><a class="J_menuItem" href="basic_gallery.html">基本图库</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="carousel.html">图片切换</a>-->
-                <!--</li>-->
-                <!--<li><a class="J_menuItem" href="blueimp.html">Blueimp相册</a>-->
-                <!--</li>-->
-                <!--</ul>-->
-                <!--</li>-->
-                <!--<li>-->
-                <!--<a class="J_menuItem" href="css_animation.html"><i class="fa fa-magic"></i> <span class="nav-label">CSS动画</span></a>-->
+                    <!--<a href="#"><i class="fa fa-picture-o"></i> <span class="nav-label">相册</span><span-->
+                            <!--class="fa arrow"></span></a>-->
+                    <!--<ul class="nav nav-second-level">-->
+                        <!--<li><a class="J_menuItem" href="basic_gallery.html">基本图库</a>-->
+                        <!--</li>-->
+                        <!--<li><a class="J_menuItem" href="carousel.html">图片切换</a>-->
+                        <!--</li>-->
+                        <!--<li><a class="J_menuItem" href="blueimp.html">Blueimp相册</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
                 <!--</li>-->
                 <!--<li>-->
-                <!--<a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">工具 </span><span class="fa arrow"></span></a>-->
-                <!--<ul class="nav nav-second-level">-->
-                <!--<li><a class="J_menuItem" href="form_builder.html">表单构建器</a>-->
+                    <!--<a class="J_menuItem" href="css_animation.html"><i class="fa fa-magic"></i> <span class="nav-label">CSS动画</span></a>-->
                 <!--</li>-->
-                <!--</ul>-->
+                <!--<li>-->
+                    <!--<a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">工具 </span><span-->
+                            <!--class="fa arrow"></span></a>-->
+                    <!--<ul class="nav nav-second-level">-->
+                        <!--<li><a class="J_menuItem" href="form_builder.html">表单构建器</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
                 <!--</li>-->
 
             </ul>
@@ -272,7 +200,8 @@
     <div id="page-wrapper" class="gray-bg dashbard-1">
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="javascript:;"><i class="fa fa-bars"></i> </a>
+                <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-info "
+                                              href="javascript:;"><i class="fa fa-bars"></i> </a>
 
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
@@ -286,7 +215,8 @@
             </nav>
         </div>
         <div class="row J_mainContent" id="content-main">
-            <iframe id="J_iframe" width="100%" height="100%" src="{:url('main/base')}" frameborder="0" data-id="{:url('main/base')}" seamless></iframe>
+            <iframe id="J_iframe" width="100%" height="100%" src="{:url('main/base')}" frameborder="0"
+                    data-id="{:url('main/base')}" seamless></iframe>
         </div>
     </div>
     <!--右侧部分结束-->
