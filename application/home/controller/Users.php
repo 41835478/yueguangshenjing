@@ -332,8 +332,38 @@ try{
 
 		$wtotal=$this->user->where('level','=',1)->whereIn('id',$zzid)->count();
 		$total=$this->user->where('level','<>',1)->whereIn('id',$zzid)->count();
-		$this->assign(['wone'=>$wone,'wtwo'=>$wtwo,'wthree'=>$wthree,'one'=>$one,'two'=>$two,'three'=>$three,'wtotal'=>$wtotal,'total'=>$total]);
+		$ztotal=$total+$wtotal;
+		$this->assign(['wone'=>$wone,'wtwo'=>$wtwo,'wthree'=>$wthree,'one'=>$one,'two'=>$two,'three'=>$three,'wtotal'=>$wtotal,'total'=>$total,'ztotal'=>$ztotal]);
   		return $this->fetch();
+	}
+	#团队详情
+	public function myteamdetails(){
+		$post=input('param.');
+		$num=$post['num'];
+		$level=$post['level'];
+		$zid=self::get_node($this->uid);		
+		#等级
+		if($post['level']==1){
+			$nid=$zid[0];
+		}elseif($post['level']==2){
+			$nid=$zid[1];
+		}elseif($post['level']==3){
+			$nid=$zid[2];
+		}
+		#消费未消费
+		if($post['type']==1){
+			$user=$this->user->where('level','=',1)->whereIn('id',$nid)->select();
+		}elseif($post['type']==2){
+			$user=$this->user->where('level','<>',1)->whereIn('id',$nid)->select();
+		}
+		foreach ($user as $key => $value) {
+			$user[$key]['phone']=substr_replace($value['mobile'],'****',3,4);
+		}
+		$this->assign('level',$level);
+		$this->assign('num',$num);
+		$this->assign('user',$user);
+  		return $this->fetch();
+
 	}
 
 /**************************************************************************************************************************************************************************************************/
