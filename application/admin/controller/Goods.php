@@ -147,7 +147,8 @@ class Goods extends Base
    public function delGoods()//商品删除
    {
        $id=input('post.id');
-       if(Goods::destroy($id)){
+       $goods=model('Goods')->get($id);
+       if($goods->delete()){
            return json(['status'=>true,'message'=>'删除成功']);
        }
        return json(['status'=>false,'message'=>'删除失败']);
