@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508552407;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\main\index.html";i:1508554839;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508555543;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -101,6 +101,12 @@
                     <span class="ng-scope">分类</span>
                 </li>
                 <li>
+                    <a class="J_menuItem" href="<?php echo url('statistics/index'); ?>"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">数据统计</span></a>
+                </li>
+                <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                    <span class="ng-scope">分类</span>
+                </li>
+                <li>
                     <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">首页轮播图</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<?php echo url('banners/index'); ?>">轮播图列表</a>
@@ -109,16 +115,9 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">商品管理</span><span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<?php echo url('goods/index'); ?>">添加商品</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<?php echo url('goods/goodsList'); ?>">商品列表</a>
-                        </li>
-                    </ul>
+                <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                    <span class="ng-scope">分类</span>
                 </li>
-
                 <li>
                     <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">内容管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
@@ -132,14 +131,24 @@
                         </li>
                     </ul>
                 </li>
-
+                <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                    <span class="ng-scope">分类</span>
+                </li>
                 <li>
-                    <a href="javascript:;"><i class="fa fa-user"></i> <span class="nav-label">参数设置</span><span class="fa arrow"></span></a>
+                    <a href="javascript:;"><i class="fa fa-envelope"></i> <span class="nav-label">商品管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li>
-                            <a class="J_menuItem" href="<?php echo url('configs/index'); ?>?type=1">商城配置</a>
+                        <li><a class="J_menuItem" href="<?php echo url('goods/index'); ?>">添加商品</a>
+                        </li>
+                        <li><a class="J_menuItem" href="<?php echo url('goods/goodsList'); ?>">商品列表</a>
                         </li>
                     </ul>
+                </li>
+
+                <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                    <span class="ng-scope">分类</span>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="<?php echo url('configs/index'); ?>"><i class="fa fa-user"></i> <span class="nav-label">参数设置</span></a>
                 </li>
                 <!--<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">-->
                 <!--<span class="ng-scope">分类</span>-->
@@ -294,6 +303,7 @@
 <script src="__PUBLIC__/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="__PUBLIC__/admin/js/plugins/layer/layer.min.js"></script>
 <script src="__PUBLIC__/admin/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="__PUBLIC__/admin/js/plugins/sparkline/jquery.sparkline.min.js"></script>
 <script src="__PUBLIC__/admin/layui-2.0/layui.js"></script>
 
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>

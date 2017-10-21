@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\configs\index.html";i:1508553179;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\configs\index.html";i:1508553179;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508555543;}*/ ?>
 <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/animate.css" rel="stylesheet">
@@ -66,6 +66,7 @@
 <script src="__PUBLIC__/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="__PUBLIC__/admin/js/plugins/layer/layer.min.js"></script>
 <script src="__PUBLIC__/admin/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="__PUBLIC__/admin/js/plugins/sparkline/jquery.sparkline.min.js"></script>
 <script src="__PUBLIC__/admin/layui-2.0/layui.js"></script>
 
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
