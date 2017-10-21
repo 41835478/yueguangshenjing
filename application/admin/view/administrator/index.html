@@ -179,11 +179,29 @@
     function modalRole(id)
     {
         $('#myId').val(id);
-
     }
     function editRole($this,id){
         var role_name=$($this).parent().prev().html();
         $('#user_id').val(id);
+    }
+    function delRole(id){
+        var sure=confirm('你确定要删除该管理员吗？');
+        if(sure){
+            $.ajax({
+                'url':'{:url("administrator/delRole")}',
+                'data':{'id':id},
+                'type':'post',
+                'async':true,
+                'dataType':'json',
+                success:function(res){
+                    alert(res.message);
+                    window.location.reload();
+                },
+                error:function(){
+                    alert('删除失败');
+                }
+            })
+        }
     }
 </script>
 </body>

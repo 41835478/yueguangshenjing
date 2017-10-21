@@ -51,6 +51,16 @@ class Administrator extends Base
         $this->redirect($url);
     }
 
+    public function delRole()//删除管理员
+    {
+        $id=input('post.id');
+        $res=model('Admin')->where(['id'=>$id])->delete();
+        if($res){
+            return json(['status'=>true,'message'=>'删除成功']);
+        }
+        return json(['status'=>false,'message'=>'删除失败']);
+    }
+
     public function getRoleName($id)
     {
         $role=model('Roles')->get($id);
