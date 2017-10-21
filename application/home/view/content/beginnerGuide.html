@@ -34,18 +34,14 @@
 <div class="content">
 	<div class="BGuide_body">
 		<ul>
+			{foreach $content as $v}
 			<li class="li">
-				<a href="{:url('content/registerRules')}">
-					<span>注册规则</span>
+				<a href="{:url('content/registerRules')}?id={$v.id}">
+					<span>{$v.title}</span>
 					<i class="iconfont icon-arrow-right"></i>
 				</a>
 			</li>
-			<li class="li">
-				<a href="cashRules.html">
-					<span>提现规则</span>
-					<i class="iconfont icon-arrow-right"></i>
-				</a>
-			</li>
+			{/foreach}
 		</ul>
 	</div>
 </div>

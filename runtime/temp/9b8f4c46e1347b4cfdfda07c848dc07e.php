@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:89:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\member\index.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:89:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\member\index.html";i:1508491848;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;}*/ ?>
 <!DOCTYPE html>
 <html>
 
@@ -69,7 +69,7 @@
                     <label class="col-sm-2 control-label">管理员头像</label>
                     <div class="col-sm-10">
                         <input name="pic" type="file" id="file">
-                        <img id="img" style="border: 1px dashed #c0c0c0" src="__PUBLIC__<?php echo (isset($res['pic']) && ($res['pic'] !== '')?$res['pic']:'admin/headPic/a5.jpg'); ?>" width="100px" height="100px">
+                        <img id="img" style="border: 1px dashed #c0c0c0" src="__PUBLIC__<?php echo (isset($res['pic']) && ($res['pic'] !== '')?$res['pic']:'/admin/headPic/a5.jpg'); ?>" width="100px" height="100px">
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>

@@ -1,0 +1,44 @@
+{include file="public/header"}
+{include file="public/popBox"}
+<section id="main-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>系统设置
+                        <small></small>
+                    </h5>
+                    <div class="ibox-tools">
+
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    {foreach $configs as $v}
+                    <div class="row">
+                        <form action="{:url('configs/edit')}?id={$v.id}" method="post">
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label">{$v.description}:</label>
+                                <div class="col-sm-4">
+                                    <input type="number" name="value" min="0" value="{$v.value}"
+                                           step="0.1" class="form-control"> <span class="help-block m-b-none">填写请谨慎</span>
+                                </div>
+                                <div class="col-sm-7">
+                                    <button type="submit" class="btn btn-info">确认</button>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        </form>
+                    </div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{include file="public/foot"}
+
+<!-- 自定义js -->
+<script>
+</script>
