@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\index\index.html";i:1508493646;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\index\index.html";i:1508574144;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -120,7 +120,7 @@
 	<div class="footer">
 		<ul>
 			<li class="footer_li">
-				<a href="index.html">
+				<a href="/">
 					<img src="__IMG__/ly_32.png" alt="">
 					<p class="p_on">首页</p>
 				</a>
@@ -175,9 +175,9 @@
 	    // });
 
 
-	    // $(".popBox .btn2").click(function() {
-	    // 	window.location.href = 'QRcode.html';
-	    // });
+	     $(".popBox .btn2").click(function() {
+	     	window.location.href = '<?php echo url("code/index"); ?>';
+	     });
 	});
 </script>
 </body>

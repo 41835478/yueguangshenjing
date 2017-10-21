@@ -1,8 +1,9 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\configs\index.html";i:1508553179;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508555543;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\configs\index.html";i:1508553179;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508572780;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508555543;}*/ ?>
 <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/animate.css" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/style.css?v=4.1.0" rel="stylesheet">
+<link href="__PUBLIC__/admin/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 <?php if(\think\Session::get('status') != null): ?>
 <div class="ibox-content">
     <?php if(\think\Session::get('status') == 'success'): ?>
