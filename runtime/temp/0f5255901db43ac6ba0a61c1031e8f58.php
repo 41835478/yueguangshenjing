@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\notice.html";i:1508493970;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\notice.html";i:1508548094;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,30 +38,16 @@
 <div class="content">
 	<div class="Notice_body">
 		<ul>
+			<?php foreach($notice as $v): ?>
 			<li class="li">
-				<a href="<?php echo url('content/noticeDetails'); ?>">
-					<span>系统更新</span>
+				<a href="<?php echo url('content/noticeDetails'); ?>?id=<?php echo $v['id']; ?>">
+					<span><?php echo $v['title']; ?></span>
 					<i class="iconfont icon-arrow-right"></i>
 				</a>
-				<p class="content">系统将于今晚十二点进行维护更新，预计更新时间7个小时系统将于今晚十二点进行维护更新，预计更新时间7个小时</p>
-				<p class="time">2017-06-21</p>
+				<p class="content"><?php echo $v['content']; ?></p>
+				<p class="time"><?php echo $v['created_at']; ?></p>
 			</li>
-			<li class="li">
-				<a href="<?php echo url('content/noticeDetails'); ?>">
-					<span>智能后视镜上新了！</span>
-					<i class="iconfont icon-arrow-right"></i>
-				</a>
-				<p class="content">越光神镜智能后视镜将于今日12点整开售，新款发布专题.越光神镜智能后视镜将于今日12点整开售，新款发布专题.</p>
-				<p class="time">2017-06-21</p>
-			</li>
-			<li class="li">
-				<a href="<?php echo url('content/noticeDetails'); ?>">
-					<span>欢迎注册</span>
-					<i class="iconfont icon-arrow-right"></i>
-				</a>
-				<p class="content">欢迎来到本平台，越光神镜，为您的安全驾驶保驾护航欢迎来到本平台，越光神镜，为您的安全驾驶保驾护航</p>
-				<p class="time">2017-06-21</p>
-			</li>
+			<?php endforeach; ?>
 		</ul>
 
 		<p class="btm_p">已经到底了... ...</p>

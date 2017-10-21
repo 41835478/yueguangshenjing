@@ -15,31 +15,32 @@ class Content extends controller
     public function beginnerGuide()
     {
         #新手指南
-        return $this->fetch("content/beginnerGuide");
+        $content = ContentsModel::all(["type"=>2]);
+        return $this->fetch("content/beginnerGuide",["content"=>$content]);
     }
-    public function registerRules()
+    public function registerRules($id)
     {
-        #注册规则
-        return $this->fetch("content/registerRules");
-    }
-    public function cashRules()
-    {
-        #提现规则
-        return $this->fetch("content/cashRules");
+        #新手指南详情
+        $conDetail = ContentsModel::get($id);
+        return $this->fetch("content/registerRules",["conDetail"=>$conDetail]);
     }
     public function notice()
     {
         #最新公告
-        return $this->fetch("content/notice");
+        $notice = ContentsModel::all(["type"=>3]);
+        return $this->fetch("content/notice",["notice"=>$notice]);
     }
-    public function noticeDetails()
+    public function noticeDetails($id)
     {
-        #最新公告
-        return $this->fetch("content/noticeDetails");
+        #公告详情
+        $noticeDetail = ContentsModel::get($id);
+        return $this->fetch("content/noticeDetails",["noticeDetail"=>$noticeDetail]);
     }
     public function kefu()
     {
         #客服
-        return $this->fetch("content/kefu");
+        $service = ContentsModel::get(2);#客服中心
+        $service->content = strip_tags($service->content);
+        return $this->fetch("content/kefu",["service"=>$service]);
     }
 }

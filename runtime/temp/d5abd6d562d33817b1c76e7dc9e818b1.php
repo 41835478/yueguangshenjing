@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:93:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\contents\service.html";i:1508484066;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:93:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\contents\service.html";i:1508549779;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\header.html";i:1508331166;s:90:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\popBox.html";i:1508331166;s:88:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/admin\view\public\foot.html";i:1508481485;}*/ ?>
 <link rel="shortcut icon" href="favicon.ico"> <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 <link href="__PUBLIC__/admin/css/animate.css" rel="stylesheet">
@@ -50,9 +50,17 @@
                             </div>
                         </div>
                         <div class="form-group has-warning">
-                            <label class="col-sm-2 control-label">内容描述 :</label>
-                            <div class="col-sm-10">
-                                <script id="editor" name="content" type="text/plain"><?php echo $service['content']; ?></script>
+                            <label class="col-sm-2 control-label">客服二维码 :</label>
+                            <!--<div class="col-sm-10">-->
+                                <!--<script id="editor" name="content" type="text/plain"><?php echo $service['content']; ?></script>-->
+                            <!--</div>-->
+                            <div class="col-sm-6">
+                                <img src="<?php echo $service['content']; ?>" width="109px" height="109px" alt="" id="addMain" >
+
+                                <button style="position:absolute;top:56px;left:220px;padding:0 40px;opacity:0" type="button" class="layui-btn" id="test1">12312</button>
+                                <input class="layui-upload-file" type="file" name="picname">
+                                <input type="hidden" name="content" value="<?php echo $service['content']; ?>" id="bannerImg">
+
                             </div>
                         </div>
                         <div class="form-group">
@@ -83,11 +91,49 @@
 <!-- 自定义js -->
 <script>
 
-    var ue = UE.getEditor('editor', {
-        initialFrameWidth: 800,//设置编辑器宽度
-        initialFrameHeight: 450,//设置编辑器高度
-        //scaleEnabled:true//设置不自动调整高度
-//scaleEnabled {Boolean} [默认值：false]//是否可以拉伸长高，(设置true开启时，自动长高失效)
+//    var ue = UE.getEditor('editor', {
+//        initialFrameWidth: 800,//设置编辑器宽度
+//        initialFrameHeight: 450,//设置编辑器高度
+//        //scaleEnabled:true//设置不自动调整高度
+////scaleEnabled {Boolean} [默认值：false]//是否可以拉伸长高，(设置true开启时，自动长高失效)
+//    });
+/*上传头像*/
+layui.use('upload',function(){
+    var $ = layui.jquery
+        ,upload = layui.upload;
+
+    //普通图片上传
+    var uploadInst = upload.render({
+        elem: '#test1'
+        ,url: '/upload.php'
+        ,field:'picname'
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            obj.preview(function(index, file, result){
+                $('#demo1').attr('alt', "正在上传中..."); //图片链接（base64）
+            });
+
+        }
+        ,done: function(res){
+            console.log(res);
+            //如果上传失败
+            if(res.code > 0){
+                return layer.msg('上传失败');
+            }
+            $("#addMain").attr("src",res.url);
+            //上传成功
+            $("#bannerImg").val(res.url);
+
+        }
+        ,error: function(){
+            //演示失败状态，并实现重传
+            var demoText = $('#demoText');
+            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+            demoText.find('.demo-reload').on('click', function(){
+                uploadInst.upload();
+            });
+        }
     });
+});
 
 </script>

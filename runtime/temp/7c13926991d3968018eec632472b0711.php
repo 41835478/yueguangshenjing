@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:97:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\noticeDetails.html";i:1508493917;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:97:"C:\xampp\htdocs\yyyyy\yueguangshenjing\public/../application/home\view\content\noticeDetails.html";i:1508548112;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,13 +43,13 @@
 	<div class="fenge"></div>
 	<div class="ND_body">
 		<div class="ND_tit">
-			<h3 class="tit_top">系统更新</h3>
-			<p class="time">2017-09-21</p>
+			<h3 class="tit_top"><?php echo $noticeDetail['title']; ?></h3>
+			<p class="time"><?php echo $noticeDetail['created_at']; ?></p>
 		</div>
 		
 
 		<div class="ND_contnet">
-			<p>系统将于今晚十二点进行维护更新，预计更新时间7个小时更新完毕。系统将于今晚十二点进行维护更新，预计更新时间7个小时更新完毕。系统将于今晚十二点进行维护更新，预计更新时间7个小时更新完毕。系统将于今晚十二点进行维护更新，预计更新时间7个小时更新完毕。系统将于今晚十二点进行维护更新，预计更新时间7个小时更新完毕。系统将于今晚十二点进行维护更新，预计更新时间7个小时更新完毕。</p>
+			<?php echo $noticeDetail['content']; ?>
 		</div>
 	</div>
 </div>
