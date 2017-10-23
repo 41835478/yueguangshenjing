@@ -52,15 +52,14 @@
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">商品展示图</label>
+                                <label class="col-sm-2 control-label">商品副图</label>
                                 <div class="col-sm-10">
-                                    <input type="file" name="show_pic" value="" id="showFile">
-                                    <img id="showImg" style="border: 1px dashed #c0c0c0" src="__PUBLIC__/admin/goods/index1.jpg" width="100px" height="100px">
+                                    <input id="multiple" type="file" multiple="multiple" name="small_pic[]" value="" onchange="javascript:setImagePreviews();">
+                                    <span style="color:red">请上传多张图片（800*800的以免影响前台显示）</span>
+                                    <div id="holder" style=" width:990px;"></div>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
-                            <div class="hr-line-dashed" id="typeInput"></div>
-                            <div  class="ppp"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">商品价格</label>
                                 <div class="col-sm-10">
@@ -155,23 +154,53 @@
     }
 </script>
 <script type="text/javascript">
-    $("#showFile").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-        console.log("objUrl = "+objUrl) ;
-        if (objUrl) {
-            $("#showImg").attr("src", objUrl) ;
+    //下面用于多图片上传预览功能
+    function setImagePreviews(avalue) {
+        //获取选择图片的对象
+        var docObj = document.getElementById("multiple");
+        //后期显示图片区域的对象
+        var dd = document.getElementById("holder");
+        dd.innerHTML = "";
+        //得到所有的图片文件
+        var fileList = docObj.files;
+        //循环遍历
+        for (var i = 0; i < fileList.length; i++) {
+            //动态添加html元素
+            dd.innerHTML += "<div style='float:left' > <img id='img" + i + "'  /> </div>";
+            //获取图片imgi的对象
+            var imgObjPreview = document.getElementById("img"+i);
+
+            if (docObj.files && docObj.files[i]) {
+                //火狐下，直接设img属性
+                imgObjPreview.style.display = 'block';
+                imgObjPreview.style.width = '140px';
+                imgObjPreview.style.height = '120px';
+                //imgObjPreview.src = docObj.files[0].getAsDataURL();
+                //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要以下方式
+                imgObjPreview.src = window.URL.createObjectURL(docObj.files[i]);   //获取上传图片文件的物理路径
+            }
+            else {
+                //IE下，使用滤镜
+                docObj.select();
+                var imgSrc = document.selection.createRange().text;
+                //alert(imgSrc)
+                var localImagId = document.getElementById("img" + i);
+                //必须设置初始大小
+                localImagId.style.width = "140px";
+                localImagId.style.height = "120px";
+                //图片异常的捕捉，防止用户修改后缀来伪造图片
+                try {
+                    localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                    localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+                }
+                catch (e) {
+                    alert("您上传的图片格式不正确，请重新选择!");
+                    return false;
+                }
+                imgObjPreview.style.display = 'none';
+                document.selection.empty();
+            }
         }
-    }) ;
-    //建立一個可存取到該file的url
-    function getObjectURL(file) {
-        var url = null ;
-        if (window.createObjectURL!=undefined) { // basic
-            url = window.createObjectURL(file) ;
-        } else if (window.URL!=undefined) { // mozilla(firefox)
-            url = window.URL.createObjectURL(file) ;
-        } else if (window.webkitURL!=undefined) { // webkit or chrome
-            url = window.webkitURL.createObjectURL(file) ;
-        }
-        return url ;
+        return true;
     }
 </script>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>越光神镜</title>
+    <meta charset="utf-8">
+    <meta name="author" content="yy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta name="author" content="yy">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="description" content="" />
+    <meta name="Keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="__CSS__/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css">
+    <link rel="stylesheet" type="text/css" href="__FONTS__/iconfont.css">
+    <script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.min.js"></script>
+    <script type="text/javascript" src="__JS__/public.js"></script>
+    <link rel="stylesheet" href="__CSS__/main.css">
+    <style type="text/css">
+        body{ background: #f5f5f5; }
+        .swiper-container img{
+            width: 100%;
+            /* height: 100px; */
+        }
+    </style>
+</head>
+<body>
+<div class="public_head">
+    <a class="iconfont icon-mjiantou-copy" href="javascript:history.go(-1);"></a>
+    <h3>商品详情</h3>
+</div>
+<div class="content">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {:widget('IndexGoods/goodsSmallPic',array('id'=>$goods->id))}
+        </div>
+        <!--如果需要分页器-->
+        <div class="swiper-pagination"></div>
+        <!--<img src="__PUBLIC__{$goods->main_pic}" alt="商品banner图">-->
+    </div>
+
+    <div class="goodsDetails">
+        <p class="p1">{$goods->name}</p>
+        <p class="p2">{$goods->describes}</p>
+        <div>
+            <span class="price">¥<em id="price">{$goods->goods_price}</em></span>
+            <div class="num_div">
+                <span class="down_span">-</span>
+                <input id="num" type="text" value="1">
+                <span class="add_span">+</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="goodsAttr">
+        <ul>
+            <li class="li_tit">商品参数</li>
+            <li>
+                <span class="left">品牌</span>
+                <span class="right">{$goods->goods_brand}</span>
+            </li>
+            <li>
+                <span class="left">颜色</span>
+                <span class="right">{$goods->goods_color}</span>
+            </li>
+        </ul>
+    </div>
+
+    <p class="goods_Detail_tit">
+        <i class="iconfont icon-tupian"></i>
+        <span>详情</span>
+    </p>
+    <div class="goods_Detail_div">
+        {$goods->content}
+    </div>
+
+    <div class="footer_btn">
+        <a class="btn btn2" href="javascript:;" id="goodsInfoPay">立即购买</a>
+    </div>
+</div>
+
+
+<script>
+    'use strict';
+    /*Shuffling figure*/
+    $(function () {
+        var mySwiper = new Swiper ('.swiper-container',{
+            direction: 'horizontal',
+            loop: true,
+            autoplay : 4000,
+            pagination: '.swiper-pagination',
+            autoplayDisableOnInteraction : false,
+            observer:true,
+            observerParents:true
+        });
+
+        //changenum
+        $('.goodsDetails').find('.add_span').on('click',function(){
+            var a = parseInt($(this).siblings('input').val());
+            a++;
+            $(this).siblings('input').val(a);
+        });
+        $('.goodsDetails').find('.down_span').on('click',function(){
+            var b = parseInt($(this).siblings('input').val());
+            if(b>1){
+                b--;
+                $(this).siblings('input').val(b);
+            }else{
+                $(this).parent().find('input').val('1');
+            }
+        });
+
+        $("#num").blur(function() {
+            var num = $("#num").val();
+            if(! /^d+$/.test(num)){
+                alert("只能输入正整数！");
+                $("#num").val(1);
+            }
+        });
+    });
+    $('#goodsInfoPay').click(function(){
+        var id='{$goods->id}';
+        var num=$('.goodsDetails').find('#num').val();
+        $.ajax({
+            'url':'{:url("goods/checkGoodsNum")}',
+            'data':{'id':id,'num':num},
+            'async':true,
+            'type':'post',
+            'dataType':'json',
+            success:function(res){
+                if(res.status){
+                    window.location.href='{:url("order/index")}';
+                }else{
+                    alert(res.message);
+                }
+            },
+        })
+    })
+</script>
+</body>
+</html>

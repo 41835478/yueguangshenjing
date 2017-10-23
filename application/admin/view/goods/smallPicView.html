@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> - 修改商品轮播图</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    {include file="public/header"}
+</head>
+<body class="gray-bg">
+{include file="public/popBox"}
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>修改商品轮播图</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link btn btn-success" href="{:url('goods/goodsList')}">
+                            返回
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form method="post" class="form-horizontal" action="{:url('goods/editSmallPic')}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">商品轮播图</label>
+                            <div class="col-sm-10">
+                                <input id="singleFile" name="small_pic" type="file" value="">
+                                <img id="singleImg" style="border: 1px dashed #c0c0c0" src="__PUBLIC__/admin/goods/index0.jpg" width="100px" height="100px">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <input type="hidden" name="id" value="{$id}">
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" type="submit">添加</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-white" type="reset">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                    {foreach $data as $v}
+                    <a class="fancybox" href="JavaScript:;" title="图片1">
+                        <img alt="image" src="__PUBLIC__{$v->small_pic}" /><button type="button" class="btn btn-outline btn-danger" onclick="smallDel('{$v->id}')">删除</button>
+                    </a>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
+<!-- Peity -->
+<script src="__PUBLIC__/admin/js/plugins/peity/jquery.peity.min.js"></script>
+<!-- 自定义js -->
+<script src="__PUBLIC__/admin/js/content.js?v=1.0.0"></script>
+<!-- Fancy box -->
+<script src="__PUBLIC__/admin/js/plugins/fancybox/jquery.fancybox.js"></script>
+<script src="__PUBLIC__/admin/js/plugins/layer/laydate/laydate.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.fancybox').fancybox({
+            openEffect: 'none',
+            closeEffect: 'none'
+        });
+    });
+</script>
+</body>
+</html>
+<script>
+    function smallDel(id){
+        var sure=confirm("你确信要删除该图片吗？删除将无法找回");
+        var data={
+            'id':id
+        };
+        if(sure){
+            $.ajax({
+                'url':'{:url("goods/smallDel")}',
+                'data':data,
+                'async':true,
+                'type':'post',
+                'dataType':'json',
+                success:function(data){
+                    if(data.status){
+                        parent.layer.alert(data.message, {
+                            icon: 1,
+                            skin: 'layer-ext-moon'
+                        })
+                    }else{
+                        alert(data.message);
+                    }
+                    window.location.reload();
+                },
+                error:function(){
+                    alert('Ajax响应失败');
+                }
+            })
+        }
+    }
+</script>
+<script type="text/javascript">
+    $("#singleFile").change(function(){
+        var objUrl = getObjectURL(this.files[0]) ;
+        console.log("objUrl = "+objUrl) ;
+        if (objUrl) {
+            $("#singleImg").attr("src", objUrl) ;
+        }
+    }) ;
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+</script>

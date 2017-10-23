@@ -145,7 +145,8 @@ return [
         '__CSS__'    => '/resource/home/css',
         '__JS__'     => '/resource/home/js',
         '__IMG__'    => '/resource/home/images',
-        '__FONTS__'  => '/resource/home/font'
+        '__FONTS__'  => '/resource/home/font',
+        '__PUBLIC__'=>'/resource',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',

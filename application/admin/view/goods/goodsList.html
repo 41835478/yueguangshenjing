@@ -51,14 +51,18 @@
                 <tr class="gradeX">
                     {if condition="count($data)>0"}
                     {foreach name="data" item="v" }
-                    <td class="did" >{$v->id}</td>
+                    <td class="did">{$v->id}</td>
                     <td>{$v->name}</td>
                     <td>{$v->describes}</td>
                     <td>
-                        <img style="border: 1px dashed #c0c0c0" src="__PUBLIC__{$v->main_pic}" width="50px" height="50px">
+                        <img style="border: 1px dashed #c0c0c0" src="__PUBLIC__{$v->main_pic}" width="50px"
+                             height="50px">
                     </td>
                     <td>
-                        <img style="border: 1px dashed #c0c0c0" src="__PUBLIC__{$v->show_pic}" width="50px" height="50px">
+                        {foreach $v->goodsInfo as $val}
+                        <img style="border: 1px dashed #c0c0c0" src="__PUBLIC__{$val->small_pic}" width="50px"
+                             height="50px">
+                        {/foreach}
                     </td>
                     <td>{$v->goods_price}</td>
                     <td>{$v->goods_brand}</td>
@@ -71,13 +75,15 @@
                         {/if}
                     </td>
                     <td>
-                        <button type="button" _content='"{$v->content}"' onclick='getGoodsDate(this,"{$v->id}")' class="btn btn-primary" data-toggle="modal" data-target="#myModal5">
+                        <button type="button" _content='"{$v->content}"' onclick='getGoodsDate(this,"{$v->id}")'
+                                class="btn btn-primary" data-toggle="modal" data-target="#myModal5">
                             查看详情
                         </button>
                     </td>
                     <td>
-                        <a onclick="modalEditGoods(this,'{$v->id}','{$v->main_pic}')"  data-toggle="modal" data-target="#myModal3">修改</a> |
-                        <a onclick="editShowPic('{$v->id}','{$v->show_pic}')" data-toggle="modal" data-target="#myModal4">修改商品展示图</a> |
+                        <a onclick="modalEditGoods(this,'{$v->id}','{$v->main_pic}')" data-toggle="modal"
+                           data-target="#myModal3">修改</a> |
+                        <a href="{:url('goods/smallPicView',['id'=>$v->id])}">修改轮播图</a> |
                         <a onclick="delGoods('{$v->id}')">删除</a>
                     </td>
                 </tr>
@@ -88,103 +94,76 @@
         </div>
     </div>
 </div>
-<div class="modal inmodal fade" id="myModal3" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal fade" id="myModal3" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">修改商品</h4>
             </div>
             <div class="modal-body">
-            <form method="post" class="form-horizontal" action="{:url('goods/editGoods')}" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">商品名称</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" id="name" type="text" name="name" placeholder="">
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">商品描述</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="text" id="describes" name="describes">
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">商品主图</label>
-                    <div class="col-sm-10">
-                        <input type="file" name="main_pic" value="" id="singleFile">
-                        <img id="singleImg" style="border: 1px dashed #c0c0c0" src="__PUBLIC__/admin/goods/index0.jpg" width="100px" height="100px">
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">商品价格</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="text" id="goods_price" name="goods_price">
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">商品品牌</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="text" id="goods_brand" name="goods_brand">
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">商品颜色</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="text" id="goods_color" name="goods_color">
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <input type="hidden" id="myId" name="id" value="">
-                <div class="form-group">
-                    <div class="col-sm-4 col-sm-offset-2">
-                        <button class="btn btn-primary" type="submit">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button class="btn btn-white" type="reset">重置</button>
-                    </div>
-                </div>
-            </form>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal inmodal" id="myModal4" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated bounceInRight">
-            <div class="modal-header">
-                <h1 class="modal-title">修改商品展示图</h1>
-            </div>
-            <div class="modal-body">
-                <form method="post" class="form-horizontal" action="{:url('goods/editShowPic')}" enctype="multipart/form-data">
+                <form method="post" class="form-horizontal" action="{:url('goods/editGoods')}"
+                      enctype="multipart/form-data">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">商品展示图</label>
-                        <div class="col-sm-9">
-                            <input type="file" name="show_pic" value="" id="showFile">
-                            <img id="showImg" style="border: 1px dashed #c0c0c0" src="__PUBLIC__/admin/goods/index0.jpg" width="100px" height="100px">
+                        <label class="col-sm-2 control-label">商品名称</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" id="name" type="text" name="name" placeholder="">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
-                    <input type="hidden" id="goods_id" name="id" value="">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">商品描述</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="describes" name="describes">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">商品主图</label>
+                        <div class="col-sm-10">
+                            <input type="file" name="main_pic" value="" id="singleFile">
+                            <img id="singleImg" style="border: 1px dashed #c0c0c0"
+                                 src="__PUBLIC__/admin/goods/index0.jpg" width="100px" height="100px">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">商品价格</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="goods_price" name="goods_price">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">商品品牌</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="goods_brand" name="goods_brand">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">商品颜色</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="goods_color" name="goods_color">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <input type="hidden" id="myId" name="id" value="">
                     <div class="form-group">
                         <div class="col-sm-4 col-sm-offset-2">
-                            <button class="btn btn-primary" type="submit">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-primary" type="submit">修改</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <button class="btn btn-white" type="reset">重置</button>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <form action="{:url('goods/editGoodsInfo')}" method="post">
             <div class="modal-content">
@@ -207,7 +186,7 @@
     </div>
 </div>
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"></script>
 <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
 <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -215,71 +194,71 @@
 <script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
 <!--<script src="__PUBLIC__/admin/js/jquery.min.js"></script>-->
 <script type="text/javascript">
-    var ue =UE.getEditor('editor');
+    var ue = UE.getEditor('editor');
 </script>
 <script>
-    $('.close').click(function(){
+    $('.close').click(function () {
         $(this).parent().parent().remove();
     })
-    function getGoodsDate($this,id){
+    function getGoodsDate($this, id) {
         $('#getid').val(id)
-        var content=$($this).attr('_content');
+        var content = $($this).attr('_content');
         ue.setContent(content)
     }
 </script>
 <script>
-    function delGoods(id){
-        var sure=confirm('你确定要删除该商品吗？');
-        if(sure){
-            var data={'id':id};
-            var url="{:url('goods/delGoods')}";
-            sendAjax(url,data);
+    function delGoods(id) {
+        var sure = confirm('你确定要删除该商品吗？');
+        if (sure) {
+            var data = {'id': id};
+            var url = "{:url('goods/delGoods')}";
+            sendAjax(url, data);
         }
     }
-    function editShowPic(id,show_pic){
-        $('#showImg').attr('src','__PUBLIC__'+show_pic)
+    function editShowPic(id, show_pic) {
+        $('#showImg').attr('src', '__PUBLIC__' + show_pic)
         $('#goods_id').val(id);
     }
-    function modalEditGoods($this,id,main_pic){
-        var obj=$($this).parent().parent().find('td');
+    function modalEditGoods($this, id, main_pic) {
+        var obj = $($this).parent().parent().find('td');
         $('#name').val(obj.eq(1).html());
         $('#describes').val(obj.eq(2).html());
         $('#goods_price').val(obj.eq(5).html());
         $('#goods_brand').val(obj.eq(6).html());
         $('#goods_color').val(obj.eq(7).html());
-        $('#singleImg').attr('src','__PUBLIC__'+main_pic);
+        $('#singleImg').attr('src', '__PUBLIC__' + main_pic);
         $('#myId').val(id)
     }
-    $('.goodsDown').click(function(){
-        var id=$(this).parent().parent().find('.did').html()
-        var data={
-            'id':id,
-            'flag':2,
+    $('.goodsDown').click(function () {
+        var id = $(this).parent().parent().find('.did').html()
+        var data = {
+            'id': id,
+            'flag': 2,
         };
-        var url="{:url('goods/goodsStatus')}";
-        sendAjax(url,data);
+        var url = "{:url('goods/goodsStatus')}";
+        sendAjax(url, data);
     })
-    $('.goodsUp').click(function(){
-        var id=$(this).parent().parent().find('.did').html()
-        var data={
-            'id':id,
-            'flag':1,
+    $('.goodsUp').click(function () {
+        var id = $(this).parent().parent().find('.did').html()
+        var data = {
+            'id': id,
+            'flag': 1,
         };
-        var url="{:url('goods/goodsStatus')}";
-        sendAjax(url,data);
+        var url = "{:url('goods/goodsStatus')}";
+        sendAjax(url, data);
     })
-    function sendAjax(url,data){
+    function sendAjax(url, data) {
         $.ajax({
-            'url':url,
-            'data':data,
-            'async':true,
-            'type':'post',
-            'dataType':'json',
-            success:function(res){
+            'url': url,
+            'data': data,
+            'async': true,
+            'type': 'post',
+            'dataType': 'json',
+            success: function (res) {
                 alert(res.message);
                 window.location.reload();
             },
-            error:function(){
+            error: function () {
                 alert('操作失败');
             }
         })
@@ -288,44 +267,44 @@
 </body>
 </html>
 <script type="text/javascript">
-    $("#singleFile").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-        console.log("objUrl = "+objUrl) ;
+    $("#singleFile").change(function () {
+        var objUrl = getObjectURL(this.files[0]);
+        console.log("objUrl = " + objUrl);
         if (objUrl) {
-            $("#singleImg").attr("src", objUrl) ;
+            $("#singleImg").attr("src", objUrl);
         }
-    }) ;
+    });
     //建立一個可存取到該file的url
     function getObjectURL(file) {
-        var url = null ;
-        if (window.createObjectURL!=undefined) { // basic
-            url = window.createObjectURL(file) ;
-        } else if (window.URL!=undefined) { // mozilla(firefox)
-            url = window.URL.createObjectURL(file) ;
-        } else if (window.webkitURL!=undefined) { // webkit or chrome
-            url = window.webkitURL.createObjectURL(file) ;
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
         }
-        return url ;
+        return url;
     }
 </script>
 <script type="text/javascript">
-    $("#showFile").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-        console.log("objUrl = "+objUrl) ;
+    $("#showFile").change(function () {
+        var objUrl = getObjectURL(this.files[0]);
+        console.log("objUrl = " + objUrl);
         if (objUrl) {
-            $("#showImg").attr("src", objUrl) ;
+            $("#showImg").attr("src", objUrl);
         }
-    }) ;
+    });
     //建立一個可存取到該file的url
     function getObjectURL(file) {
-        var url = null ;
-        if (window.createObjectURL!=undefined) { // basic
-            url = window.createObjectURL(file) ;
-        } else if (window.URL!=undefined) { // mozilla(firefox)
-            url = window.URL.createObjectURL(file) ;
-        } else if (window.webkitURL!=undefined) { // webkit or chrome
-            url = window.webkitURL.createObjectURL(file) ;
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
         }
-        return url ;
+        return url;
     }
 </script>
