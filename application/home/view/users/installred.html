@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>我的账户</title>
+<title>安装红包</title>
 <meta charset="utf-8">
 <meta name="author" content="yy">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -23,34 +23,26 @@
 <script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
 <script type="text/javascript" src="/resource/home/js/public.js"></script>
 <style type="text/css">
-	body{
-		background: #f5f5f5;
-	}
+	.shopAccount_head{background: url('/resource/home/images/ly_49.png') no-repeat; background-size: 100% 100%; height: 175px;}
+
+	.shopAccount_2 span{ font-size: 38px; }
 </style>
 </head>
 <body style="padding-bottom: 20px;">
 <div class="shopAccount_head">
 	<div class="shopAccount_1">
-		<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='/home/Users/index'"></i>我的账户
+		<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>安装红包
 	</div>
-	<div class="shopAccount_2">总额（元）<span>{$user['account']}</span></div>
-	<a href="{:url('Users/withdrawal')}" class="shopAccount_tx">提现</a>
+	<div class="shopAccount_2"><span>{$totalinstallred}</span>累计金额（元）</div>
 </div>
-<div class="shopAccount_3">账户明细</div>
-<ul class="shopAccount_ul1">
-	<li><a href="{:url('Users/incomedetails')}"><img src="/resource/home/images/ly_4.png">收入明细</a></li>
-	<li><a href="{:url('Users/expendituredetails')}"><img src="/resource/home/images/ly_5.png">支出明细</a></li>
-	<li><a href="{:url('Users/withdrawaldetails')}"><img src="/resource/home/images/ly_6.png">提现记录</a></li>
+<div class="irp_1"><span>时间</span><span>金额</span></div>
+<ul class="irp_ul">
+	{foreach $installred as $k=>$v}
+	<li><span>{$v['created_at']|date="Y-m-d",###}</span><span>￥{$v['money']}</span></li>
+{/foreach}
+
+		
+			
 </ul>
-<div class="shopAccount_3">奖金</div>
-<ul class="shopAccount_ul1">
-	<li><a href="{:url('Users/distributionaward')}"><img src="/resource/home/images/ly_7.png">分销奖</a></li>
-	<li><a href="{:url('Users/upgradeaward')}"><img src="/resource/home/images/ly_8.png">招商升级奖</a></li>
-	<li><a href="{:url('Users/salesaward')}"><img src="/resource/home/images/ly_9.png">招商销售奖</a></li>
-	<li><a href="{:url('Users/installred')}"><img src="/resource/home/images/ly_10.png">安装红包</a></li>
-</ul>
-
-
-
 </body>
 </html>

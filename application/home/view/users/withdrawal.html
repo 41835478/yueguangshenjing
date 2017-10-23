@@ -35,15 +35,16 @@
 </div>
 <div class="withdrawal_1">
 	<h3>提现金额</h3>
-	<input type="number" class="withdrawal_text" placeholder="请输入提现金额" />
+	<input type="number" class="withdrawal_text money" value="" placeholder="请输入提现金额" />
 	<p>提现金额必须为100的整数倍，提现扣除8%手续费</p>
 </div>
 <div style="width: 100%; height: 12px; overflow: hidden; background:url(/resource/home/images/ly_42.png)"></div>
 <div class="withdrawal_2">可提现金额<span>￥{$user['account']}</span></div>
 <div class="withdrawal_2" style="margin-top: 10px;">支付宝账户<span>{$alipay['alipay_account']}</span></div>
-<div class="withdrawal_2">支付密码<input type="password" class="withdrawal_text2" placeholder="请输入支付密码" /></div>
+<div class="withdrawal_2">支付密码<input type="password" class="withdrawal_text2 pay_pwd" value=""  placeholder="请输入支付密码" /></div>
 
-<a href="withdrawalsRecord.html" class="a_btn2">确认提现</a>
+<!-- <a href="javascript:void(0);" class="a_btn2 true">确认提现</a> -->
+<button class="a_btn2 true" >确认提现 </button>
 
 {if condition="$alipay neq ''"/} 
 
@@ -64,6 +65,62 @@
 		$(".yzz_1").fadeOut('fast');
 		$(".yzz").fadeOut('fast');
 	});
+
+
+
+	  $('.true').click(function(){
+	  		var money=$('.money').val();
+            var pay_pwd=$('.pay_pwd').val();
+            if(money==""){
+                alert("请输入金额！");
+                //window.location.reload();
+                return false;
+            }          
+            if(pay_pwd==""){
+                alert("请输入支付密码！");
+                //window.location.reload();
+                return false;
+            }
+            
+            var data={
+            	'money':money,
+                'pay_pwd':pay_pwd,              
+            }
+            var url="{:url('Users/withdrawal')}";  
+             sendAjax(data,url)
+        })
+        function sendAjax(data,url){    
+            $.ajax({
+                'url':url,
+                'data':data,
+                'async':true,
+                'type':'post',
+                'dataType':'jsonp',
+                success:function(data){
+                	 if(data.status){ 
+                				 
+                	 		if(data.status==200){
+                	 			alert(data.message);
+                	 			window.location.reload();  
+                	 			//window.location.href="/home/Login/login.html";
+                	 		}
+                	 		if(data.status==401){
+                	 			alert(data.message);
+                	 			window.location.reload();                 	 			
+                	 		}                 	
+                           
+                        }else{
+                        	alert(data.message);
+                        	window.location.reload();
+                        }
+
+                  
+                },
+             
+            })
+        }
+	     
+       
 </script>
 
 

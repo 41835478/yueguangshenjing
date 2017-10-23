@@ -71,3 +71,16 @@ function isMobile()
     } 
     return false;
 }
+//获取用户所有上级
+function getUpUser($arr,$prentId){
+    $totalNum = [];
+    while($prentId !== 0 ){
+        foreach($arr as $key=>$val){
+            if($val['id'] == $prentId){
+                array_push($totalNum,$val['id']);
+                $prentId = $val['pid'];
+            }
+        }
+    }
+    return $totalNum;
+}

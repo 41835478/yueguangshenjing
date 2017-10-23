@@ -24,16 +24,24 @@ class Contents extends Base
             $guide = ContentsModel::all(function($query){
                 $query->where(["type"=>2])->order("created_at","desc");
             });#新手指南
+            $guide = $this->strContent($guide);
             return $this->fetch("contents/guide",["guide"=>$guide]);
         }elseif ($type == "3"){
             $notice = ContentsModel::all(function($query){
                 $query->where(["type"=>3])->order("created_at","desc");
             });#最新公告
+            $notice = $this->strContent($notice);
             return $this->fetch("contents/notice",["notice"=>$notice]);
         }elseif ($type == "4"){
             $service = ContentsModel::get(2);#客服中心
             return $this->fetch("contents/service",["service"=>$service]);
         }
+    }
+    public function strContent($content){
+        foreach ($content as $v){
+            $v->content = mb_substr(strip_tags($v->content),0,80,"utf-8");
+        }
+        return $content;
     }
 
     /**
