@@ -14,4 +14,14 @@ class User extends Model
     const LEVEL_FOUR = "4";#地级市
     const LEVEL_FIVE = "5";#省会城市
     const LEVEL_SIX = "6";#一线城市
+
+    public function downUsers()
+    {
+        return $this->hasMany('User', 'pid', 'id');
+    }
+
+    public function upUserPhone($id)
+    {
+        return $this->where(['pid'=>$id])->find();
+    }
 }
