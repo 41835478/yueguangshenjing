@@ -1,10 +1,231 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html>
 
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 订单列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    {include file="public/header"}
+    <link href="__PUBLIC__/admin/css/plugins/jsTree/style.min.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+{include file="public/popBox"}
+<div class="col-sm-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>订单列表</h5>
+            <div class="ibox-tools">
+                <!--<a class="collapse-link" href="javascript:;">-->
+                <!--<button type="button" class="btn btn-outline btn-success" data-toggle="modal" data-target="#myModal5">-->
+                <!--</button>-->
+                <!--</a>-->
+            </div>
+        </div>
+        <div class="ibox-content">
+            <form action="{:url('orders/index')}" method="get">
+                <div class="input-group">
+                    <span style="float: right; margin-left: 5px;margin-right:5px">状态：
+                        <select name="status" class="input-sm">
+                            <option value="">--请选择--</option>
+                            <option value="1">待付款</option>
+                            <option value="2">待发货</option>
+                            <option value="3">待收货</option>
+                            <option value="4">已完成</option>
+                        </select>
+                    </span>
+                    <span style="float: right;margin-left: 5px;">支付类型：
+                        <select id="threeLevel" name="flag" class="input-sm">
+                            <option value="">--请选择--</option>
+                            <option value="1">支付宝</option>
+                            <option value="2">微信</option>
+                            <option value="3">余额</option>
+                        </select>
+                    </span>
+                    <span style="float: right;margin-left: 5px;">用户手机号：
+                        <input name="mobile" type="text" class="input-sm" placeholder="请输入用户手机号"/>
+                    </span>
+                    <span style="float: right;margin-left: 5px;">用户名称：
+                        <input name="name" type="text" class="input-sm" placeholder="请输入用户名称"/>
+                    </span>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-sm btn-primary">
+                            搜索
+                        </button>
+                    </span>
+                </div>
+            </form>
+            <table class="footable table table-stripped" data-page-size="10" data-filter=#filter>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>用户手机号</th>
+                    <th>用户头像</th>
+                    <th>发货人名称</th>
+                    <th>订单号</th>
+                    <th>物流单号</th>
+                    <th>是否是店面购买</th>
+                    <th>店面名称</th>
+                    <th>订单状态</th>
+                    <th>收货人手机号</th>
+                    <th>收货详细地址</th>
+                    <th>订单价格</th>
+                    <th>商品总量</th>
+                    <th>支付方式</th>
+                    <th>下单时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="gradeX">
+                    {foreach name="data" item="v" key="k" }
+                    <td class="did">{$v->id}</td>
+                    <td>{$v->getUser->name}</td>
+                    <td>{$v->getUser->mobile}</td>
+                    <td>
+                        <img scr="__PUBLIC__/admin/{$v->getUser->user_pic}" width="50px" height="50px">
+                    </td>
+                    <td>
+                        {if condition="$v->send_id>0"}
+                        {$v->user->name}
+                        {/if}
+                    </td>
+                    <td>{$v->order_code}</td>
+                    <td>{$v->logistics_num}</td>
+                    <td>
+                        {if condition="$v->is_shop==1"}
+                        是
+                        {else/}
+                        否
+                        {/if}
+                    </td>
+                    <td>{$v->shop_name}</td>
+                    <td>
+                        {if condition="$v->status==1"}
+                        待付款
+                        {elseif condition="$v->status==2"/}
+                        待发货
+                        {elseif condition="$v->status==3"/}
+                        <font color="red">待收货</font>
+                        {elseif condition="$v->status==4"/}
+                        已完成
+                        {/if}
+                    </td>
+                    <td>{$v->phone}</td>
+                    <td>{$v->area_info}</td>
+                    <td>{$v->price} 元</td>
+                    <td>{$v->num}</td>
+                    <td>
+                        {if condition="$v->flag==1"}
+                        支付宝
+                        {elseif condition="$v->flag==2"/}
+                        微信
+                        {else/}
+                        余额
+                        {/if}
+                    </td>
+                    <td>{$v->created_at}</td>
+                    <td>
+                        {if condition="$v->status==2"}
+                        <a class="sendGoods" style="color:green">发货</a> |
+                        {/if}
+                        <a onclick="cour('{$v->id}')" data-toggle="modal" data-target="#myModal4">添加物流号</a> |
+                        <a href="{:url('orders/orderInfo',array('id'=>$v->id))}">订单详情</a>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3">
+                        总共 {$total} 页 当前显示第 {$currentPage} 页
+                    </td>
+                    <td colspan="13" style="text-align: right">
+                        {$render}
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal inmodal" id="myModal4" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <h4 class="modal-title">填写物流单号</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="form-horizontal" action="{:url('orders/cour')}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">物流单号</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="logistics_num" placeholder="">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <input type="hidden" name="id" id="orderId">
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">添加</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-white" type="reset">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/editor/kindeditor.js"></script>
+
+<script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
+<!--<script src="__PUBLIC__/admin/js/jquery.min.js"></script>-->
+<script src="__PUBLIC__/admin/js/plugins/jsTree/jstree.min.js"></script>
+<script>
+    $('.sendGoods').click(function(){
+        var id=$(this).parent().parent().find('.did').html();
+        if(confirm('您确定要发货吗？')){
+            var data={'id':id};
+            var url="{:url('orders/sendGoods')}";
+            sendAjax(data,url)
+        }
+    })
+    function sendAjax(data, url) {
+        $.ajax({
+            'url': url,
+            'data': data,
+            'async': true,
+            'type': 'post',
+            'dataType': 'json',
+            success: function (res) {
+                alert(res.message);
+                window.location.reload();
+            },
+            error: function () {
+                alert('操作失败');
+            }
+        })
+    }
+    function cour(id){
+        $('#orderId').val(id);
+    }
+</script>
+<script>
+    $('.close').click(function () {
+        $(this).parent().parent().remove();
+    })
+</script>
 </body>
 </html>

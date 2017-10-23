@@ -16,4 +16,14 @@ class OrderModel extends Model
     const STATUS_TWO = "2";#待发货
     const STATUS_THREE = "3";#待收货
     const STATUS_FOUR = "4";#已完成
+
+    public function user()
+    {
+        return $this->belongsTo('User','send_id');
+    }
+
+    public function getUser()
+    {
+        return $this->belongsTo('User','user_id');
+    }
 }

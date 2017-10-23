@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 订单详情列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    {include file="public/header"}
+    <link href="__PUBLIC__/admin/css/plugins/jsTree/style.min.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+{include file="public/popBox"}
+<div class="col-sm-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>订单详情列表</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link" href="{:url('orders/index')}">
+                <button type="button" class="btn btn-outline btn-success">
+                    返回
+                </button>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <table class="footable table table-stripped" data-page-size="10" data-filter=#filter>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>商品名称</th>
+                    <th>商品图片</th>
+                    <th>商品价格</th>
+                    <th>购买数量</th>
+                    <th>创建时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="gradeX">
+                    {foreach name="data" item="v" key="k" }
+                    <td class="did">{$v->id}</td>
+                    <td>{$v->goods_name}</td>
+                    <td>
+                        <img src="__PUBLIC__{$v->goods_pic}" width="50px" height="50px">
+                    </td>
+                    <td>{$v->goods_price}</td>
+                    <td>{$v->goods_num}</td>
+                    <td>{$v->created_at}</td>
+                </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/admin/editor/kindeditor.js"></script>
+
+<script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
+<!--<script src="__PUBLIC__/admin/js/jquery.min.js"></script>-->
+<script src="__PUBLIC__/admin/js/plugins/jsTree/jstree.min.js"></script>
+</body>
+</html>
