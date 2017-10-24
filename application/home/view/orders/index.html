@@ -73,14 +73,14 @@
     <ul class="pay_way">
         <li class="li1">
             <span class="left">非店面购买</span>
-            <i class="right iconfont icon-guan"></i>
+            <i class="right iconfont icon-guan" _flag="2"></i>
         </li>
         <li>
             <span class="left">店面购买</span>
-            <i class="right iconfont icon-kaiguanguan-copy-copy"></i>
+            <i class="right iconfont icon-kaiguanguan-copy-copy" _flag="1"></i>
         </li>
         <div class="edit_div">
-            <textarea class="textarea" cols="30" rows="10" placeholder="请填写店铺名称"></textarea>
+            <textarea class="textarea" id="shop_name" cols="30" rows="10" placeholder="请填写店铺名称"></textarea>
         </div>
     </ul>
 
@@ -88,11 +88,13 @@
     <ul class="goodsBox">
         <li>
             <a href="{:url('goods/goodsInfo',['id'=>$goods->id])}">
+                {if condition="$goods->main_pic neq ''"}
                 <img class="img" src="__PUBLIC__{$goods->main_pic}" alt="商品图">
+                {/if}
                 <div class="right">
-                    <p class="tit">{$goods->name}</p>
+                    <p class="tit">{$goods->name|default=''}</p>
                     <p class="num">&times;<span>{$num}</span></p>
-                    <p class="price">&yen;<span>{$goods->goods_price}</span></p>
+                    <p class="price">&yen;<span>{$goods->goods_price|default=0.00}</span></p>
                 </div>
             </a>
         </li>
@@ -122,7 +124,22 @@
     $('#orderPay').click(function(){
         var address_id='{$address->id|default=""}';
         if(address_id){
+            var flag=$('.pay_way').find('.icon-kaiguanguan-copy-copy').attr('_flag');
+            var shop_name=$('#shop_name').val();
+            $.ajax({
+                'url':'{:url("orders/create")}',
+                'data':{'address_id':address_id,'shop_name':shop_name,'is_shop':flag},
+                'async':true,
+                'type':'post',
+                'dataType':'json',
+                success:function(res){
+                    if(res.status){
 
+                    }else{
+                        alert(res.message);
+                    }
+                },
+            })
         }else{
             alert('请先填写收货地址');
             sessionStorage.setItem('address',1)

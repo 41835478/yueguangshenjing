@@ -31,7 +31,7 @@
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                     <span class="block m-t-xs" style="font-size:20px;">
-                                        {if condition="$_SESSION['admin']['pic'] neq ''"}
+                                        {if condition="isset($_SESSION['admin']['pic'])&&$_SESSION['admin']['pic'] neq ''"}
                                         <img src="__PUBLIC__{$_SESSION['admin']['pic']}" style="border-radius:40px"
                                              width="80px" height="80px">
                                         {else/}

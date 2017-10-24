@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>越光神镜</title>
+    <meta charset="utf-8">
+    <meta name="author" content="yy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta name="author" content="yy">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="description" content="" />
+    <meta name="Keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="__CSS__/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css">
+    <link rel="stylesheet" type="text/css" href="__FONTS__/iconfont.css">
+    <script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.min.js"></script>
+    <script type="text/javascript" src="__JS__/public.js"></script>
+    <link rel="stylesheet" href="__CSS__/main.css">
+    <style type="text/css">
+        body{ background: #f5f5f5; }
+        .out-show {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(100, 100, 100, 0.7);
+            display: none;
+            z-index: 150;
+        }
+        .out-box {
+            width: 300px;
+            height: 220px;
+            border-radius: 10px;
+            background: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -160px;
+            margin-left: -150px;
+            overflow: hidden;
+        }
+        .out-box_h4 {
+            margin: 0 8%;
+            font-size: 18px;
+            font-weight: normal;
+            line-height: 50px;
+            text-align: center;
+            color: #333;
+            border-top-left-radius:10px;
+            border-top-right-radius:10px;
+            position: relative;
+            border-bottom: 1px solid #d1d1d1;
+        }
+        .out-box_h4 .off{
+            position: absolute;
+            right: 0;
+            top: 17px;
+            width: 16px;
+            height: 16px;
+            display: block;
+        }
+
+        .out-box_label {
+            display: block;
+            padding: 20px 8% 10px;
+            position: relative;
+        }
+
+        .out-box_inpass_bot {
+            position: absolute;
+            bottom: 1.4rem;
+            left: 9%;
+            width: 12%;
+            height: 2px;
+            background: #f8fdfc;
+            opacity: 0;
+            transition: all .2s;
+        }
+
+        .out-box_inpass_botin {
+            opacity: 1;
+            background: #099;
+        }
+
+        .out-box_ul {
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .out-box_li {
+            box-sizing: border-box;
+            width: 16.6%;
+            line-height: 46px;
+            height:46px;
+            font-size: 16px;
+            color: #666;
+            float: left;
+            border: 1px solid #e6e6e6;
+            background: #fffefb;
+            font-weight: 900;
+            text-align: center;
+            border-right: none;
+        }
+
+        .out-box_li_lst{
+            border-right: 1px solid #e6e6e6;
+        }
+
+        .out-inpass {
+            position: relative;
+            z-index: -1000;
+            border: 0;
+            opacity: 0;
+            left: -100%;
+        }
+        .out-btn_box {
+            overflow: hidden;
+        }
+        .out-btn_no {
+            width: 40%;
+            float: left;
+            background: #daf6f3;
+            border: 1px solid #40cfc4;
+            border-radius: 5px;
+            color: #39ccc6;
+            line-height: 2em;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .out-btn_ok {
+            width: 40%;
+            float: right;
+            background: #daf6f3;
+            border-radius: 5px;
+            color: #fff;
+            line-height: 2em;
+            background:#5cd9bc; /* 一些不支持背景渐变的浏览器 */
+            background:-o-linear-gradient(left, #5cd9bc, #39ccc6);
+            background:-moz-linear-gradient(top, #5cd9bc, #39ccc6);
+            background:-webkit-gradient(linear, 0 0, right bottom, from(#5cd9bc), to(#39ccc6));
+            background:-o-linear-gradient(top, #5cd9bc, #39ccc6);
+            border: 0;
+            outline: none;
+        }
+        .margin{
+            margin: 15% auto;
+        }
+        .icon-guanbi{ position: absolute; top: 9px; left: 12px; color: #FFF; font-size: 22px;  }
+        .yy_1{ font-size: 14px; color: #333; float: right; margin-right: 8%; }
+        .out_btnBox{
+            margin-top: 26px;
+            overflow: hidden;
+            border-top: 1px solid #e6e6e6;
+        }
+        .out_btnBox .out_btn{
+            width: 50%;
+            float: left;
+            font-size: 15px;
+            display: block;
+            height: 47px;
+            line-height: 47px;
+            background: none;
+        }
+        .out_btnBox .out_btn2{
+            color: #fff;
+            background: #2d3238;
+        }
+
+    </style>
+</head>
+<body>
+<div class="public_head">
+    <a class="iconfont icon-mjiantou-copy" href="javascript:history.go(-1);"></a>
+    <h3>支付</h3>
+</div>
+<div class="content">
+    <div class="pay_body">
+        <div class="pay_muneyDiv">
+            <span class="tit">支付金额(元)</span>
+            <span class="num_span">&yen;5760.00</span>
+        </div>
+
+        <div class="pay_mode">
+            <p class="tit_p">
+                <span>支付类型</span>
+                <i class="iconfont icon-arrow-right"></i>
+            </p>
+
+            <ul class="pay_modeUl">
+                <li>
+                    <img src="__IMG__/weixin.png" alt="">
+                    <span>微信支付</span>
+                    <i class="iconfont icon-xuanzhong1"></i>
+                </li>
+                <li>
+                    <img src="__IMG__/zhifubao.png" alt="">
+                    <span>支付宝支付</span>
+                    <i class="iconfont icon-weixuanzhong"></i>
+                </li>
+                <li class="li_last">
+                    <img src="__IMG__/yue.png" alt="">
+                    <span>余额支付</span>
+                    <i class="iconfont icon-weixuanzhong"></i>
+
+                    <span class="yue_num">¥<em>9880.00</em></span>
+                </li>
+            </ul>
+        </div>
+
+        <a class="pay_soon" href="javascript:void(0);">立即支付</a>
+    </div>
+
+    <div class="out-show" id="out-show">
+        <div class="out-box">
+            <h4 class="out-box_h4"><span>请输入支付密码</span><img class="off" src="__IMG__/off_btn.png" alt="关闭"></h4>
+            <label class="out-box_label" for="out-inpass">
+                <ul class="out-box_ul">
+                    <li class="out-box_li"></li>
+                    <li class="out-box_li"></li>
+                    <li class="out-box_li"></li>
+                    <li class="out-box_li"></li>
+                    <li class="out-box_li"></li>
+                    <li class="out-box_li out-box_li_lst"></li>
+                </ul>
+                <span class="out-box_inpass_bot"></span>
+            </label>
+            <input class="out-inpass" id="out-inpass" type="number" />
+            <a href="" class="yy_1">忘记密码?</a>
+
+            <div class="out_btnBox">
+                <button class="out_btn out_btn1" type="button">取消</button>
+                <button class="out_btn out_btn2" type="button">确定</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    'use strict';
+    /*Shuffling figure*/
+    $(function () {
+        var flag = true;
+        $(".pay_mode .tit_p").click(function(){
+            if(flag){
+                $(".icon-arrow-right").css({'transform': 'rotate(0deg)','line-height': '34px'});
+                flag = false;
+            }else{
+                $(".icon-arrow-right").css('transform','rotate(90deg)');
+                flag = true;
+            }
+            $(".pay_modeUl").slideToggle(500);
+        });
+
+        $(".pay_modeUl li").click(function() {
+            $(".pay_modeUl li").children('i').removeClass('icon-xuanzhong1').addClass('icon-weixuanzhong');
+            $(this).children('i').removeClass('icon-weixuanzhong').addClass('icon-xuanzhong1');
+        });
+
+
+        // tan
+        function toggleStyle(n){
+            var Color = ["icon-icon-test","icon-weixuanzhong"]
+            $("i[name='checkPay']").removeClass(Color[0]).addClass(Color[1])
+                    .eq(n).removeClass(Color[1]).addClass(Color[0]);
+            $("#payType").val(n);
+        }
+
+        $('.out-btn_ok, .icon-guanbi').on('touchend', function () {
+            setTimeout(function () {
+                $('#out-show').css('display', 'none');
+            }, 50);
+        });
+
+        $('.out-btn_ok').on('touchend', function () {
+            setTimeout(function () {
+                window.location.href = './payment-Success.html';
+            }, 50);
+        });
+        var passBotShow,
+                initWidth = parseFloat($('.out-box_inpass_bot').css('left')),
+                keyNum = 0;
+        $('#out-inpass').on('focus', function () {
+            var passBot = $('.out-box_inpass_bot');//下划线
+            passBotShow = setInterval(function () {//下滑线滑动
+                if (passBot.attr('class').match('out-box_inpass_botin')) passBot.removeClass('out-box_inpass_botin');
+                else passBot.addClass('out-box_inpass_botin');
+            }, 500);
+        }).on('blur', function () {
+            var passBot = $('.out-box_inpass_bot');//下划线
+            clearInterval(passBotShow);
+            passBot.removeClass('out-box_inpass_botin');
+        }).keydown(function (e) {
+            clearInterval(passBotShow);
+            $('.out-box_inpass_bot').removeClass('out-box_inpass_botin');
+            e = e || window.event;
+            if (e.keyCode != 8) {
+                if ($('#out-inpass').val().length >= 6 || (e.keyCode >= 58 && e.keyCode <= 47)) {
+                    e.preventDefault();
+                    $('#out-inpass').val($('#out-inpass').val().substring(0,6));
+                    return false;
+                }
+            }
+        }).keyup(function(e) {
+            var pass = $('#out-inpass').val();
+            if (keyNum >= 6 && e.keyCode != 8) {
+                e.preventDefault();
+                $('#out-inpass').val($('#out-inpass').val().substring(0,6));
+                return false;
+            }
+            if (e.keyCode >= 58 && e.keyCode <= 47) {
+                e.preventDefault();
+                return false;
+            }
+            if ($('.out-inpass').val().length == 0 && e.keyCode == 8) {
+                $('.out-box_li').eq(0).text('');
+                $('.out-box_inpass_bot').css('left', initWidth);
+                e.preventDefault();
+                return false;
+            }
+            if (e.keyCode == 8) {
+                keyNum = 0;
+                $('#out-inpass').val('');
+                pass = '';
+            }
+            else keyNum++;
+            if (pass.length == 6) {
+                clearInterval(passBotShow);
+                $('.out-box_inpass_bot').removeClass('out-box_inpass_botin');
+            }
+            var arr = pass.split('');
+            var list = $('.out-box_li');
+            // 明文密码
+            for (var i = 0; i < list.length; i++) {
+                list.eq(i).text('');
+            }
+            for (var i = 0 ; i < arr.length; i++) {
+                list.eq(i).text('·');
+            }
+        });
+
+
+        $(".pay_soon").click(function() {
+            $("#out-show").fadeIn('fast');
+        });
+
+        $(".off").click(function() {
+            $("#out-show").fadeOut('fast');
+        });
+
+        $(".out_btnBox .out_btn1").click(function() {
+            $("#out-show").fadeOut('fast');
+        });
+
+        $(".out_btnBox .out_btn2").click(function() {
+            window.location.href = 'paySuccess.html';
+        });
+    });
+</script>
+</body>
+</html>
