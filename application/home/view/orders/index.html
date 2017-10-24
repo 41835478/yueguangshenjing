@@ -87,16 +87,16 @@
 
     <ul class="goodsBox">
         <li>
+            {if condition="$goods neq ''"}
             <a href="{:url('goods/goodsInfo',['id'=>$goods->id])}">
-                {if condition="$goods->main_pic neq ''"}
                 <img class="img" src="__PUBLIC__{$goods->main_pic}" alt="商品图">
-                {/if}
                 <div class="right">
                     <p class="tit">{$goods->name|default=''}</p>
                     <p class="num">&times;<span>{$num}</span></p>
                     <p class="price">&yen;<span>{$goods->goods_price|default=0.00}</span></p>
                 </div>
             </a>
+            {/if}
         </li>
     </ul>
 
@@ -126,6 +126,12 @@
         if(address_id){
             var flag=$('.pay_way').find('.icon-kaiguanguan-copy-copy').attr('_flag');
             var shop_name=$('#shop_name').val();
+            if(flag==1){
+                if(!shop_name){
+                    alert('请填写店面名称');
+                    return false;
+                }
+            }
             $.ajax({
                 'url':'{:url("orders/create")}',
                 'data':{'address_id':address_id,'shop_name':shop_name,'is_shop':flag},
@@ -134,7 +140,7 @@
                 'dataType':'json',
                 success:function(res){
                     if(res.status){
-
+                        window.location.href="{:url('orders/pay')}";
                     }else{
                         alert(res.message);
                     }
