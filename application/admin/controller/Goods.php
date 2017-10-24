@@ -3,6 +3,8 @@
 namespace app\admin\controller;
 
 use think\Controller;
+use think\Db;
+use think\Exception;
 use think\Request;
 
 class Goods extends Base
@@ -37,27 +39,44 @@ class Goods extends Base
                $this->redirect($url);
            }
            unset($_FILES['main_pic']);
-           if(input('?file.show_pic')){
-               $files = $request->file('show_pic');
-               $info = $files->move(ROOT_PATH . 'public' . DS . 'resource'.DS.'admin'.DS.'goods');
-               if ($info) {
-                   $saveName = $info->getSaveName();
-                   $arr = explode("\\", $saveName);
-                   $str = implode('/', $arr);
-                   $date['show_pic']='/admin/goods/'.$str;
-               } else {
-                   $url=popBox('warning',$files->getError());
-                   $this->redirect($url);
+           if(input('?file.small_pic')){
+               $files = $request->file('small_pic');
+               foreach($files as $v){
+                   $info = $v->move(ROOT_PATH . 'public' . DS . 'resource'.DS.'admin'.DS.'goods');
+                   if ($info) {
+                       $saveName = $info->getSaveName();
+                       $arr = explode("\\", $saveName);
+                       $str = implode('/', $arr);
+                       $img[]='/admin/goods/'.$str;
+                   } else {
+                       $url=popBox('warning',$file->getError());
+                       $this->redirect($url);
+                   }
                }
            }else{
                $url=popBox('error','请上传商品展示图');
                $this->redirect($url);
            }
-           $res=model('Goods')->data($date)->save();
-           if($res){
-               $url=popBox('success','添加商品成功');
-               $this->redirect($url);
-           }else{
+           Db::startTrans();
+           try{
+               $date['created_at']=time();
+               $res=model('Goods')->insertGetId($date);
+               if($res){
+                   foreach($img as $v){
+                       $data[]['goods_id']=$res;
+                       $data[]['small_pic']=$v;
+                   }
+                   $res2=model('GoodsInfo')->saveAll($data);
+                   if($res2){
+                       Db::commit();
+                       $url=popBox('success','添加商品成功');
+                       $this->redirect($url);
+                   }else{
+                       throw new Exception();
+                   }
+               }
+           }catch(Exception $e){
+               Db::rollback();
                $url=popBox('error','添加商品失败');
                $this->redirect($url);
            }
@@ -86,22 +105,41 @@ class Goods extends Base
        return json(['status'=>false,'message'=>'修改商品状态失败']);
    }
 
-   public function editShowPic(Request $request)//修改商品展示图
+   public function smallPicView($id)
    {
-       if(input('?file.show_pic')){
-           $files = $request->file('show_pic');
+       $data=model('GoodsInfo')->where(['goods_id'=>$id])->select();
+       return view('goods/smallPicView',['data'=>$data,'id'=>$id]);
+   }
+
+   public function smallDel()//删除商品轮播图
+   {
+       $id=input('post.id');
+       $mod=model('GoodsInfo');
+       $goods=$mod->get($id);
+       $res=$mod->where('id',$id)->delete();
+       if($res){
+           unlink('./resource'.$goods->small_pic);
+           return json(['status'=>true,'message'=>'删除成功']);
+       }
+       return json(['status'=>false,'message'=>'删除失败']);
+   }
+
+   public function editSmallPic(Request $request)//修改商品展示图
+   {
+       if(input('?file.small_pic')){
+           $files = $request->file('small_pic');
            $info = $files->move(ROOT_PATH . 'public' . DS . 'resource'.DS.'admin'.DS.'goods');
            if ($info) {
                $saveName = $info->getSaveName();
                $arr = explode("\\", $saveName);
                $str = implode('/', $arr);
-               $date['show_pic']='/admin/goods/'.$str;
-               $date['updated_at']=time();
-               $res=model('Goods')->where(['id'=>$request->post('id')])->setField($date);
+               $date['small_pic']='/admin/goods/'.$str;
+               $date['goods_id']=input('post.id');
+               $res=model('GoodsInfo')->data($date)->save();
                if($res){
-                   $url=popBox('success','修改商品展示图成功');
+                   $url=popBox('success','添加商品轮播图成功');
                }else{
-                   $url=popBox('error','修改商品展示图失败');
+                   $url=popBox('error','添加商品轮播图失败');
                }
            } else {
                $url=popBox('warning',$files->getError());

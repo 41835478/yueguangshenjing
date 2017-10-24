@@ -81,15 +81,7 @@
 				<div class="titbg">产品展示</div>
 				<img src="__IMG__/index_hub.png" alt="" class="hu">
 			</div>
-			<div class="show_div">
-				<img class="goods_img" src="__IMG__/index_1.png" alt="">
-				<div class="right">
-					<p class="p1">越光神镜智能后视镜</p>
-					<p class="p2">至尊高速4G版</p>
-					<p class="price">单价：<span>2880</span>元</p>
-					<a class="go_a" href="goodsDetails.html">点击进入</a>
-				</div>
-			</div>
+            {:widget('IndexGoods/index')}
 		</div>
 		
 		<div class="body_2">
@@ -164,19 +156,19 @@
 	        autoplayDisableOnInteraction : false,
 	        observer:true,
 	        observerParents:true
-	    }); 
+	    });
 
-	    // $(".QR_li").click(function() {
-	    // 	$(".popBox").fadeIn('fast');
-	    // });
-	    // $(".popBox .btn1").click(function() {
-	    // 	$(".popBox").fadeOut('fast');
-	    // });
-
-
-	     $(".popBox .btn2").click(function() {
-	     	window.location.href = '{:url("code/index")}';
-	     });
+//	     $(".QR_li").click(function() {
+//	     	$(".popBox").fadeIn('fast');
+//	     });
+//	     $(".popBox .btn1").click(function() {
+//	     	$(".popBox").fadeOut('fast');
+//	     });
+//
+//
+//	     $(".popBox .btn2").click(function() {
+//	     	window.location.href = '{:url("code/index")}';
+//	     });
 	});
 </script>
 </body>

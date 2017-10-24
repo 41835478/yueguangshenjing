@@ -27,7 +27,12 @@ class Content extends controller
     public function notice()
     {
         #最新公告
-        $notice = ContentsModel::all(["type"=>3]);
+        $notice = ContentsModel::all(function($query){
+            $query->where(["type"=>3])->order("created_at","desc");
+        });
+        foreach ($notice as $v){
+            $v->content = mb_substr(strip_tags($v->content),0,15,"utf-8");
+        }
         return $this->fetch("content/notice",["notice"=>$notice]);
     }
     public function noticeDetails($id)

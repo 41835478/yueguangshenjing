@@ -1,0 +1,13 @@
+{if condition="count($data)>0"}
+{foreach $data as $v}
+<div class="show_div">
+    <img class="goods_img" src="__PUBLIC__{$v->show_pic}" alt="">
+    <div class="right">
+        <p class="p1">{$v->name}</p>
+        <p class="p2">{$v->describes}</p>
+        <p class="price"><span>单价：{$v->goods_price}</span>元</p>
+        <a class="go_a" href="{:url('goods/goodsInfo',['id'=>$v->id])}">点击进入</a>
+    </div>
+</div>
+{/foreach}
+{/if}

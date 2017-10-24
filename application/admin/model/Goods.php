@@ -14,4 +14,9 @@ class Goods extends Model
     protected $updateTime = false;
     protected $update = ['updated_at'];
     protected $table="ygsj_goods";
+
+    public function goodsInfo()
+    {
+        return $this->hasMany('GoodsInfo','goods_id');
+    }
 }
