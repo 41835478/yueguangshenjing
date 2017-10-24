@@ -92,4 +92,21 @@ class Users extends Controller
         }
     }
 
+    public function lock()
+    {
+        $input = Request::instance()->only("id,flag");
+        $user = User::get($input["id"]);
+        if($input["flag"] == 1){
+            $ob = $user->save(["status"=>2],["id"=>$input["id"]]);
+            if($ob){
+                return json(["status"=>0,"msg"=>"解锁定"]);
+            }
+        }else if($input["flag"] == 2){
+            $ob = $user->save(["status"=>1],["id"=>$input["id"]]);
+            if($ob){
+                return json(["status"=>0,"msg"=>"锁定"]);
+            }
+        }
+    }
+
 }

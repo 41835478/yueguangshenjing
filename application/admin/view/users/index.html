@@ -95,9 +95,9 @@
                     <td>{$v->level}</td>
                     <td>
                         <a href="javascrpt:void(0)" onclick="editLevel('{$v->id}')" data-toggle="modal" data-target="#myModal6">修改等级</a> |
-                        <a href="#" data-toggle="modal"
+                        <a href="javascript:void(0)" data-toggle="modal"
                            data-target="#myModal7" onclick="recharge('{$v->id}')">充值</a>
-                        <a href="#">锁定</a>
+                        <a href="javascript:void(0)" id="lo_{$v->id}" onclick="lock('{$v->id}')">{$v->status == "1" ? "锁定" : "解锁定"}</a>
                         <a href="#">密码重置</a>
                         <a href="#">查看下级</a>
                         <a href="#">进货</a>
@@ -180,6 +180,7 @@
         </div>
     </div>
 </div>
+
 <script src="__PUBLIC__/admin/js/plugins/layer/laydate/laydate.js"></script>
 
 
@@ -193,6 +194,35 @@
     }
     function recharge(id) {
         $("#recharge_id").val(id);
+    }
+    function lock(id) {
+        var flag = 0;
+        if($("#lo_"+id).html() == "锁定"){
+            flag = 1;
+            if(confirm("确定锁定该用户?")){
+                sendAjax(id,flag);
+            }
+        }else{
+            flag = 2;
+            if(confirm("确定解锁?")) {
+                sendAjax(id, flag);
+            }
+        }
+    }
+    function sendAjax(id,flag){
+        $.ajax({
+            url:"{:url('users/lock')}",
+            type:"post",
+            data:{
+                id:id,
+                flag:flag
+            },
+            success:function(res){
+                if(res.status == 0){
+                    $("#lo_"+id).html(res.msg);
+                }
+            }
+        });
     }
 </script>
 </body>
