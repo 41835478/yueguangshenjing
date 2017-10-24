@@ -2,6 +2,7 @@
 
 namespace app\home\controller;
 
+use app\admin\model\AccountRecordModel;
 use think\Controller;
 use think\Db;
 use think\Exception;
@@ -164,11 +165,14 @@ class Orders extends Base
         }
     }
 
-    public function writeRecord()//写入记录
+    public function writeRecord($order)//写入记录
     {
         $date['user_id']=$this->user_id;
         $date['record_info']='购买商品';
-        $date['type']='购买商品';
+        $date['type']=AccountRecordModel::TYPE_FIVE;
+        $date['status']=2;
+        $date['money']=$order->price;
+        model('admin/AccountRecordModel')->data($date)->save();
     }
 
     public function paySuccess()//支付成功跳转页面

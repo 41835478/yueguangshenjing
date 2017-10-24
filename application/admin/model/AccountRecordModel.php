@@ -8,6 +8,10 @@ class AccountRecordModel extends Model
 {
     //
     // 确定链接表名
+    protected $autoWriteTimestamp=true;
+    protected $createTime='created_at';
+    protected $updateTime = false;
+    protected $update = ['updated_at'];
     protected $table = 'ygsj_account_record';
 
     const TYPE_ONE = "1";#分销奖
