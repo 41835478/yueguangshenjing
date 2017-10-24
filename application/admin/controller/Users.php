@@ -92,4 +92,80 @@ class Users extends Controller
         }
     }
 
+    public function lock()
+    {
+        $input = Request::instance()->only("id,flag");
+        $user = User::get($input["id"]);
+        if($input["flag"] == 1){
+            $ob = $user->save(["status"=>2],["id"=>$input["id"]]);
+            if($ob){
+                return json(["status"=>0,"msg"=>"解锁定"]);
+            }
+        }else if($input["flag"] == 2){
+            $ob = $user->save(["status"=>1],["id"=>$input["id"]]);
+            if($ob){
+                return json(["status"=>0,"msg"=>"锁定"]);
+            }
+        }
+    }
+    public function pwdreset(){
+        $input = Request::instance()->only("id");
+        $user = User::get($input["id"]);
+
+        #生成随机密码
+        $randpwd='';
+        for ($i = 0; $i < 5; $i++)
+        {
+            $randpwd .= chr(mt_rand(97, 122));
+        }
+
+        $password=md5($user->mobile.$randpwd);
+        $user->save(['login_pwd'=>$password],["id"=>$input["id"]]);
+
+        return json(['status'=>0,'msg'=>'重置成功']);
+    }
+    //下级
+    public function suborDinate($id){
+        $user = User::get($id);
+        $childen = User::where("pid",$id)->select();
+        if($childen){
+            $childenNum = count($childen);
+            $str = '<table class="table table-hover table-striped">';
+            $str .= '<th>ID</th>';
+            $str .= '<th>推荐人</th>';
+            $str .= '<th>会员昵称</th>';
+            $str .= '<th>会员手机号</th>';
+            $str .= '<th>会员注册时间</th>';
+            $str .= '<th>会员余额</th>';
+            foreach($childen as $key=>$vo){
+                if($this->downU($vo['id']) == "n"){
+                    $downU = ">";
+                }else{
+                    $downU = " ";
+                }
+                $str .= "<tr style='cursor:pointer' onclick='childen({$vo['id']})'>";
+                $str .= "<td><a id='user_name' href='javascript:void(0)'>".$vo['id'].'</a></td>';
+                $str .= '<td>'.$vo['pid'].'</td>';
+                $str .= '<td>'.$vo['name'].'</td>';
+                $str .= '<td>'.$vo['mobile'].'</td>';
+                $str .= '<td>'.date("Y-m-d H:i:s",$vo['created_at']).'</td>';
+                $str .= '<td>'.$vo['account'].'</td>';
+                $str .= '<td>'.$downU.'</td>';
+                $str .= '</tr>';
+            }
+            $str .= '</table>';
+            return json(["data"=>$str,"user"=>$user,"num"=>$childenNum]);
+        }else{
+            return json(["message"=>"没有下级了"]);
+        }
+    }
+    //单个查询下级
+    public function downU($id){
+        $user = User::get($id);
+        $userList = User::where(["pid"=>$user->id])->find();
+        if($userList){
+            return "n";
+        }
+    }
+
 }

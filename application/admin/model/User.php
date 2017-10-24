@@ -15,10 +15,6 @@ class User extends Model
     const LEVEL_FIVE = "5";#省会城市
     const LEVEL_SIX = "6";#一线城市
 
-    public function upUserPhone($id)
-    {
-        return $this->where(['pid'=>$id])->find();
-    }
     public function accountRecord()
     {
         return $this->hasMany("AccountRecordModel","user_id","id");
