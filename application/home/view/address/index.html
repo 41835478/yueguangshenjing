@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>越光神镜</title>
+    <meta charset="utf-8">
+    <meta name="author" content="yy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta name="author" content="yy">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="description" content="" />
+    <meta name="Keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="__CSS__/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css">
+    <link rel="stylesheet" type="text/css" href="__FONTS__/iconfont.css">
+    <script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.min.js"></script>
+    <script type="text/javascript" src="__JS__/public.js"></script>
+    <link rel="stylesheet" href="__CSS__/main.css">
+    <style type="text/css">
+        body{ background: #f5f5f5; }
+    </style>
+</head>
+<body>
+<div class="public_head">
+    <a class="iconfont icon-mjiantou-copy" href="javascript:history.go(-1);"></a>
+    <h3>选择收货地址</h3>
+    <span class="head_right" onclick="manageAddress()">管理</span>
+</div>
+<div class="content">
+    <div class="fenge"></div>
+    <div class="selectAds">
+        <ul>
+            {if condition="$data neq ''"}
+            {foreach $data as $v}
+            <li>
+                <p class="p1">
+                    <span class="name">{$v->name}</span>
+                    <span class="phone">{$v->phone}</span>
+                </p>
+                <p class="p2">
+                    {if condition="$v->default==1"}
+                    <span class="moren">[默认地址]</span>
+                    {/if}
+                    <span>{$v->area},{$v->street},{$v->area_info}</span>
+                </p>
+            </li>
+            {/foreach}
+            {/if}
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    'use strict';
+    /*Shuffling figure*/
+function manageAddress(){
+    window.location.href='{:url("address/manageAddress")}';
+}
+</script>
+</body>
+</html>

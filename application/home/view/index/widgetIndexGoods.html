@@ -1,12 +1,15 @@
 {if condition="count($data)>0"}
 {foreach $data as $v}
 <div class="show_div">
-    <img class="goods_img" src="__PUBLIC__{$v->show_pic}" alt="">
+    <img class="goods_img" src="__PUBLIC__{$v->main_pic}" alt="">
     <div class="right">
-        <p class="p1">{$v->name}</p>
-        <p class="p2">{$v->describes}</p>
-        <p class="price"><span>单价：{$v->goods_price}</span>元</p>
-        <a class="go_a" href="{:url('goods/goodsInfo',['id'=>$v->id])}">点击进入</a>
+        <p class="con_tit">{$v->name}{$v->describes}</p>
+        <p class="price">&yen;<span>{$v->goods_price}</span></p>
+        <a class="buy_btn" href="{:url('goods/goodsInfo',['id'=>$v->id])}">点击购买</a>
+        <!--<p class="p1"></p>-->
+        <!--<p class="p2"></p>-->
+        <!--<p class="price"><span>单价：</span>元</p>-->
+        <!--<a class="go_a" href="">点击进入</a>-->
     </div>
 </div>
 {/foreach}

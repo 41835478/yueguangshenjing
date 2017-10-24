@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理收货地址</title>
+    <meta charset="utf-8">
+    <meta name="author" content="yy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta name="author" content="yy">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="description" content="" />
+    <meta name="Keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="__CSS__/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css">
+    <link rel="stylesheet" type="text/css" href="__FONTS__/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/ly.css">
+    <script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.min.js"></script>
+    <script type="text/javascript" src="__JS__/public.js"></script>
+    <style type="text/css">
+        body{
+            background: #f5f5f5;
+        }
+        .icon-xuanzhong1{ color: #e99b01; }
+        .mA_d3 span:nth-child(1).mrdz_hover{color: #e99b01;}
+        .yzz,.yzz_1{ display: none; }
+    </style>
+</head>
+<body>
+<div class="public_head">
+    <i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>
+    管理收货地址
+</div>
+<ul class="mA_ul">
+    {if condition="$data neq ''"}
+    {foreach $data as $v}
+    <li>
+        <div class="mA_d1">
+            <span class="mA_s1">默认</span>
+            <span class="mA_s2">杨阳洋</span>
+            <span class="mA_s3">13245678998</span>
+        </div>
+        <div class="mA_d2">河南省郑州市郑东新区农业南路街道如意西路建业大厦F座2306</div>
+        <div class="mA_d3">
+            <span class="mrdz"><i class="iconfont icon-weixuanzhong"></i>默认地址</span>
+            <span class="masc"><i class="iconfont icon-shanchu"></i>删除</span>
+            <span class="mabj"><i class="iconfont icon-bianji"></i>编辑</span>
+        </div>
+    </li>
+    {/foreach}
+    {/if}
+</ul>
+<a href="{:url('address/addressCreate')}" class="mA_btn">新增收货地址</a>
+<div class="yzz"></div>
+<div class="yzz_1">
+    <h3>提示</h3>
+    <p>确定要删除该收货地址吗？</p>
+    <a href="#" class="yzz_btn1">忽略</a>
+    <a href="#" class="yzz_btn2">确定</a>
+</div>
+<script type="text/javascript">
+    $(".mA_ul li .mA_d1:first").find(".mA_s1").css('display','block');
+    $(".mA_ul li:first").find('.mrdz').addClass('mrdz_hover').find('i').addClass('icon-xuanzhong1');
+    ;
+    $(".mA_ul li").each(function() {
+        $(this).find('.mrdz').click(function() {
+            $(".mA_s1").hide();
+            $(".mrdz").removeClass('mrdz_hover').find('i').removeClass('icon-xuanzhong1')
+            $(this).parent().prev().prev().find(".mA_s1").show();
+            $(this).addClass('mrdz_hover').find('i').addClass('icon-xuanzhong1');
+        });
+
+        $(this).find('.masc').click(function() {
+            var _this = $(this);
+            $(".yzz").show();
+            $(".yzz_1").show();
+            $(".yzz_btn1").click(function() {
+                $(".yzz").hide();
+                $(".yzz_1").hide();
+            });
+            $(".yzz_btn2").click(function() {
+                _this.parent().parent().remove();
+                $(".yzz").hide();
+                $(".yzz_1").hide();
+            });
+        });
+
+
+
+        $(".mabj").click(function() {
+            window.location.href = 'editAddress.html';
+        });
+
+    });
+</script>
+</body>
+</html>

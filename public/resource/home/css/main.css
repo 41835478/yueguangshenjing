@@ -311,34 +311,46 @@ border: none;
 }
 .index_body .body_1 .show_div{
 	margin: 0 3.5%;
-	background: #000000;
+	background: #fff;
 	overflow: hidden;
 	color: #fff;
-	padding-bottom: 15px;
+	padding:10px;
+	border:1px solid #eaeaea;
+	/*padding-bottom: 15px;*/
 }
 .index_body .body_1 .show_div .goods_img{
 	display: block;
-	float: left;
-	width: calc(94% - 80px);
+	width: 100%;
 }
 .index_body .body_1 .show_div .right{
-	width: 80px;
-	float: left;
-	padding: 10px 3% 0;
 	text-align: center;
 }
-.index_body .body_1 .show_div .right .p1{
+.index_body .body_1 .show_div .right .buy_btn{
+	width: 80px;
+	height: 26px;
+	background: #2d3238;
+	color: #fff;
+	float: right;
 	font-size: 14px;
-	font-weight: bold;
+	line-height: 26px;
+	text-align: center;
+	border-radius: 4px;
 }
-.index_body .body_1 .show_div .right .p2{
-	font-size: 12px;
-	margin-bottom: 8px;
+.index_body .body_1 .show_div .right .con_tit{
+	font-size: 14px;
+	color: #333;
+	height: 40px;
+	line-height: 40px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .index_body .body_1 .show_div .right .price{
-	font-size: 12px;
-	margin-bottom: 8px;
-	font-size: 12px;
+	font-size: 16px;
+	color: #e63b47;
+	text-align: left;
+	float: left;
+	line-height: 26px;
 }
 .index_body .body_1 .show_div .right .go_a{
 	background: #fff;

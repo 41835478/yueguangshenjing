@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>越光神镜</title>
+    <meta charset="utf-8">
+    <meta name="author" content="yy">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta name="author" content="yy">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="description" content="" />
+    <meta name="Keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="__CSS__/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/public.css">
+    <link rel="stylesheet" type="text/css" href="__FONTS__/iconfont.css">
+    <script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.min.js"></script>
+    <script type="text/javascript" src="__JS__/public.js"></script>
+    <link rel="stylesheet" href="__CSS__/main.css">
+    <style type="text/css">
+        body{ background: #f5f5f5; }
+        .textarea::-webkit-input-placeholder { /* WebKit browsers */
+            color: #999;
+        }
+        .textarea:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: #999;
+            opacity:  1;
+        }
+        .textarea::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: #999;
+            opacity:  1;
+        }
+        .textarea:-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+<div class="public_head">
+    <a class="iconfont icon-mjiantou-copy" href="javascript:history.go(-1);"></a>
+    <h3>确认订单</h3>
+</div>
+<div class="content placeOrder_body">
+    <div class="placeOrder_msg">
+        {if condition="$address neq ''"}
+        <div class="top">
+            <span class="span1">配送至：</span>
+            <span class="name">{$address->name}</span>
+            <span class="phone">{$address->phone}</span>
+            <i class="iconfont icon-arrow-right"></i>
+        </div>
+        <div class="btm">
+            <i class="iconfont icon-weizhi-copy"></i>
+            <p class="p1">{$address->area},{$address->street},{$address->area_info}</p>
+        </div>
+        {else/}
+        <div class="top">
+            <span class="span1">配送至：</span>
+            <span class="name"></span>
+            <span class="phone"></span>
+            <i class="iconfont icon-arrow-right"></i>
+        </div>
+        {/if}
+    </div>
+
+    <div class="msg_border"></div>
+
+    <ul class="pay_way">
+        <li class="li1">
+            <span class="left">非店面购买</span>
+            <i class="right iconfont icon-guan"></i>
+        </li>
+        <li>
+            <span class="left">店面购买</span>
+            <i class="right iconfont icon-kaiguanguan-copy-copy"></i>
+        </li>
+        <div class="edit_div">
+            <textarea class="textarea" cols="30" rows="10" placeholder="请填写店铺名称"></textarea>
+        </div>
+    </ul>
+
+
+    <ul class="goodsBox">
+        <li>
+            <a href="{:url('goods/goodsInfo',['id'=>$goods->id])}">
+                <img class="img" src="__PUBLIC__{$goods->main_pic}" alt="商品图">
+                <div class="right">
+                    <p class="tit">{$goods->name}</p>
+                    <p class="num">&times;<span>{$num}</span></p>
+                    <p class="price">&yen;<span>{$goods->goods_price}</span></p>
+                </div>
+            </a>
+        </li>
+    </ul>
+
+    <div class="msgBox">
+        <span>商品金额</span>
+        <span class="allmoney right">&yen;<em>{$totalMoney}</em></span>
+    </div>
+    <div class="footer_btn">
+        <a class="btn btn2" href="javascript:;" id="orderPay">立即购买</a>
+    </div>
+</div>
+
+
+<script>
+    'use strict';
+    /*Shuffling figure*/
+
+    $(".goodsBox li:last").css('margin-bottom','0');
+
+    $(".pay_way .iconfont").click(function() {
+        $(this).removeClass('icon-guan').addClass('icon-kaiguanguan-copy-copy');
+        $(this).parents("li").siblings('li').find('.iconfont').removeClass('icon-kaiguanguan-copy-copy').addClass('icon-guan');
+    });
+
+    $('#orderPay').click(function(){
+        var address_id='{$address->id|default=""}';
+        if(address_id){
+
+        }else{
+            alert('请先填写收货地址');
+            sessionStorage.setItem('address',1)
+            window.location.href = '{:url("address/index")}';
+        }
+    })
+    $(".placeOrder_msg").click(function() {
+        sessionStorage.setItem('address',1)
+        window.location.href = '{:url("address/index")}';
+    });
+</script>
+</body>
+</html>

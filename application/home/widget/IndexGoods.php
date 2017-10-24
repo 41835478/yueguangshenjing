@@ -13,7 +13,7 @@ class IndexGoods extends Controller
     public function index()//遍历首页商品
     {
         $data=array();
-        $data=model('admin/Goods')->field(['id','name','show_pic','goods_price','describes'])->where(['status'=>1])->select();
+        $data=model('admin/Goods')->field(['id','name','main_pic','goods_price','describes'])->where(['status'=>1])->select();
         $this->assign('data',$data);
         return $this->fetch('index/widgetIndexGoods');
     }
