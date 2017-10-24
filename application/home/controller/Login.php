@@ -33,7 +33,7 @@ class Login extends Controller
 		    } 
 		    #判断验证码
 		    $code=Cache::get('yzm');
-		    if($post['yzm']!=$code['yzm'] && $post['phone']!=$code['phone'] ){
+		    if($post['yzm']!=$code['yzm'] || $post['phone']!=$code['phone'] ){
 		    	return jsonp(['status'=>401,'message'=>'手机验证码有误']);
 		    }
 		    #生成随机密码
@@ -116,7 +116,7 @@ class Login extends Controller
 		    } 
 		    #判断验证码
 		    $code=Cache::get('yzm');
-		    if($post['yzm']!=$code['yzm'] && $post['phone']!=$code['phone'] ){
+		    if($post['yzm']!=$code['yzm'] || $post['phone']!=$code['phone'] ){
 		    	return jsonp(['status'=>401,'message'=>'手机验证码有误']);
 		    }
 		    #生成随机密码
