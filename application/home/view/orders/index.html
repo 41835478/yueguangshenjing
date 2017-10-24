@@ -126,12 +126,12 @@
         }else{
             alert('请先填写收货地址');
             sessionStorage.setItem('address',1)
-            window.location.href = '{:url("address/index")}';
+            window.location.href = '{:url("users/manageaddress")}';
         }
     })
     $(".placeOrder_msg").click(function() {
         sessionStorage.setItem('address',1)
-        window.location.href = '{:url("address/index")}';
+        window.location.href = '{:url("users/manageaddress")}';
     });
 </script>
 </body>
