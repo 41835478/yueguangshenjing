@@ -24,7 +24,9 @@ class Orders extends Base
             $user_id=$this->getUserInfo($request->param('name'),2);
             $mod->where(['user_id'=>$user_id]);
         }
-        $data=$mod->paginate(config('page'));
+        $data=$mod->paginate(config('page'),false, [
+            'query' => Request::instance()->param(),//不丢失已存在的url参数
+        ]);
         $page=$this->getPage($data);
         $this->assign('currentPage',$page['currentPage']);
         $this->assign('total',$page['total']);

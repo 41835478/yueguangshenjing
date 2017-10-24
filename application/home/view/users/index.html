@@ -107,14 +107,23 @@
 	</div>
 </div>
 <div class="shopCenter_5" style="margin-top: 10px;">
+	{if condition="$alipay eq ''"/} 
+		<div class="shopCenter_6">
+		<a href="{:url('Users/bingdingalipay')}"><img src="/resource/home/images/ly_26.png"><span>账户绑定</span><i class="iconfont icon-arrow-right"></i><span class="shopCenter_span1">未支付宝,前往绑定</span></a>
+		</div>
+
+	{else}
+		<div class="shopCenter_6">
+		<a href="javascript:void(0);" class="person_bb"><img src="/resource/home/images/ly_26.png"><span>账户绑定</span><i class="iconfont icon-arrow-right"></i><span class="shopCenter_span1">已绑定支付宝,解绑</span></a>
+		</div>
+	{/if}
+	
+
 	<div class="shopCenter_6">
-		<a href="alipayBound.html"><img src="/resource/home/images/ly_26.png"><span>账户绑定</span><i class="iconfont icon-arrow-right"></i><span class="shopCenter_span1">已绑定支付宝</span></a>
+		<a href="{:url('Users/manageaddress')}"><img src="/resource/home/images/ly_27.png"><span>收货地址</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
 	<div class="shopCenter_6">
-		<a href="manageAddress.html"><img src="/resource/home/images/ly_27.png"><span>收货地址</span><i class="iconfont icon-arrow-right"></i></a>
-	</div>
-	<div class="shopCenter_6">
-		<a href="modifyPwd.html"><img src="/resource/home/images/ly_28.png"><span>修改密码</span><i class="iconfont icon-arrow-right"></i></a>
+		<a href="{:url('Users/alterpassword')}"><img src="/resource/home/images/ly_28.png"><span>修改密码</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
 </div>
 <div class="shopCenter_5" style="margin-top: 10px; margin-bottom: 50px;">
@@ -151,6 +160,15 @@
 		}
 		return false;
 		});
+
+		$(".person_bb").click(function(){
+		if(confirm("确认解绑支付宝？")){
+		window.location.href="/home/Users/removealipay";
+		}
+		return false;
+		});
+
+
 </script>
 </body>
 </html>

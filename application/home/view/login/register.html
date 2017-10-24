@@ -82,35 +82,30 @@
 			</li>
 		</ul>
 
-		<button class="login_btn true">立即注册</button>
+		<button class="login_btn true shop"  id="bid">立即注册</button>
 		<p class="regist_xieyi">注册即同意<a href="{:url('Login/registerProtocol')}">《用户注册协议》</a></p>
 	</div>
 
 	<script>
-		// $(".login_btn").click(function() {
-		// 	window.location.href = 'login.html';
-		// });
-
-
 $('#code').on('click',function(){
-    var phone = $(".phone").val();
-    // if(!(/^1[34578]\d{9}$/.test(phone))){ 
-    //       alert("手机号码有误!");  
-    //       return false; 
-    //   } 
+     var phone=$('.phone').val();
+            if(phone==""){             
+                return false;
+            }
     var count = 60;
     var countdown = setInterval(CountDown, 1000);
     function CountDown() {
         $("#code").css('pointer-events', 'none');;
-        $("#code").text("重新发送("+count +")");
+        $("#code").val("重新发送("+count +")");
         if (count == 0) {
           $("#code").css('pointer-events', 'auto');
-           $("#code").text("发送验证码");
+           $("#code").val("发送验证码");
             clearInterval(countdown);
         };
         count--;
     }
 });
+
 
 
 
@@ -125,8 +120,7 @@ $('#code').on('click',function(){
                 return false;
             }
             var data={
-                'phone':phone,
-               
+                'phone':phone,               
             }
 
             var url="{:url('Login/sendyamcode')}";
@@ -153,8 +147,6 @@ $('#code').on('click',function(){
             })
             
         })
-
-
 
 	  $('.true').click(function(){
             var phone=$('.phone').val();
@@ -206,6 +198,8 @@ $('#code').on('click',function(){
                 'pay_pwd':pay_pwd,
                
             }
+           
+
             var url="{:url('Login/register')}";
             sendAjax(data,url)
         })

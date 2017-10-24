@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>管理收货地址</title>
+<meta charset="utf-8">
+<meta name="author" content="yy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="yy">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" type="text/css" href="/resource/home/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/public.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/ly.css">
+<script type="text/javascript" src="/resource/home/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/public.js"></script>
+<style type="text/css">
+	body{
+		background: #f5f5f5;
+	}
+	.icon-xuanzhong1{ color: #e99b01; }
+	.mA_d3 span:nth-child(1).mrdz_hover{color: #e99b01;}
+	.yzz,.yzz_1{ display: none; }
+</style>
+</head>
+<body>
+<div class="public_head">
+	<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>
+	管理收货地址
+</div>
+<ul class="mA_ul">
+	{foreach $address as $v}
+	<li>
+		<div class="mA_d1">
+			{if condition="$v['default'] eq 1 "/} 
+			<span class="mA_s1" style="display: inline;">默认</span>
+			{else}
+
+			{/if}
+			<span class="mA_s2">{$v['name']}</span>
+			<span class="mA_s3">{$v['phone']}</span>
+		</div>
+		<div class="mA_d2">{$v['area']}{$v['street']}{$v['area_info']}</div>
+		<div class="mA_d3">
+			
+			{if condition="$v['default'] eq 1 "/} 
+			<span class="mrdz mrdz_hover">
+			<i class="iconfont icon-weixuanzhong icon-xuanzhong1" data-id="{$v['id']}"></i>默认地址</span>
+			{else}
+			<span class="mrdz">
+			<i class="iconfont icon-weixuanzhong" data-id="{$v['id']}"></i>默认地址</span>
+			{/if}
+			<span class="masc mascss"><i class="iconfont icon-shanchu" data-id="{$v['id']}"></i>删除</span>
+			<span class="mabj"><a href="{:url('Users/editaddress',['id'=>$v['id']])}" class="iconfont icon-bianji">编辑</a></span>
+			<!-- <span class="mabj"><i class="iconfont icon-bianji" data-id="{$v['id']}"></i>编辑</span> -->
+		</div>
+	</li>
+	{/foreach}
+</ul>
+
+
+<a href="{:url('Users/Addaddress')}" class="mA_btn">新增收货地址</a>
+<div class="yzz"></div>
+<div class="yzz_1">
+	<h3>提示</h3>
+	<p>确定要删除该收货地址吗？</p>
+	<a href="#" class="yzz_btn1">忽略</a>
+	<a href="#" class="yzz_btn2">确定</a>
+</div>
+<script type="text/javascript">
+$(".mA_ul li").each(function() {
+	$(this).find('.mrdz').click(function() {
+		$(".mA_s1").hide();
+		$(".mrdz").removeClass('mrdz_hover').find('i').removeClass('icon-xuanzhong1')
+		$(this).parent().prev().prev().find(".mA_s1").show();
+		$(this).addClass('mrdz_hover').find('i').addClass('icon-xuanzhong1');
+
+		var id = $(this).addClass('mrdz_hover').find('i').attr("data-id");
+		 var data={
+                'id':id,               
+            }
+            var url="{:url('Users/defaultaddress')}";
+            sendAjax(data,url)
+	});
+		 function sendAjax(data,url){
+            $.ajax({
+                'url':url,
+                'data':data,
+                'async':true,
+                'type':'post',
+                'dataType':'jsonp',
+                success:function(data){
+                	 if(data.status){ 
+                	 		if(data.status==200){
+                	 			//alert(data.message);  
+                	 		}
+                	 		if(data.status==401){
+                	 			alert(data.message);
+                	 			window.location.reload();                 	 			
+                	 		}                 	                           
+                        }else{
+                        	alert(data.message);
+                        	window.location.reload();
+                        }                  
+                },             
+            })
+        }
+
+
+	$(this).find('.masc').click(function() {
+		var id = $(this).addClass('mascss').find('i').attr("data-id");
+		var _this = $(this);
+		$(".yzz").show();
+		$(".yzz_1").show();
+		$(".yzz_btn1").click(function() {
+			$(".yzz").hide();
+			$(".yzz_1").hide();
+		});
+		$(".yzz_btn2").click(function() {
+			_this.parent().parent().remove();
+			$(".yzz").hide();
+			$(".yzz_1").hide();
+		 	var data={
+                'id':id,               
+            }
+            var url="{:url('Users/deladdress')}";
+	              $.ajax({
+	                'url':url,
+	                'data':data,
+	                'async':true,
+	                'type':'post',
+	                'dataType':'jsonp',
+	                success:function(data){
+	                	 if(data.status){ 
+	                	 		if(data.status==200){
+	                	 			//alert(data.message);  
+	                	 		}
+	                	 		if(data.status==401){
+	                	 			alert(data.message);
+	                	 			window.location.reload();                 	 			
+	                	 		}                 	                           
+	                        }else{
+	                        	alert(data.message);
+	                        	window.location.reload();
+	                        }                  
+	                },             
+	            })
+		});
+	});
+
+
+
+});
+</script>
+</body>
+</html>

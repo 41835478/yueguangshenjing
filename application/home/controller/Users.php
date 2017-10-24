@@ -30,7 +30,8 @@ class Users extends Base
     	}else{
     		$user['pphone']=$this->user->where('id',$user['pid'])->value('mobile');
     	}
-
+    	$alipay=Alipay::where('user_id',$uid)->find();
+    	$this->assign('alipay',$alipay);
     	$this->assign('user',$user);
     	return $this->fetch();
     }
@@ -87,7 +88,10 @@ class Users extends Base
     	$user=$this->user->where('id',$uid)->find();
     	#查询支付宝
     	$alipay=Alipay::where('user_id',$uid)->find();
-    	$alipay['alipay_account']=substr_replace($alipay['alipay_account'],'****',3,4);
+    	if($alipay){
+    		$alipay['alipay_account']=substr_replace($alipay['alipay_account'],'****',3,4);
+    	}
+    	
     	if(request()->isPost()){
     		$post=input('param.');
     		if($post['money'] ==0 || $post['money'] < 0){
@@ -366,9 +370,189 @@ try{
 
 	}
 
-/**************************************************************************************************************************************************************************************************/
-	
+/*****支付宝*********************************************************************************************************************************************************************************************/
+	public function bingdingalipay(){
+		$user=$this->user->where('id',$this->uid)->find();
+		$user['pphone']=substr_replace($user['mobile'],'****',3,4);
+		if(request()->isPost()){
+			$post=input('param.');
+			$password=md5($post['pwd'].$user['unique']);
+			if($password != $user['login_pwd']){
+				return jsonp(['status'=>401,'message'=>'登录密码错误']);
+			}
+			$code=Cache::get('yzm');
+		    if($post['yzm']!=$code['yzm'] || $user['mobile']!=$code['phone'] ){
+		    	return jsonp(['status'=>401,'message'=>'手机验证码有误']);
+		    }
+			$data=[];
+			$data['user_id']=$user['id'];
+			$data['alipay_account']=$post['alipay_account'];
+			$data['alipay_name']=$post['alipay_name'];
+			$data['created_at']=time();
+			$data['updated_at']=time();
+			$res=Alipay::insert($data);
+			if($res){
+				return jsonp(['status'=>200,'message'=>'绑定成功']);
+			}			
+		}
+		$this->assign('user',$user);
+	 	return $this->fetch();	
+	}
 
+	public function removealipay(){
+		$res=Alipay::where('user_id',$this->uid)->delete();
+		if($res){
+			exit('<script>alert("解除绑定支付宝成功");location.href = "/home/Users/index"</script>');
+		}
+	}
+
+
+
+/*****管理收货地址*********************************************************************************************************************************************************************************************/
+	public function manageaddress(){
+		$address=db('address')->where('user_id',$this->uid)->select();
+
+
+		$this->assign('address',$address);
+		return $this->fetch();	
+	}
+	public function Addaddress(){
+		if(request()->isPost()){
+			$num=db('address')->where('user_id',$this->uid)->count();
+			if($num >= 5){
+				return jsonp(['status'=>401,'message'=>'您的收货地址已经达到最多,请删除或修改地址']);
+			}
+			$post=input('param.');
+			$data=[];
+			if($post['di']==1){
+				db('address')->where('user_id',$this->uid)->update(['default'=>2]);
+				$data['default']=1;
+			}
+			$data['user_id']=$this->uid;
+			$data['name']=$post['name'];
+			$data['phone']=$post['phone'];
+			$data['street']=$post['street'];
+			$data['area']=$post['demo2'];
+			$data['area_info']=$post['area_info'];
+			$data['created_at']=time();
+			$data['updated_at']=time();
+			$res=db('address')->insert($data);
+			if($res){
+				return jsonp(['status'=>200,'message'=>'添加成功']);
+			}			
+		}
+		return $this->fetch();	
+	}
+	public function defaultaddress(){
+		if(request()->isPost()){
+			$id=input('param.id');	
+				db('address')->where('user_id',$this->uid)->update(['default'=>2]);
+				$res=db('address')->where('id',$id)->update(['default'=>1]);
+			if($res){
+				return jsonp(['status'=>200,'message'=>'修改成功']);
+			}			
+		}
+	}
+	public function editaddress(){
+		$id=input('param.id');
+		$address=db('address')->where('id',$id)->find();
+			if(request()->isPost()){
+				$post=input('param.');	
+				$data['name']=$post['name'];
+				$data['phone']=$post['phone'];
+				$data['street']=$post['street'];
+				$data['area']=$post['demo2'];
+				$data['area_info']=$post['area_info'];
+				$data['updated_at']=time();
+				$res=db('address')->where('id',$post['id'])->update($data);
+				if($res){
+					return jsonp(['status'=>200,'message'=>'修改成功']);
+				}			
+			}	
+		$this->assign('address',$address);
+		return $this->fetch();	
+	}
+	public function deladdress(){
+		$id=input('param.id');
+		$res=db('address')->where('id',$id)->delete();
+			if($res){
+				return jsonp(['status'=>200,'message'=>'删除成功']);
+				}	
+	}
+/******修改密码********************************************************************************************************************************************************************************************/
+	public function alterpassword(){
+
+		return $this->fetch();	
+	}
+	public function loginpassword(){
+		$user=$this->user->where('id',$this->uid)->find();
+		$user['pphone']=substr_replace($user['mobile'],'****',3,4);
+		if(request()->isPost()){
+				$post=input('param.');	
+				if ($post['login_pwd1'] !=$post['login_pwd2']) 
+				    { 
+				       	return jsonp(['status'=>401,'message'=>'两次密码不一致']);
+				    } 
+				    #判断验证码
+				    $code=Cache::get('yzm');
+
+				    if($post['yzm']!=$code['yzm'] || $user['phone']!=$code['phone'] ){
+				    	return jsonp(['status'=>401,'message'=>'手机验证码有误']);
+				    }
+				    #生成随机密码
+				    $randpwd='';
+				    for ($i = 0; $i < 5; $i++) 
+					{ 
+					$randpwd .= chr(mt_rand(97, 122)); 
+					}
+					$password=md5($post['login_pwd1'].$randpwd);
+					$data=[];
+					$data['unique']=$randpwd;
+					$data['login_pwd']=$password;
+					$data['updated_at']=time();
+					$res=$this->user->where('mobile',$user['mobile'])->update($data);
+				if($res){
+					return jsonp(['status'=>200,'message'=>'修改成功']);
+				}			
+			}	
+			
+		$this->assign('user',$user);
+		return $this->fetch();	
+	}
+	public function alipaypassword(){
+		$user=$this->user->where('id',$this->uid)->find();
+		$user['pphone']=substr_replace($user['mobile'],'****',3,4);	
+		if(request()->isPost()){
+				$post=input('param.');
+
+				if ($post['login_pwd1'] !=$post['login_pwd2']) 
+				    { 
+				       	return jsonp(['status'=>401,'message'=>'两次密码不一致']);
+				    } 
+				    #判断验证码
+				    $code=Cache::get('yzm');				 
+				    if($post['yzm']!=$code['yzm'] || $user['mobile']!=$code['phone'] ){
+				    	return jsonp(['status'=>401,'message'=>'手机验证码有误']);
+				    }
+					$password=md5($post['login_pwd1']);
+					$data=[];
+					$data['pay_pwd']=$password;
+					$data['updated_at']=time();
+					$res=$this->user->where('mobile',$user['mobile'])->update($data);
+				if($res){
+					return jsonp(['status'=>200,'message'=>'修改成功']);
+				}			
+			}
+
+		$this->assign('user',$user);
+		return $this->fetch();	
+	}
+
+/******库存******************************************************************************************************************************************************************************************/
+	public function myInventory(){
+
+		return $this->fetch();
+	}
 
 
     #退出

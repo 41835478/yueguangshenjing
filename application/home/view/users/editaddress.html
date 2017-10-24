@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>越光神镜</title>
+<meta charset="utf-8">
+<meta name="author" content="yy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="yy">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" type="text/css" href="/resource/home/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/public.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/font/iconfont.css">
+<script type="text/javascript" src="/resource/home/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/public.js"></script>
+<link rel="stylesheet" type="text/css" href="/resource/home/css/LArea.css">
+<script type="text/javascript" src="/resource/home/js/LArea.js"></script>
+<script type="text/javascript" src="/resource/home/js/LAreaData1.js"></script>
+<script type="text/javascript" src="/resource/home/js/LAreaData2.js"></script>
+<link rel="stylesheet" href="/resource/home/css/main.css">
+<style type="text/css">
+	body{ background: #f5f5f5; }
+	.public_head{
+		border: none;
+	}
+	::-webkit-input-placeholder { /* WebKit browsers */  
+	    color: #333;  
+	}  
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */  
+	   color: #333;  
+	   opacity:  1;  
+	}  
+	::-moz-placeholder { /* Mozilla Firefox 19+ */  
+	   color: #333;  
+	   opacity:  1;  
+	}  
+	:-ms-input-placeholder { /* Internet Explorer 10+ */  
+	   color: #333;  
+	} 
+	.zz-right{
+		float: right;
+	}
+</style>
+</head>
+<body>
+<div class="public_head">
+	<a class="iconfont icon-mjiantou-copy" href="javascript:history.go(-1);"></a>
+	<h3>编辑收货地址</h3>
+</div>
+<div class="content">
+	<ul class="editAds_body">
+		<li class="li">
+			<span>收货人</span>
+			<input type="text" id="name" value="{$address['name']}" placeholder="姓名">
+		</li>
+		<li class="li">
+			<span>联系电话</span>
+			<input type="text" id="phone" value="{$address['phone']}" placeholder="电话">
+		</li>
+		<li class="li">
+			<span>所在地区</span>
+			
+			<div class=" zz-right zz color-66">
+                <i class="iconfont icon-arrow-right"></i>
+                <div class="zz-right">
+                    <input class="demo three-input" id="demo2" type="text" value="{$address['area']}" readonly placeholder="地区" />
+                    <input id="value2" type="hidden" />
+                </div>
+            </div>
+		</li>
+		<li class="li">
+			<span>街道</span>
+			<input type="text" id="street" value="{$address['street']}" placeholder="街道">
+		</li>
+		<input type="hidden" id="id" value="{$address['id']}">
+		<textarea class="address" cols="30" rows="10" id="area_info" placeholder="详细地址">{$address['area_info']}</textarea>
+	</ul>
+	
+
+	<button class="editAds_btn true" type="button">保存</button>
+</div>
+
+<script>
+	'use strict';
+	/*Shuffling figure*/
+	$(function () {
+		var area2 = new LArea();
+	    area2.init({
+	        'trigger': '#demo2',
+	        'valueTo': '#value2',
+	        'keys': {
+	            id: 'value',
+	            name: 'text'
+	        },
+	        'type': 2,
+	        'data': [provs_data, citys_data, dists_data]
+	    });
+	});
+
+
+	 $('.true').click(function(){
+            var name=$('#name').val();
+            var phone=$('#phone').val();
+            var demo2=$('#demo2').val();
+            var area_info=$('#area_info').val();
+            var street=$('#street').val();
+            var id=$('#id').val();
+            if(name==""){
+                alert("请输入支付宝账户！");
+                return false;
+            }
+            if(phone==""){
+                alert("请输入手机号！");
+                return false;
+            }
+            if(!phone.match(/^1[34578]\d{9}$/)){
+                alert('手机号不符合规则！');
+                return false;
+            }
+            if(demo2==""){
+                alert("请选择所在地区！");
+                return false;
+            } 
+            if(area_info==""){
+                alert("请输入详细地址！");
+                return false;
+            }
+            if(street==""){
+                alert("请输入街道！");
+                return false;
+            }               
+            var data={
+                'name':name,
+                'phone':phone,
+                'demo2':demo2,
+                'area_info':area_info,
+                'street':street,
+                'id':id,
+               
+            }
+            var url="{:url('Users/editaddress')}";
+            sendAjax(data,url)
+        })
+        function sendAjax(data,url){
+            $.ajax({
+                'url':url,
+                'data':data,
+                'async':true,
+                'type':'post',
+                'dataType':'jsonp',
+                success:function(data){
+                	 if(data.status){ 
+                	 		if(data.status==200){
+                	 			alert(data.message); 
+                	 			window.location.href="/home/Users/manageaddress.html";
+                	 		}
+                	 		if(data.status==401){
+                	 			alert(data.message);
+                	 			window.location.reload();                 	 			
+                	 		}                 	                           
+                        }else{
+                        	alert(data.message);
+                        	window.location.reload();
+                        }                  
+                },             
+            })
+        }
+
+
+</script>
+</body>
+</html>

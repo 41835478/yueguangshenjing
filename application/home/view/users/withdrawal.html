@@ -54,8 +54,8 @@
 <div class="yzz_1">
 	<h3>提示</h3>
 	<p>提现需要先绑定支付宝账号，是否去绑定支付宝账户？</p>
-	<a href="javascript:void(0);" class="close_btn yzz_btn1">忽略</a>
-	<a href="alipayBound.html" class="yzz_btn2">确定</a>
+	<a href="javascript:history.go(-1);" class="close_btn yzz_btn1">忽略</a>
+	<a href="{:url('Users/bingdingalipay')}" class="yzz_btn2">确定</a>
 </div>
 
 {/if}
@@ -73,21 +73,19 @@
             var pay_pwd=$('.pay_pwd').val();
             if(money==""){
                 alert("请输入金额！");
-                //window.location.reload();
                 return false;
             }          
             if(pay_pwd==""){
                 alert("请输入支付密码！");
-                //window.location.reload();
                 return false;
             }
-            
             var data={
             	'money':money,
                 'pay_pwd':pay_pwd,              
             }
+            $(this).css("pointer-events","auto");
             var url="{:url('Users/withdrawal')}";  
-             sendAjax(data,url)
+            sendAjax(data,url)
         })
         function sendAjax(data,url){    
             $.ajax({
