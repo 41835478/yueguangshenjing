@@ -95,7 +95,8 @@
                     <td>{$v->level}</td>
                     <td>
                         <a href="javascrpt:void(0)" onclick="editLevel('{$v->id}')" data-toggle="modal" data-target="#myModal6">修改等级</a> |
-                        <a href="#">充值</a>
+                        <a href="#" data-toggle="modal"
+                           data-target="#myModal7" onclick="recharge('{$v->id}')">充值</a>
                         <a href="#">锁定</a>
                         <a href="#">密码重置</a>
                         <a href="#">查看下级</a>
@@ -147,6 +148,38 @@
         </div>
     </div>
 </div>
+<div class="modal inmodal fade" id="myModal7" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">用户充值</h4>
+            </div>
+            <form action="{:url('users/recharge')}" method="post">
+                <input type="hidden" id="recharge_id" name="recharge_id" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-inline">类别：</label>
+                        <select name="is_add" class="form-control" id="">
+                            <option value="1">增加</option>
+                            <option value="0">减少</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="form-inline">金额：</label>
+                        <input type="number" class="form-control" min="1" name="num">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">确定</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 <script src="__PUBLIC__/admin/js/plugins/layer/laydate/laydate.js"></script>
 
 
@@ -157,6 +190,9 @@
 <script>
     function editLevel(id) {
 //        alert(id);
+    }
+    function recharge(id) {
+        $("#recharge_id").val(id);
     }
 </script>
 </body>
