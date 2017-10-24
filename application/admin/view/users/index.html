@@ -94,12 +94,11 @@
                     <td>{$v->account}</td>
                     <td>{$v->level}</td>
                     <td>
-                        <a href="javascrpt:void(0)" onclick="editLevel('{$v->id}')" data-toggle="modal" data-target="#myModal6">修改等级</a> |
-                        <a href="javascript:void(0)" data-toggle="modal"
-                           data-target="#myModal7" onclick="recharge('{$v->id}')">充值</a>
+                        <a href="javascript:void(0)" onclick="editLevel('{$v->id}')" data-toggle="modal" data-target="#myModal6">修改等级</a> |
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal7" onclick="recharge('{$v->id}')">充值</a>
                         <a href="javascript:void(0)" id="lo_{$v->id}" onclick="lock('{$v->id}')">{$v->status == "1" ? "锁定" : "解锁定"}</a>
-                        <a href="#">密码重置</a>
-                        <a href="#">查看下级</a>
+                        <a href="javascript:void(0)" id="pw_{$v->id}" onclick="pwdreset('{$v->id}')">密码重置</a>
+                        <a href="javascript:void(0)" onclick="childen('{$v->id}')">查看下级</a>
                         <a href="#">进货</a>
                         <a href="#">出货</a>
                         <a href="#">库存</a>
@@ -180,10 +179,9 @@
         </div>
     </div>
 </div>
+{include file="public/foot"}
 
 <script src="__PUBLIC__/admin/js/plugins/layer/laydate/laydate.js"></script>
-
-
 <script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
 <script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
 <!--<script src="__PUBLIC__/admin/js/jquery.min.js"></script>-->
@@ -221,6 +219,62 @@
                 if(res.status == 0){
                     $("#lo_"+id).html(res.msg);
                 }
+            }
+        });
+    }
+    function pwdreset(id){
+        if(confirm("确定重置?")) {
+            $.ajax({
+                url:"{:url('users/pwdreset')}",
+                type:"post",
+                data:{
+                    id:id
+                },success:function(res){
+                    if(res.status == 0){
+                        alert(res.msg);
+                    }
+                }
+            });
+        }
+    }
+    //用户下级
+    function childen(id){
+        //加载层
+        index2 = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+
+        //获取权限信息
+        $.ajax({
+            url:"{:url('users/suborDinate')}",
+            type:"get",
+            data:{
+               id:id
+            }, success:function(res){
+                layer.close(index2);
+                if(res.message){
+                    layer.msg(res.message);
+                    return;
+                }
+                layer.open({
+                    type: 1,
+                    shade: 0,
+                    maxmin: true,//允许最大化
+                    resize: true,//允许拉伸
+                    offset: [ //随机坐标
+                        Math.random()*($(window).height()-500)
+                        ,Math.random()*($(window).width()-600)
+                    ],
+                    zIndex: layer.zIndex, //重点1
+                    success: function(layero){
+                        layer.setTop(layero); //重点2
+                    },
+                    tipsMore: true,
+                    area:['600px', '500px'],
+                    title:'<b style="color:orange;">'+res.user.name+'</b>的下级　　人数：<b style="color:orange;">'+res.num+'</b>人',
+                    skin: 'layui-layer-demo', //加上边框
+                    content: res.data
+                });
+            },error:function(){
+                console.log("请稍后重试");
             }
         });
     }
