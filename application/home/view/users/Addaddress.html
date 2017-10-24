@@ -175,19 +175,20 @@
                 	 if(data.status){
 						 if(sessionStorage.getItem('address')==1){
 							 window.location.href="{:url('orders/index')}"
+						 }else{
+							 if(data.status==200){
+								 alert(data.message);
+								 window.location.href="/home/Users/manageaddress.html";
+							 }
+							 if(data.status==401){
+								 alert(data.message);
+								 window.location.reload();
+							 }
 						 }
-						if(data.status==200){
-							alert(data.message);
-							window.location.href="/home/Users/manageaddress.html";
-						}
-						if(data.status==401){
-							alert(data.message);
-							window.location.reload();
-						}
-                        }else{
-                        	alert(data.message);
-                        	window.location.reload();
-                        }                  
+					 }else{
+						alert(data.message);
+						window.location.reload();
+					}
                 },             
             })
         }
