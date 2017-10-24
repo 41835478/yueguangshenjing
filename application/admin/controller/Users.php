@@ -2,7 +2,9 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\AccountRecordModel;
 use app\admin\model\User;
+use Service\AccountRecord;
 use think\Controller;
 use think\Request;
 
@@ -64,69 +66,30 @@ class Users extends Controller
         }
         return $pages;
     }
-    /**
-     * 显示创建资源表单页.
-     *
-     * @return \think\Response
-     */
-    public function create()
+
+    public function recharge()
     {
-        //
+        $input = Request::instance()->only("is_add,recharge_id,num");
+        $user = User::get($input["recharge_id"]);
+        $account = new AccountRecord();
+
+        if($input["is_add"] == "1"){
+            $user->setInc("account",$input["num"]);
+            $account->setAccountRecord($input["recharge_id"],"系统充值",
+                AccountRecordModel::TYPE_EIGHT,1,$input["num"]);
+
+            $Url = popBox("success","系统充值成功");
+            $this->redirect($Url);
+        }else{
+            $user->setDec("account",$input["num"]);
+
+            $account->setAccountRecord($input["recharge_id"],"系统扣款",
+                AccountRecordModel::TYPE_EIGHT,2,$input["num"]);
+
+            $Url = popBox("success","系统扣款成功");
+            $this->redirect($Url);
+
+        }
     }
 
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-    }
-
-    /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-    }
-
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
 }
