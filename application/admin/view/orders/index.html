@@ -75,6 +75,7 @@
                     <th>是否是店面购买</th>
                     <th>店面名称</th>
                     <th>订单状态</th>
+                    <th>收货人名称</th>
                     <th>收货人手机号</th>
                     <th>收货详细地址</th>
                     <th>订单价格</th>
@@ -123,6 +124,7 @@
                         <font color="green">已完成</font>
                         {/if}
                     </td>
+                    <td>{$v->name}</td>
                     <td>{$v->phone}</td>
                     <td>{$v->area_info}</td>
                     <td>{$v->price} 元</td>
@@ -142,14 +144,14 @@
                         <a class="sendGoods" style="color:green">发货</a> |
                         {/if}
                         <a onclick="cour('{$v->id}')" data-toggle="modal" data-target="#myModal4">添加物流号</a> |
-                        <a href="{:url('orders/orderInfo',array('id'=>$v->id))}">订单详情</a>
+                        <a href="{:url('orders/orderInfo',array('id'=>$v->id))}">详情</a>
                     </td>
                 </tr>
                 {/foreach}
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="4">
                         总共 {$total} 页 当前显示第 {$currentPage} 页
                     </td>
                     <td colspan="14" style="text-align: right">
