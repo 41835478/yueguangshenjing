@@ -135,6 +135,7 @@ class Users extends Controller
             $str .= '<th>推荐人</th>';
             $str .= '<th>会员昵称</th>';
             $str .= '<th>会员手机号</th>';
+            $str .= '<th>会员身份</th>';
             $str .= '<th>会员注册时间</th>';
             $str .= '<th>会员余额</th>';
             foreach($childen as $key=>$vo){
@@ -145,9 +146,10 @@ class Users extends Controller
                 }
                 $str .= "<tr style='cursor:pointer' onclick='childen({$vo['id']})'>";
                 $str .= "<td><a id='user_name' href='javascript:void(0)'>".$vo['id'].'</a></td>';
-                $str .= '<td>'.$vo['pid'].'</td>';
+                $str .= '<td>'.User::get($vo['pid'])["mobile"].'</td>';
                 $str .= '<td>'.$vo['name'].'</td>';
                 $str .= '<td>'.$vo['mobile'].'</td>';
+                $str .= '<td>'.config('level')[$vo['level']].'</td>';
                 $str .= '<td>'.date("Y-m-d H:i:s",$vo['created_at']).'</td>';
                 $str .= '<td>'.$vo['account'].'</td>';
                 $str .= '<td>'.$downU.'</td>';
