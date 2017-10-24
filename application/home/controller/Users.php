@@ -44,7 +44,7 @@ class Users extends Base
     		$post=input('param.');
     		$data=[];
     		 	// 获取表单上传文件 
-    		if(!empty(request()->file("user_pic"))){
+    		if(input('?user_pic')){
     			 $file = request()->file("user_pic");
 			    // 移动到框架应用根目录/public/uploads/ 目录下
 			    $info = $file->validate(['size'=>10485756,'ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS . 'uploads');
