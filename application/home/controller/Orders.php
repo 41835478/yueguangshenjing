@@ -77,6 +77,7 @@ class Orders extends Base
         $date['status']=1;
         $date['address_id']=$data['address_id'];
         $address=$this->getAddress($data['address_id']);
+        $date['phone']=$address->name;
         $date['phone']=$address->phone;
         $date['area_info']=$address->area.','.$address->street.','.$address->area_info;
         $date['price']=$this->getGoods($id)->goods_price;
@@ -142,42 +143,86 @@ class Orders extends Base
         $order_id=Session::get('order_id','home');
         if($date['flag']==3){//说明是余额支付
             if($order_id){
-                $this->balancePay($order_id);
+                $user=model('admin/User')->get($this->user_id);
+                if(md5($date['pwd'])==$user->pay_pwd){
+                    $res=$this->balancePay($order_id,$user);
+                    if($res){
+                        Session::delete('order_id','home');
+                        return json(['status'=>true,'message'=>'支付成功']);
+                    }else{
+                        $message='支付失败';
+                    }
+                }else{
+                    $message='支付密码输入错误';
+                }
+                return json(['status'=>false,'message'=>$message]);
             }
             return json(['status'=>false,'message'=>'该订单已支付请不要重复支付']);
         }
     }
 
-    public function balancePay($id)//余额支付
+    public function balancePay($id,$user)//余额支付
     {
-        Db::startTrans();
-        try{
-            $order=model('admin/OrderModel')->get($id);
-            $order->status=2;
-            if($order->save()){
-
-            }else{
-                throw new Exception();
-            }
-        }catch (Exception $e){
-            Db::rollback();
+        $order=model('admin/OrderModel')->get($id);
+        if($user->account<$order->price){
             return false;
+        }else{//只有用户中的余额大于等于订单金额才可以购买
+            Db::startTrans();
+            try{
+                $order->status=2;
+                if($order->save()){
+                    $res=$this->writeRecord($order->price);
+                    if($res){
+                        $res2=$this->userAccountChange($order->price);
+                        if($res2){
+                            Db::commit();
+                            return true;
+                        }else{
+                            throw new Exception();
+                        }
+                    }else{
+                        throw new Exception();
+                    }
+                }else{
+                    throw new Exception();
+                }
+            }catch (Exception $e){
+                Db::rollback();
+                return false;
+            }
         }
     }
 
-    public function writeRecord($order)//写入记录
+    public function writeRecord($money)//写入记录
     {
         $date['user_id']=$this->user_id;
         $date['record_info']='购买商品';
         $date['type']=AccountRecordModel::TYPE_FIVE;
         $date['status']=2;
-        $date['money']=$order->price;
-        model('admin/AccountRecordModel')->data($date)->save();
+        $date['money']=$money;
+        $res=model('admin/AccountRecordModel')->data($date)->save();
+        if($res){
+            return true;
+        }
+        return false;
+    }
+
+    public function userAccountChange($money)//改变用户表
+    {
+        $user=model('admin/User')->get($this->user_id);
+        if($user->level!=2){
+            $user->level=2;
+        }
+        $user->account=$user->account-$money;
+        if($user->save()){
+            return true;
+        }
+        return false;
     }
 
     public function paySuccess()//支付成功跳转页面
     {
-        return view('order/paySuccess');
+        return view('orders/paySuccess');
     }
 
     public function order_num()//生成订单号
