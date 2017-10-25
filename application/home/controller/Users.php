@@ -100,12 +100,21 @@ class Users extends Base
     		if ($post['money'] %100 != 0){ //x为10的倍数
     			return jsonp(['status'=>401,'message'=>'提现金额必须是100的倍数']);
     		} 
+    		$starttime=db('config')->where('name','starttime')->value('value');
+    		$endtime=db('config')->where('name','endtime')->value('value');
+    		$time=strtotime(date('Y-m-d'));
+    		if(time() < $starttime || time() > $endtime){
+    			return jsonp(['status'=>401,'message'=>'提现时间为'.$starttime.'点与'.$endtime.'点之间']);   			
+    		}
+
     		if($post['money'] > $user['account']){
     			return jsonp(['status'=>401,'message'=>'余额不足']);
     		}
     		if(md5($post['pay_pwd']) != $user['pay_pwd']){
     			return jsonp(['status'=>401,'message'=>'支付密码错误']);
     		}
+
+
     		#查询配置
     		$lmoney=abs($post['money']);
     		$shouxu=db('config')->where('name','withdrawal')->value('value');
@@ -120,7 +129,7 @@ try{
     		$data=[];
     		$data['user_id']=$uid;
     		$data['record_info']='提现';
-    		$data['type']=7;
+    		$data['type']=6;
     		$data['status']=2;
     		$data['money']=$lmoney;
     		$data['created_at']=time();
@@ -239,6 +248,24 @@ try{
   		$this->assign('installred',$installred);
   		return $this->fetch();
   	}
+
+
+  	#店面奖
+  	public function storeaward(){
+  		#
+  		$uid=$this->uid;
+  		$onetotalstoreaward=self::public_total(9,$uid);
+  		$onestoreaward=self::public_node(9,$uid);
+
+  		$towtotalstoreaward=self::public_total(10,$uid);
+  		$towstoreaward=self::public_node(10,$uid);
+  		$totalstoreaward=$onetotalstoreaward + $towtotalstoreaward;
+
+  		$this->assign(['totalstoreaward'=>$totalstoreaward,'onestoreaward'=>$onestoreaward ,'towstoreaward'=>$towstoreaward ]);
+  		return $this->fetch();
+  	}
+
+
 
   	#公用方法获取奖总额
   	public static function public_total($type,$uid){
@@ -376,6 +403,7 @@ try{
 		$user['pphone']=substr_replace($user['mobile'],'****',3,4);
 		if(request()->isPost()){
 			$post=input('param.');
+
 			$password=md5($post['pwd'].$user['unique']);
 			if($password != $user['login_pwd']){
 				return jsonp(['status'=>401,'message'=>'登录密码错误']);

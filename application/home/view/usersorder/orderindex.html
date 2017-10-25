@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>待付款</title>
+<meta charset="utf-8">
+<meta name="author" content="yy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="yy">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" type="text/css" href="/resource/home/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/public.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/ly.css">
+<script type="text/javascript" src="/resource/home/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/public.js"></script>
+<script type="text/javascript" src="/resource/home/js/payment.js"></script>
+<style type="text/css">
+    body{
+        background-color: #f5f5f5;
+    }
+    .clearfix:after{
+        content: "";
+        display: block;
+        clear: both;
+    }
+    .clearfix{
+        zoom: 1;
+    }
+    .left{
+       float: left;
+    }
+    .right{
+       float: right;
+    }
+    .public_head{
+        width: 100%;
+        overflow: hidden;
+        height: 45px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        text-align: center;
+        font-size: 18px;
+        color: #333333;
+        line-height: 45px;
+        z-index: 1000;
+        border-bottom: 1px solid #e6e6e6;
+        background: #FFF;
+    }
+    .public_head i{
+        position: absolute;
+        top: 0; left: 0;
+        font-size: 18px;
+        display: block;
+        padding: 0 2%;
+        font-weight: bold;
+    }
+    .title{
+        margin-top: 46px;
+    }
+    .title ul{
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        background-color: #fff;
+    }
+    .title ul li{
+        width: 25%;
+        float: left;
+    }
+    .title ul li a{
+        display: block;
+        width: 100%;
+        height: 47px;
+        font-size: 16px;
+        color: #333333;
+    }
+    .active{
+        border-bottom: 3px solid #333;
+    }
+    .orderDetails_6 .orderDetails_7 .orderDetails_8 .right{
+        padding-right: 3%;
+        color: #e99b01;
+        width: 50px;
+    }
+    .orderDetails_9{
+        color: #e63b47;
+        height: 30px;
+        line-height: 30px;
+    }
+    .orderDetails_9 a{
+        width: 25%;
+        height: 30px;
+        line-height: 30px;
+        background-color: #2d3238;
+        color: #fff;
+        text-align: center;
+        margin-right: 3%;
+        border-radius: 3px;
+    }
+    .orderDetails_9 .go{
+        background-color: #fff;
+        color: #2d3238;
+        border: 1px solid #2d3238;
+    }
+    .orderDetails_8{
+        color: #999;
+    }
+    .co_3 a{
+        display: block;
+        overflow: hidden;
+    }
+</style>
+</head>
+<body>
+<div class="public_head">
+    <i class="iconfont icon-mjiantou-copy" onclick="window.location.href='my.html'"></i>
+    我的订单
+</div>
+
+<div class="title">
+    <ul>
+        {if condition="$type eq 1"/} 
+        <li><a href="{:url('Usersorder/orderindex',['type'=>1])}" class="active">待付款</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>2])}">待发货</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>3])}">待收货</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>4])}">已完成</a></li>
+                {elseif condition="$type eq 2"/}
+        <li><a href="{:url('Usersorder/orderindex',['type'=>1])}">待付款</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>2])}" class="active">待发货</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>3])}">待收货</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>4])}">已完成</a></li>
+                {elseif condition="$type eq 3"/}
+        <li><a href="{:url('Usersorder/orderindex',['type'=>1])}">待付款</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>2])}">待发货</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>3])}" class="active">待收货</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>4])}">已完成</a></li>
+                {elseif condition="$type eq 4"/}
+         <li><a href="{:url('Usersorder/orderindex',['type'=>1])}" >待付款</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>2])}">待发货</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>3])}">待收货</a></li>
+        <li><a href="{:url('Usersorder/orderindex',['type'=>4])}" class="active">已完成</a></li>
+
+        {/if}
+
+  
+    </ul>
+</div>
+
+<div class="orderDetails_6">
+
+    {foreach $order as $v}
+    <div class="orderDetails_7">
+        <div class="orderDetails_8 left">订单编号：<span>{$v['order_code']}</span><div class="right">
+           {if condition="$type eq 1"/} 
+            待付款
+                {elseif condition="$type eq 2"/}
+            待发货
+                {elseif condition="$type eq 3"/}
+            待收货
+                {elseif condition="$type eq 4"/}
+            已完成
+
+        {/if}  
+
+        </div></div>
+
+        {foreach $v.info as $vv}
+        <div class="co_3">
+            <!-- <a href="{:url('goods/goodsInfo',['id'=>$vv['goods_id']])}"> -->
+                <a href="{:url('Usersorder/orderinfo',['order_id'=>$v['id']])}">
+                
+                <img src="__PUBLIC__{$vv['goods_pic']}">
+                <h3>{$vv['goods_name']}</h3>
+                <div class="co_4">
+                    <span>￥{$vv['goods_price']}</span>
+                    <span>x{$vv['goods_num']}</span>
+                </div>
+            </a>
+        </div>
+        {/foreach}
+
+        {if condition="$type eq 1"/} 
+        <div class="orderDetails_9">应付￥{$v['price']}
+            <a href="{:url('Order/pay',['order_id'=>$v['id']])}" class="right">去付款</a>
+            <input type="hidden"  value="{$v['id']}" id="order_id">
+            <a href="javascript:void(0);" class="right go">取消订单</a>
+        </div>
+                {elseif condition="$type eq 2"/}
+        <div class="orderDetails_9">实付￥{$v['price']}
+            <a href="{:url('Usersorder/orderinfo',['order_id'=>$v['id']])}" class="right">查看详情</a>
+        </div>
+                {elseif condition="$type eq 3"/}
+        <div class="orderDetails_9">实付￥{$v['price']}
+            <input type="hidden"  value="{$v['id']}" id="order_id">
+            <a href="javascript:void(0);" class="right save">确认收货</a>
+        </div>
+                {elseif condition="$type eq 4"/}
+        <div class="orderDetails_9">实付￥{$v['price']}
+            <a href="{:url('Usersorder/orderinfo',['order_id'=>$v['id']])}" class="right">查看订单</a>
+        </div> 
+        {/if}         
+    </div>
+{/foreach}
+<script>
+    $(".orderDetails_9 .go").click(function() {
+        if(confirm("确认删除该订单？")){
+            $(this).parent().parent(".orderDetails_7").css('display','none'); 
+            var order_id=$('#order_id').val();
+             var data={
+                    'order_id':order_id,               
+                }
+            var url="{:url('Usersorder/delorder')}";
+            sendAjax(data,url)          
+        }
+    });
+
+        function sendAjax(data,url){
+            $.ajax({
+                'url':url,
+                'data':data,
+                'async':true,
+                'type':'post',
+                'dataType':'jsonp',
+                success:function(data){
+                     if(data.status){ 
+                            if(data.status==200){
+
+                            }
+                            if(data.status==401){
+                                //alert(data.message);
+                                //window.location.reload();                               
+                            }                                              
+                        }else{
+                            alert(data.message);
+                            window.location.reload();
+                        }                  
+                },             
+            })
+        }
+
+    $(".orderDetails_9 .save").click(function() {
+        if(confirm("确认收货吗？")){
+            $(this).parent().parent(".orderDetails_7").css('display','none'); 
+            var order_id=$('#order_id').val();
+             var data={
+                    'order_id':order_id,               
+                }
+            var url="{:url('Usersorder/stocks')}";
+            seeeAjax(data,url)          
+        }
+    });
+
+        function seeeAjax(data,url){
+            $.ajax({
+                'url':url,
+                'data':data,
+                'async':true,
+                'type':'post',
+                'dataType':'jsonp',
+                success:function(data){
+                     if(data.status){ 
+                            if(data.status==200){
+                                alert(data.message);
+                                window.location.href="/home/Usersorder/orderindex/type/4";
+                            }
+                            if(data.status==401){
+                                alert(data.message);
+                                window.location.reload();                               
+                            }                                              
+                        }else{
+                            alert(data.message);
+                            window.location.reload();
+                        }                  
+                },             
+            })
+        }
+
+</script>
+</div>
+</body>
+</html>

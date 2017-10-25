@@ -101,7 +101,7 @@
 	  $('.true').click(function(){
             var alipay_account=$('.alipay_account').val();
             var alipay_name=$('.alipay_name').val();
-            var pwd=$('.pay_pwd').val();
+            var pwd=$('.pwd').val();
             var yzm=$('.yzm').val();
             if(alipay_account==""){
                 alert("请输入支付宝账户！");
@@ -141,7 +141,7 @@
                 	 if(data.status){ 
                 	 		if(data.status==200){
                 	 			alert(data.message); 
-                	 			window.location.href="/home/User/index.html";
+                	 			window.location.href="/home/Users/index.html";
                 	 		}
                 	 		if(data.status==401){
                 	 			alert(data.message);
