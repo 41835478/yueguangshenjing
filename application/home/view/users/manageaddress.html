@@ -33,7 +33,7 @@
 </head>
 <body>
 <div class="public_head">
-	<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>
+	<i class="iconfont icon-mjiantou-copy" onclick="backPrev()"></i>
 	管理收货地址
 </div>
 <ul class="mA_ul">
@@ -157,7 +157,13 @@ $(".mA_ul li").each(function() {
 	});
 
 
-
+	function backPrev(){
+		if(sessionStorage.getItem('address')==1){
+			window.location.href='{:url("orders/index")}';
+		}else{
+			window.location.href='javascript:history.go(-1);'
+		}
+	}
 });
 </script>
 </body>

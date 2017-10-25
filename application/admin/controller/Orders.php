@@ -46,6 +46,7 @@ class Orders extends Base
         $id=input('post.id');
         $order=model('OrderModel')->get($id);
         $order->status=3;
+        $order->type=1;
         if($order->save()){
             return json(['status'=>true,'message'=>'发货成功']);
         }
