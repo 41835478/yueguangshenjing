@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> - 视频列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    {include file="public/header"}
+</head>
+<body class="gray-bg">
+{include file="public/popBox"}
+<div class="col-sm-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>视频列表</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link" href="{:url('video/index')}">
+                <button type="button" class="btn btn-success">
+                    添加视频
+                </button>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <table class="footable table table-stripped" data-page-size="10" data-filter=#filter>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>视频标题</th>
+                    <th>视频展示图</th>
+                    <th>视频源地址</th>
+                    <th>是否推荐到首页</th>
+                    <th>是否显示</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="gradeX">
+                    {foreach name="data" item="v" key="k" }
+                    <td class="did">{$v->id}</td>
+                    <td>{$v->title}</td>
+                    <td _pic="{$v->pic}">
+                        <img src="__PUBLIC__{$v->pic}" width="50px" height="50px">
+                    </td>
+                    <td>{$v->video_path}</td>
+                    <td>
+                        {if condition="$v->flag eq 1"}
+                        <b style="color:green">是</b> | <b style="color:#ccc;cursor:pointer" class="no_index">否</b>
+                        {else/}
+                        <b style="color:#ccc;cursor:pointer" class="is_index">是</b> | <b style="color:green">否</b>
+                        {/if}
+                    </td>
+                    <td>
+                        {if condition="$v->status eq 1"}
+                        <b style="color:green">是</b> | <b style="color:#ccc;cursor:pointer" class="none">否</b>
+                        {else/}
+                        <b style="color:#ccc;cursor:pointer" class="display">是</b> | <b style="color:green">否</b>
+                        {/if}
+                    </td>
+                    <td>{$v->created_at}</td>
+                    <td>
+                        <a onclick="editVideo(this,'{$v->id}')" data-toggle="modal" data-target="#myModal5">修改</a>
+                        <a onclick="delVideo('{$v->id}')">删除</a>
+                    </td>
+                </tr>
+                {/foreach}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        总共 {$total} 页 当前显示第 {$currentPage} 页
+                    </td>
+                    <td colspan="14" style="text-align: right">
+                        {$render}
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">修改视频信息</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="form-horizontal" action="{:url('video/editVideo')}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">视频标题</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" id="title" type="text" name="title" value="">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">视频图片</label>
+                        <div class="col-sm-10">
+                            <input type="file" name="pic" value="" id="singleFile">
+                            <img id="singleImg" style="border: 1px dashed #c0c0c0" src="__PUBLIC__/admin/goods/index0.jpg" width="100px" height="100px">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <input type="hidden" id="videoId" name="id" value="">
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">修改</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-white" type="reset">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
+<script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
+<!--<script src="__PUBLIC__/admin/js/jquery.min.js"></script>-->
+<script src="__PUBLIC__/admin/js/plugins/jsTree/jstree.min.js"></script>
+<script>
+    function editVideo($this,id){
+        $('#videoId').val(id);
+        var obj=$($this).parent().parent().find('td');
+        var title=obj.eq(1).html()
+        var pic=obj.eq(2).attr('_pic');
+        $('#singleImg').attr('src','__PUBLIC__'+pic)
+        $('#title').val(title);
+    }
+    function delVideo(id){
+        if(confirm('您确定要删除该视频吗？')){
+            var data={'id':id};
+            var url="{:url('video/delVideo')}";
+            sendAjax(data,url)
+        }
+    }
+    $('.no_index').click(function(){
+        var id=$(this).parent().parent().find('.did').html();
+        var data={
+            'id':id,
+            'flag':2,
+            'mark':1
+        };
+        var url="{:url('video/configVideo')}";
+        sendAjax(data, url)
+    })
+    $('.is_index').click(function(){
+        var id=$(this).parent().parent().find('.did').html();
+        var data={
+            'id':id,
+            'flag':1,
+            'mark':1
+        };
+        var url="{:url('video/configVideo')}";
+        sendAjax(data, url)
+    })
+    $('.none').click(function(){
+        var id=$(this).parent().parent().find('.did').html();
+        var data={
+            'id':id,
+            'status':2,
+            'mark':2
+        };
+        var url="{:url('video/configVideo')}";
+        sendAjax(data, url)
+    })
+    $('.display').click(function(){
+        var id=$(this).parent().parent().find('.did').html();
+        var data={
+            'id':id,
+            'status':1,
+            'mark':2
+        };
+        var url="{:url('video/configVideo')}";
+        sendAjax(data, url)
+    })
+    function sendAjax(data, url) {
+        $.ajax({
+            'url': url,
+            'data': data,
+            'async': true,
+            'type': 'post',
+            'dataType': 'json',
+            success: function (res) {
+                alert(res.message);
+                window.location.reload();
+            },
+            error: function () {
+                alert('操作失败');
+            }
+        })
+    }
+    function cour(id){
+        $('#orderId').val(id);
+    }
+</script>
+<script>
+    $('.close').click(function () {
+        $(this).parent().parent().remove();
+    })
+</script>
+</body>
+</html>
+<script type="text/javascript">
+    $("#singleFile").change(function(){
+        var objUrl = getObjectURL(this.files[0]) ;
+        console.log("objUrl = "+objUrl) ;
+        if (objUrl) {
+            $("#singleImg").attr("src", objUrl) ;
+        }
+    }) ;
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+</script>
