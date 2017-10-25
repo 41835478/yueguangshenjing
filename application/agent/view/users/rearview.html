@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 出货明细列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    {include file="public/header"}
+    <link href="__PUBLIC__/admin/css/plugins/jsTree/style.min.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+{include file="public/popBox"}
+<div class="col-sm-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>出货明细</h5>
+        </div>
+        <div class="ibox-content">
+            <form action="{:url('users/index')}" method="get">
+                <div class="input-group">
+                    <span style="float: right;margin-left: 10px;margin-right: 10px">
+                                <input placeholder="结束日期" value=""
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+                                       class="input-sm form-control layer-date" name="end" id="end">
+                            </span>
+                    <span style="float: right;margin-left: 10px">
+                                <input placeholder="开始日期" value=""
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+                                       class="input-sm form-control layer-date" name="start" id="start">
+                            </span>
+                    <span style="float: right;margin-left: 5px;">级别：
+                        <select id="threeLevel" name="level" class="input-sm">
+                            <option value="">--请选择--</option>
+                            <option value="1">普通会员</option>
+                            <option value="2">消费会员</option>
+                            <option value="3">县级市代理</option>
+                            <option value="4">地级市代理</option>
+                            <option value="5">省会城市代理</option>
+                            <option value="6">一线城市代理</option>
+                            <option value="7">店面</option>
+                        </select>
+                    </span>
+                    <span style="float: right;margin-left: 5px;">推荐人：
+                        <input name="from_phone" type="text" class="input-sm" placeholder="请输入推荐人电话"/>
+                    </span>
+                    <span style="float: right;margin-left: 5px;">用户昵称：
+                        <input name="nickname" type="text" class="input-sm" placeholder="请输入用户昵称"/>
+                    </span>
+                    <span style="float: right;margin-left: 5px;">用户手机号：
+                        <input name="mobile" type="text" class="input-sm" placeholder="请输入用户手机号"/>
+                    </span>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-sm btn-primary">
+                            搜索
+                        </button>
+                    </span>
+                </div>
+            </form>
+            <h3 style="color:green;">库存:{$rearview->repertorys}</h3>
+            <table class="footable table table-stripped" data-page-size="10" data-filter=#filter>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>商品名</th>
+                    <th>增加/减少</th>
+                    <th>商品数量</th>
+                    <th>备注</th>
+                    <th>时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $data as $v}
+                    <tr class="gradeX">
+                        <td class="did">{$v->id}</td>
+                        <td>倒车镜</td>
+                        <td>{$v->is_add == 1 ? "增加" : "减少"}</td>
+                        <td>{$v->num}</td>
+                        <td>{$v->info}</td>
+                        <td>{$v->created_at}</td>
+                    </tr>
+                {/foreach}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3">
+                        总共 {$total}页 当前显示第 {$currentPage} 页
+                    </td>
+                    <td colspan="13" style="text-align: right">
+                        {$render}
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">修改会员等级</h4>
+                <small class="font-bold">这里可以显示副标题。</small>
+            </div>
+            <div class="modal-body">
+                <select class="sel123" id="level" name="level" class="input-sm">
+                    <option value="7">一级店面</option>
+                    <option value="8">二级店面</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                <button type="button" onclick="submitLevel()" class="btn btn-primary" id="level_ss">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/foot"}
+
+</body>
+<script>
+    var user_id = "";
+    function editLevel(id) {
+        user_id = id;
+    }
+    function submitLevel() {
+        if(confirm("确定修改该店面?")){
+            $.ajax({
+                url:"{:url('users/editStorefront')}",
+                type:"post",
+                data:{
+                    id:user_id,
+                    level:$("#level").val()
+                },success:function(res){
+                    if(res.status == 0){
+                        history.go(0);
+                    }
+                }
+            });
+        }
+    }
+</script>
+</html>
