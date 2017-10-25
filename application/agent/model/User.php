@@ -17,11 +17,6 @@ class User extends Model
     private $key = 'huaLove1314';
     protected $rand = 'ILoveYou';
 
-    public function setPwdAttr($value)
-    {
-        return md5($value);
-    }
-
     public function setToken()
     {
         if (session('token') && session('expire') > time()) {

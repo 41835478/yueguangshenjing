@@ -77,7 +77,14 @@ class Orders extends Base
         $date['status']=1;
         $date['address_id']=$data['address_id'];
         $address=$this->getAddress($data['address_id']);
-        $date['phone']=$address->name;
+        $send_id=$this->getAgentId($address->area_ids);
+        if($send_id){
+            $date['send_id']=$send_id;
+        }else{
+            $date['type']=1;
+        }
+        $date['area_ids']=$address->area_ids;
+        $date['name']=$address->name;
         $date['phone']=$address->phone;
         $date['area_info']=$address->area.','.$address->street.','.$address->area_info;
         $date['price']=$this->getGoods($id)->goods_price;
@@ -110,6 +117,23 @@ class Orders extends Base
         }catch(Exception $e){
             Db::rollback();
             return false;
+        }
+    }
+
+    public function getAgentId($area_ids)//生成订单时得到该订单属于谁的订单
+    {
+        $arr=explode(',',$area_ids);
+        $count=count($arr);
+        if($count==3){
+            $district=model('admin/User')->where(['district'=>$arr[2]])->where('level','in',[3,4,5,6])->value('id');
+            if(!$district){
+                $city=model('admin/User')->where(['city'=>$arr[1]])->where('level','in',[3,4,5,6])->value('id');
+                if($city){
+                    return $city;
+                }
+                return false;
+            }
+            return $district;
         }
     }
 

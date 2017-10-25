@@ -38,9 +38,28 @@
         .textarea:-ms-input-placeholder { /* Internet Explorer 10+ */
             color: #999;
         }
+        .loadingBox{
+            position: fixed;
+            top:0;
+            left:0;
+            z-index: 200;
+            background: #2b2c30;
+            width: 100vw;
+            height:100vh;
+            filter: opacity(0.6666666);
+            display: none;
+        }
+        .loadingBox img{
+            display: block;
+            width:100%;
+            margin-top: 100px;
+        }
     </style>
 </head>
 <body>
+<div class="loadingBox">
+    <img alt="" src="__IMG__/loading123.gif" class="loadingImg" />
+</div>
 <div class="public_head">
     <a class="iconfont icon-mjiantou-copy" href="javascript:history.go(-1);"></a>
     <h3>确认订单</h3>
@@ -122,6 +141,8 @@
     });
 
     $('#orderPay').click(function(){
+        $("#orderPay").css("pointer-events","none");
+        $(".loadingBox").css("display","block")
         var address_id='{$address->id|default=""}';
         if(address_id){
             var flag=$('.pay_way').find('.icon-kaiguanguan-copy-copy').attr('_flag');
@@ -129,6 +150,8 @@
             if(flag==1){
                 if(!shop_name){
                     alert('请填写店面名称');
+                    $(".loadingBox").css("display","none");
+                    $("#orderPay").css("pointer-events","auto");
                     return false;
                 }
             }
@@ -139,6 +162,8 @@
                 'type':'post',
                 'dataType':'json',
                 success:function(res){
+                    $("#orderPay").css("pointer-events","auto");
+                    $(".loadingBox").css("display","none")
                     if(res.status){
                         window.location.href="{:url('orders/pay')}";
                     }else{
