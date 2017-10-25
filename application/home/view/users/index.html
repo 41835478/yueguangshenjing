@@ -75,7 +75,7 @@
 	</div>
 </div>
 <!-- 判断订单 -->
-{in name="$user['level']" value="3,4,5,6"}
+{in name="$user['level']" value="7,8"}
 				
 			{else/}
 <ul class="shopCenter_nav">
@@ -87,17 +87,25 @@
 {/in}
 
 <!-- 判断客户订单 -->
-{in name="$user['level']" value="1,2"}
-<div class="shopCenter_5">				
-	{else/}
+{in name="$user['level']" value="7,8"}
+
 <div class="shopCenter_5">
 		<div class="shopCenter_6">
 		<a href="customerOrder.html"><img src="/resource/home/images/ly_23.png"><span>客户订单</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
-		<div class="shopCenter_6">
-		<a href="myInventory.html"><img src="/resource/home/images/ly_59.png"><span>我的库存</span><i class="iconfont icon-arrow-right"></i></a>
-	</div>
+	{else/}
+<div class="shopCenter_5">				
+	
+		
 {/in}
+
+
+{in name="$user['level']" value="3,4,5,6"}
+	<div class="shopCenter_6">
+		<a href="myInventory.html"><img src="/resource/home/images/ly_59.png"><span>我的库存</span><i class="iconfont icon-arrow-right"></i></a>
+	</div>		
+{/in}
+
 
 	<div class="shopCenter_6">
 		<a href="{:url('Users/myaccount')}"><img src="/resource/home/images/ly_24.png"><span>我的账户</span><i class="iconfont icon-arrow-right"></i></a>

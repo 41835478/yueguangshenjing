@@ -250,7 +250,7 @@ try{
   	}
 
 
-  	#店面奖
+  	#当店面时 店面奖
   	public function storeaward(){
   		#
   		$uid=$this->uid;
@@ -264,8 +264,17 @@ try{
   		$this->assign(['totalstoreaward'=>$totalstoreaward,'onestoreaward'=>$onestoreaward ,'towstoreaward'=>$towstoreaward ]);
   		return $this->fetch();
   	}
+  	#当用户为代理商时 代理补助奖
+  	public function subsidy(){
 
+  		return $this->fetch();
+  	}
+  	
+  	#当用户为代理商时 代理发货奖
+  	public function delivery(){
 
+  		return $this->fetch();
+  	}
 
   	#公用方法获取奖总额
   	public static function public_total($type,$uid){
