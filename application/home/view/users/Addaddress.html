@@ -128,6 +128,7 @@
             var area_info=$('#area_info').val();
             var street=$('#street').val();
             var di=$('#di').attr("data-num");
+		  	var area_ids=$('#value2').val();
             if(name==""){
                 alert("请输入支付宝账户！");
                 return false;
@@ -159,7 +160,7 @@
                 'area_info':area_info,
                 'street':street,
                 'di':di,
-               
+               	'area_ids':area_ids
             }
             var url="{:url('Users/Addaddress')}";
             sendAjax(data,url)
