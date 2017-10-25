@@ -34,12 +34,17 @@
 	<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>代理发货奖
 </div>
 <div class="IPA_2">
-	<span>累计金额</span><span class="storeAward_price">￥400.00</span>
+	<span>累计金额</span><span class="storeAward_price">￥{$totaldelivery}</span>
 </div>
 <div class="storeAward_all">
 	<div class="storeAward_c" style="display: block;">
 		<ul id="storeAward_ul1">
-			<li><div>1</div><img src="images/tx.gif"><div><span>CR小杀</span>2017-09-16</div><div>￥50.00</div></li>
+
+			{foreach $delivery as $v}
+			<li><div>{$k+1}</div><img src="{$v['user_pic']}"><div><span>{$v['name']}</span>{$v['created_at']|date="Y-m-d",###}</div><div>￥{$v['money']}</div></li>
+			{/foreach}
+
+		<!-- 	<li><div>1</div><img src="images/tx.gif"><div><span>CR小杀</span>2017-09-16</div><div>￥50.00</div></li> -->
 	
 		</ul>
 	</div>
