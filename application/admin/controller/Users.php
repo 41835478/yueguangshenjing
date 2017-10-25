@@ -5,6 +5,7 @@ namespace app\admin\controller;
 use app\admin\model\AccountRecordModel;
 use app\admin\model\Config;
 use app\admin\model\RearviewModel;
+use app\admin\model\RearviewRecordModel;
 use app\admin\model\User;
 use Service\AccountRecord;
 use think\Controller;
@@ -199,8 +200,10 @@ class Users extends Controller
                     "level"=>$input['level'],"repertorys"=>$this->stock($input['level'])]);
                 $rearview->save();
             }
+        }else{
+            $input["area"] = "";
         }
-        $input["area"] = "";
+
 
         $user->save($input,["id"=>$input["id"]]);
 
@@ -229,13 +232,18 @@ class Users extends Controller
     }
     public function replenishment($id){
         $rearview = RearviewModel::where("uid",$id)->find();
-        if($rearview->level >= config('level')[$rearview->level]){
+        if($rearview->repertorys >= $rearview->stock){
             return json(["status"=>100]);
         }
         #补货量 需要储存记录
-        $revcount = config('level')[$rearview->level] - $rearview->level;
-        $rearview->setInc("stock",$revcount);
-        return json(["data"=>$rearview]);
+        $revcount = $rearview->stock - $rearview->repertorys;
+        #储存记录
+        $reaRecord = new RearviewRecordModel();
+        $reaRecord->data(["uid"=>$id,"is_add"=>1,"info"=>"进货","num"=>$revcount,"gid"=>0]);#TODO 目前只有一款产品
+        $reaRecord->save();
+
+        $rearview->setInc("repertorys",$revcount);
+        return json(["status"=>0,"data"=>$rearview]);
     }
 
 }
