@@ -187,7 +187,12 @@ try{
 	}
 
   /****奖金*******************************************************************************************************************************************************************************************/
-  	#分销奖金
+    public function  award(){
+
+
+    }
+
+    #分销奖金
   	public function distributionaward(){
   		#查询下级id
   		$zid=self::get_node($this->uid);
@@ -252,7 +257,7 @@ try{
 
   	#当店面时 店面奖
   	public function storeaward(){
-  		#
+ 
   		$uid=$this->uid;
   		$onetotalstoreaward=self::public_total(9,$uid);
   		$onestoreaward=self::public_node(9,$uid);
@@ -266,16 +271,22 @@ try{
   	}
   	#当用户为代理商时 代理补助奖
   	public function subsidy(){
-
+  		$uid=$this->uid;
+  		$totalsubsidy=self::public_total(11,$uid);
+  		$subsidy=self::public_node(11,$uid);
+  		$this->assign(['totalsubsidy'=>$totalsubsidy,'subsidy'=>$subsidy]);
   		return $this->fetch();
   	}
   	
   	#当用户为代理商时 代理发货奖
   	public function delivery(){
-
+  		$uid=$this->uid;
+  		$totaldelivery=self::public_total(12,$uid);
+  		$delivery=self::public_node(12,$uid);
+  		$this->assign(['totaldelivery'=>$totaldelivery,'delivery'=>$delivery]);
   		return $this->fetch();
   	}
-
+/*************/
   	#公用方法获取奖总额
   	public static function public_total($type,$uid){
   		$total=db('account_record')->where(['type'=>$type,'user_id'=>$uid])->sum('money'); 		
@@ -291,7 +302,6 @@ try{
   		}
   		return $installred;
   	}
-
 
 
 /*************************************************************************************************/
@@ -310,7 +320,6 @@ try{
         $num ++ ;
         return self::get_nodetotal($ids,$num,$number,$userId);
     }
-
 
 	# 分开获取下级(1.2.3)
 	protected static function get_node($uid){
@@ -369,7 +378,6 @@ try{
 		$two=$this->user->where('level','<>',1)->whereIn('id',$zid[1])->count();
 		#查询消费三级会员
 		$three=$this->user->where('level','<>',1)->whereIn('id',$zid[2])->count();
-
 		$wtotal=$this->user->where('level','=',1)->whereIn('id',$zzid)->count();
 		$total=$this->user->where('level','<>',1)->whereIn('id',$zzid)->count();
 		$ztotal=$total+$wtotal;
@@ -403,7 +411,6 @@ try{
 		$this->assign('num',$num);
 		$this->assign('user',$user);
   		return $this->fetch();
-
 	}
 
 /*****支付宝*********************************************************************************************************************************************************************************************/
@@ -435,15 +442,12 @@ try{
 		$this->assign('user',$user);
 	 	return $this->fetch();	
 	}
-
 	public function removealipay(){
 		$res=Alipay::where('user_id',$this->uid)->delete();
 		if($res){
 			exit('<script>alert("解除绑定支付宝成功");location.href = "/home/Users/index"</script>');
 		}
 	}
-
-
 
 /*****管理收货地址*********************************************************************************************************************************************************************************************/
 	public function manageaddress(){
@@ -556,7 +560,7 @@ try{
 					return jsonp(['status'=>200,'message'=>'修改成功']);
 				}			
 			}	
-			
+
 		$this->assign('user',$user);
 		return $this->fetch();	
 	}
@@ -599,7 +603,6 @@ try{
     #退出
     public function logout(){
     	Session::delete('uid');
-
     	exit('<script>alert("退出成功");location.href = "/"</script>');
 
     }

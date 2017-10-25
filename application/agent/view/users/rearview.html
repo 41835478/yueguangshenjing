@@ -24,46 +24,6 @@
             <h5>出货明细</h5>
         </div>
         <div class="ibox-content">
-            <form action="{:url('users/index')}" method="get">
-                <div class="input-group">
-                    <span style="float: right;margin-left: 10px;margin-right: 10px">
-                                <input placeholder="结束日期" value=""
-                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
-                                       class="input-sm form-control layer-date" name="end" id="end">
-                            </span>
-                    <span style="float: right;margin-left: 10px">
-                                <input placeholder="开始日期" value=""
-                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
-                                       class="input-sm form-control layer-date" name="start" id="start">
-                            </span>
-                    <span style="float: right;margin-left: 5px;">级别：
-                        <select id="threeLevel" name="level" class="input-sm">
-                            <option value="">--请选择--</option>
-                            <option value="1">普通会员</option>
-                            <option value="2">消费会员</option>
-                            <option value="3">县级市代理</option>
-                            <option value="4">地级市代理</option>
-                            <option value="5">省会城市代理</option>
-                            <option value="6">一线城市代理</option>
-                            <option value="7">店面</option>
-                        </select>
-                    </span>
-                    <span style="float: right;margin-left: 5px;">推荐人：
-                        <input name="from_phone" type="text" class="input-sm" placeholder="请输入推荐人电话"/>
-                    </span>
-                    <span style="float: right;margin-left: 5px;">用户昵称：
-                        <input name="nickname" type="text" class="input-sm" placeholder="请输入用户昵称"/>
-                    </span>
-                    <span style="float: right;margin-left: 5px;">用户手机号：
-                        <input name="mobile" type="text" class="input-sm" placeholder="请输入用户手机号"/>
-                    </span>
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            搜索
-                        </button>
-                    </span>
-                </div>
-            </form>
             <h3 style="color:green;">库存:{$rearview->repertorys}</h3>
             <table class="footable table table-stripped" data-page-size="10" data-filter=#filter>
                 <thead>
