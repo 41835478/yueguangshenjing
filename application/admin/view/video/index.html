@@ -27,11 +27,12 @@
             </div>
         </div>
         <div class="ibox-content">
-            <form method="post" class="form-horizontal" action="{:url('member/editAdmin')}" enctype="multipart/form-data">
+            <form method="post" class="form-horizontal" action="{:url('video/addVideo')}"
+                  enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">视频标题</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="name" >
+                        <input class="form-control" type="text" name="title">
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
@@ -39,20 +40,48 @@
                     <label class="col-sm-2 control-label">视频图片</label>
                     <div class="col-sm-10">
                         <input name="pic" type="file" id="file">
-                        <img id="img" style="border: 1px dashed #c0c0c0" src="__PUBLIC__/admin/goods/index0.jpg" width="100px" height="100px">
+                        <img id="img" style="border: 1px dashed #c0c0c0" src="__PUBLIC__/admin/goods/index0.jpg"
+                             width="100px" height="100px">
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">视频源</label>
                     <div class="col-sm-10">
-                        <input name="pic" type="file">
+                        <input name="video_path" type="hidden" id="video">
+                        <input name="video_key" type="hidden" id="videoKey">
+                        <button id="upqiniu" style="margin-top: 10px" type="button" class="btn btn-outline btn-success">
+                            点击上传视频源
+                        </button>
+                        <span style="color:red">请上传视频大小不要超过800M（视频类型为：video/mp4、video/webm、video/ogg、video/quicktime）格式</span>
+                        <div class="process">
+                            <div  class="processNow"></div>
+                        </div>
+                        <style>
+                            .process{
+                                position: relative;
+                                width: 775px;
+                                height:10px;
+                                background: #f5f5f5;
+                                border:1px solid #e6e6e6;
+                                border-radius: 2px;
+                                display: none;
+                            }
+                            .processNow{
+                                position: absolute;
+                                height: 10px;
+                                width:0;
+                                background: #00FF7F;
+                            }
+                        </style>
                     </div>
+
                 </div>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <div class="col-sm-4 col-sm-offset-2">
-                        <button class="btn btn-primary" type="submit">添加</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-primary" type="submit">添加</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button class="btn btn-white" type="reset">重置</button>
                     </div>
                 </div>
@@ -61,46 +90,134 @@
     </div>
 </div>
 
-
-<script type="text/javascript" src="__PUBLIC__/admin/editor/kindeditor.js"></script>
-
-<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"> </script>
-<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
-<!-- <script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script> -->
+<script src="__PUBLIC__/admin/js/jquery-1.10.1.min.js"></script>
 <script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.6"></script>
-<script src="__PUBLIC__/admin/js/jquery.min.js"></script>
 
-<script type="text/javascript">
-    //实例化编辑器
-    var ue = UE.getEditor('editor');
-</script>
+<script src="__PUBLIC__/admin/qiniu_js/moxie.js"></script>
+<script src="__PUBLIC__/admin/qiniu_js/plupload.dev.js"></script>
+<script src="https://cdn.staticfile.org/plupload/2.3.0/plupload.full.min.js"></script>
+<script src="__PUBLIC__/admin/qiniu_js/zh_CN.js"></script>
+<script src="__PUBLIC__/admin/qiniu_js/qiniu.js"></script>
 <script>
-    $('.close').click(function(){
+    $('.close').click(function () {
         $(this).parent().parent().remove();
     })
-    $("#file").change(function(){
-        var objUrl = getObjectURL(this.files[0]) ;
-        console.log("objUrl = "+objUrl) ;
+    $("#file").change(function () {
+        var objUrl = getObjectURL(this.files[0]);
+        console.log("objUrl = " + objUrl);
         if (objUrl) {
-            $("#img").attr("src", objUrl) ;
+            $("#img").attr("src", objUrl);
         }
-    }) ;
+    });
     //建立一個可存取到該file的url
     function getObjectURL(file) {
-        var url = null ;
-        if (window.createObjectURL!=undefined) { // basic
-            url = window.createObjectURL(file) ;
-        } else if (window.URL!=undefined) { // mozilla(firefox)
-            url = window.URL.createObjectURL(file) ;
-        } else if (window.webkitURL!=undefined) { // webkit or chrome
-            url = window.webkitURL.createObjectURL(file) ;
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
         }
-        return url ;
+        return url;
     }
 </script>
 
 </body>
 </html>
+<script type="text/javascript">
+    var keyss;
+    $(document).ready(function () {
+        $.ajax({
+            url: '{:url("video/getToken")}',
+            async:true,
+            data:{},
+            type:'post',
+            dataType: 'json',
+            success: function (req) {
+                console.log(req.data);
+                var uploader = Qiniu.uploader({
+                    multi_selection: !(mOxie.Env.OS.toLowerCase() === "ios"),
+                    runtimes: 'html5,html4',    //上传模式,依次退化
+                    browse_button: 'upqiniu',       //上传选择的点选按钮，**必需**
+//                    uptoken_url: '../qiniu3.php',            //Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
+                    uptoken: req.data, //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+                    unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK为自动生成上传成功后的key（文件名）。
+                    // save_key: true,   // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK会忽略对key的处理
+                    domain: 'oybhkyfed.bkt.clouddn.com',   //bucket 域名，下载资源时用到，**必需**//http://hr3.hongrunet.com/
+                    get_new_uptoken: false,  //设置上传文件的时候是否每次都重新获取新的token
+                    //        container: 'container',           //上传区域DOM ID，默认是browser_button的父元素，
+                    max_file_size: '800mb',           //最大文件体积限制
+                    //        flash_swf_url: 'js/plupload/Moxie.swf',  //引入flash,相对路径
+                    max_retries: 3,                   //上传失败最大重试次数
+                    dragdrop: false,                   //开启可拖曳上传
+                    //        drop_element: 'container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+                    chunk_size: '4mb',                //分块上传时，每片的体积
+                    auto_start: false,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+                    init: {
+                        'FilesAdded': function (up, files) {
+                            plupload.each(files, function (file) {
+                                if ((file.type == "video/mp4" ) || (file.type == "video/webm") || (file.type == "video/ogg") || (file.type == "video/quicktime")) {
+                                    uploader.start();
+                                } else {
+                                    alert("视频格式不对");
+                                    return false;
+                                }
+                            });
+                        },
+                        'BeforeUpload': function (up, file) {
+                            // 每个文件上传前,处理相关的事情
+                            // console.log('准备上传'+file);
+                        },
+                        'UploadProgress': function (up, file) {
+                            // 每个文件上传时,处理相关的事情
+//                            $('#progress').val(file.percent);
+//                            $('#fwq').text(' ');
+//                            $('#fwq').text('上传中 ' + file.percent + "%");
+                            $(".process").css("display","block");
+                            $(".processNow").css("width",file.percent + "%");
+                        },
+                        'FileUploaded': function (up, file, info) {
+                            console.log(info);
+                            // 每个文件上传成功后,处理相关的事情
+                            // 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
+                            var domain = up.getOption('domain');
+                            var res = eval('(' + info + ')');
+                            keyss = res.key;
+                            var sourceLink = domain +'/'+res.key; //获取上传成功后的文件的Url
+                            $('#videoKey').val(res.key);
+                            $('#video').val(sourceLink);
+//                            alert('视频上传成功路径为：'+sourceLink);
+//                            $('#fwq').text(' ');
+//                            $('#fwq').text('文件上传成功');
+//                            console.log(sourceLink);
+                        },
+                        'Error': function (up, err, errTip) {
+                            // alert(err);
+                            var progress = new FileProgress(err.file, 'fsUploadProgress');
+                            progress.setError();
+                            progress.setStatus(errTip);
+//                            $('#fwq').text('服务器太火爆了，换个时间再来吧');
+                            //上传出错时,处理相关的事情
+                            // console.log(err);
+                        },
+                        'UploadComplete': function () {
+                            alert('视频上传成功');
+                            $(".process").css("display","none");
+//                            console.log('队列文件处理完毕');
+                            //队列文件处理完毕后,处理相关的事情
+                        },
+                        'Key': function (up, file) {
+                            // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+                            // 该配置必须要在 unique_names: false , save_key: false 时才生效
+
+                            var key = "";
+                            // do something with key here
+                            return key
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

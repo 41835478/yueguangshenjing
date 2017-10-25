@@ -14,4 +14,12 @@ class Index extends controller
 
     	return $this->fetch("index/index",["content"=>$content]);
     }
+
+    public function videoList()//视频列表
+    {
+        $data='';
+        $data=model('admin/Video')->where(['status'=>1])->select();
+        $this->assign('data',$data);
+        return view('index/videoList');
+    }
 }
