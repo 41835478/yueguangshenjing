@@ -115,14 +115,7 @@ class Users extends Controller
         $input = Request::instance()->only("id");
         $user = User::get($input["id"]);
 
-        #生成随机密码
-        $randpwd='';
-        for ($i = 0; $i < 5; $i++)
-        {
-            $randpwd .= chr(mt_rand(97, 122));
-        }
-
-        $password=md5($user->mobile.$randpwd);
+        $password=md5($user->mobile.$user->unique);
         $user->save(['login_pwd'=>$password],["id"=>$input["id"]]);
 
         return json(['status'=>0,'msg'=>'重置成功']);
@@ -181,7 +174,7 @@ class Users extends Controller
 
     //修改用户等级
     public function levelEdit(){
-        $input = Request::instance()->only("id,level,area");
+        $input = Request::instance()->only("id,level,area,province,city,district");
         $user = User::get($input['id']);
 
         if($input['level'] == 3 ||$input['level'] == 4 ||$input['level'] == 5 ||$input['level'] == 6){
