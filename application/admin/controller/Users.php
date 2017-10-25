@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\AccountRecordModel;
+use app\admin\model\Config;
 use app\admin\model\RearviewModel;
 use app\admin\model\User;
 use Service\AccountRecord;
@@ -180,6 +181,8 @@ class Users extends Controller
     //修改用户等级
     public function levelEdit(){
         $input = Request::instance()->only("id,level,area");
+        $user = User::get($input['id']);
+
         if($input['level'] == 3 ||$input['level'] == 4 ||$input['level'] == 5 ||$input['level'] == 6){
             if(empty($input["area"])){
                 return json(["status"=>100,"msg"=>"请填写代理商地区"]);
@@ -189,16 +192,50 @@ class Users extends Controller
             if($userOb){
                 return json(["status"=>100,"msg"=>"该地区已有代理商,请重新选择!"]);
             }
-
-            $rearview = new RearviewModel();
-//            $rearview->data(["uid"=>$input['id'],"stock"=>""]);
-
+            $rearviewOne = RearviewModel::where(["uid"=>$input["id"]])->find();
+            if(!$rearviewOne){
+                $rearview = new RearviewModel();
+                $rearview->data(["uid"=>$input['id'],"stock"=>$this->stock($input['level']),
+                    "level"=>$input['level'],"repertorys"=>$this->stock($input['level'])]);
+                $rearview->save();
+            }
         }
+        $input["area"] = "";
 
-        $user = User::get($input['id']);
         $user->save($input,["id"=>$input["id"]]);
 
         return json(["status"=>0,"data"=>config('level')[$user->level]]);
+    }
+    #各级别代理商的供货量
+    public function stock($level){
+        switch ($level){
+            case 3:
+                return Config::get(5)->value;
+                break;
+            case 4:
+                return Config::get(6)->value;
+                break;
+            case 5:
+                return Config::get(7)->value;
+                break;
+            case 6:
+                return Config::get(8)->value;
+                break;
+        }
+    }
+    public function rearview($id){
+        $rearview = RearviewModel::where("uid",$id)->find();
+        return json(["data"=>$rearview]);
+    }
+    public function replenishment($id){
+        $rearview = RearviewModel::where("uid",$id)->find();
+        if($rearview->level >= config('level')[$rearview->level]){
+            return json(["status"=>100]);
+        }
+        #补货量 需要储存记录
+        $revcount = config('level')[$rearview->level] - $rearview->level;
+        $rearview->setInc("stock",$revcount);
+        return json(["data"=>$rearview]);
     }
 
 }

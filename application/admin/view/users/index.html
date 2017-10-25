@@ -102,7 +102,7 @@
                             {$v->downUser($v->id) == "" ? "没有下级" : "查看下级"}</a>
 
                         {if($v->level == "县级市代理" || $v->level == "地级市代理"|| $v->level == "省会城市代理"|| $v->level == "一线城市代理")}
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal8" >代理商详情</a>
+                        <a href="javascript:void(0)" onclick="rearview('{$v->id}')" data-toggle="modal" data-target="#myModal8" >代理商详情</a>
                         {/if}
                         <!--<a href="#">出货</a>-->
                         <!--<a href="#">库存</a>-->
@@ -178,28 +178,13 @@
                 <small class="font-bold">这里可以显示副标题。</small>
             </div>
             <div class="modal-body">
-                <table class="footable table table-stripped" data-page-size="10" data-filter=#filter>
-                    <thead>
-                    <tr>
-                        <th>进货量</th>
-                        <th>出货量</th>
-                        <th>库存</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>50</td>
-                            <td>25</td>
-                            <td>25</td>
-                            <td>补货</td>
-                        </tr>
-                    </tbody>
-                </table>
+                进货量: <input id="stock" type="text" disabled="disabled">
+                出货量: <input id="shipment" type="text" disabled="disabled">
+                库存: <input id="repertorys" type="text" disabled="disabled">
+                <button type="button" id="replenishment" class="btn btn-primary">补货</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
-                <button type="button" onclick="submitLevel()" class="btn btn-primary" data-dismiss="modal">保存</button>
             </div>
         </div>
     </div>
@@ -340,6 +325,7 @@
         var val = $(this).children("option:selected").val();
         console.log(val)
         if(val == 3 || val == 4 || val == 5 || val == 6){
+            $("#city").val("");
             $(".sanLink").css("display","block");
         }else{
             $(".sanLink").css("display","none");
@@ -358,6 +344,12 @@ var user_id = "";
                     console.log(res);
                     $("#level").val(res.data.level);
                     $("#city").val(res.data.area);
+                    if(res.data.level == 3 || res.data.level == 4 || res.data.level == 5 || res.data.level == 6){
+                        $(".sanLink").css("display","block");
+                    }else{
+                        $(".sanLink").css("display","none");
+
+                    }
                 }else{
                     alert(res.msg);
                 }
@@ -384,19 +376,38 @@ var user_id = "";
             }
         });
     }
-    function getLevel(val){
-        var level = [];
-        level['普通会员'] = 1;
-        level['消费会员'] = 2;
-        level['县级市代理'] = 3;
-        level['地级市代理'] = 4;
-        level['省会城市代理'] = 5;
-        level['一线城市代理'] = 6;
-        level['一级店面'] = 7;
-        level['二级店面'] = 8;
-
-        return level[val];
+    function rearview(id) {
+        $.ajax({
+            url:"{:url('users/rearview')}",
+            type:"get",
+            data:{
+                id:id
+            },success:function(res){
+                $("#stock").val(res.data.stock);
+                $("#shipment").val(res.data.shipment);
+                $("#repertorys").val(res.data.repertorys);
+                user_id = id;
+            }
+        });
     }
+    $("#replenishment").click(function(){
+        if(confirm("确定补货?")){
+            $.ajax({
+                url:"{:url('users/replenishment')}",
+                type:"get",
+                data:{
+                  id:user_id
+                },
+                success:function(res){
+                    if(res.status == 0){
+                        alert("补货成功");
+                    }else{
+                        alert("无需补货");
+                    }
+                }
+            });
+        }
+    });
 </script>
 </body>
 </html>
