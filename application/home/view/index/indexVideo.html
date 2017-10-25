@@ -1,0 +1,12 @@
+{if condition="$res neq ''"}
+<div class="show_div">
+    <img class="goods_img" src="__PUBLIC__{$res->pic}" alt="">
+    <p class="jieshao_p">{$res->title}</p>
+    <div class="seemore_div">
+        <a href="{:url('index/videoList')}">
+            <img src="__IMG__/index_3.png" alt="">
+            <p>点击进入查看更多视频</p>
+        </a>
+    </div>
+</div>
+{/if}

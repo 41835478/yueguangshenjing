@@ -24,4 +24,12 @@ class IndexGoods extends Controller
         $this->assign('data',$data);
         return $this->fetch('goods/goodsSmallPic',['data'=>$data]);
     }
+
+    public function indexVideo()//前台首页视频展示
+    {
+        $res='';
+        $res=model('admin/Video')->where(['flag'=>1,'status'=>1])->find();
+        $this->assign('res',$res);
+        return $this->fetch('index/indexVideo');
+    }
 }
