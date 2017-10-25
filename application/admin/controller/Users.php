@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\AccountRecordModel;
+use app\admin\model\RearviewModel;
 use app\admin\model\User;
 use Service\AccountRecord;
 use think\Controller;
@@ -168,6 +169,36 @@ class Users extends Controller
         if($userList){
             return "n";
         }
+    }
+    //获取用户等级
+    public function userOne($id){
+        $user = User::get($id);
+        $userList = User::where(["id"=>$user->id])->find();
+        return json(["status"=>0,"data"=>$userList]);
+    }
+
+    //修改用户等级
+    public function levelEdit(){
+        $input = Request::instance()->only("id,level,area");
+        if($input['level'] == 3 ||$input['level'] == 4 ||$input['level'] == 5 ||$input['level'] == 6){
+            if(empty($input["area"])){
+                return json(["status"=>100,"msg"=>"请填写代理商地区"]);
+            }
+
+            $userOb = User::where(["area"=>$input["area"]])->find();
+            if($userOb){
+                return json(["status"=>100,"msg"=>"该地区已有代理商,请重新选择!"]);
+            }
+
+            $rearview = new RearviewModel();
+//            $rearview->data(["uid"=>$input['id'],"stock"=>""]);
+
+        }
+
+        $user = User::get($input['id']);
+        $user->save($input,["id"=>$input["id"]]);
+
+        return json(["status"=>0,"data"=>config('level')[$user->level]]);
     }
 
 }
