@@ -148,6 +148,9 @@
                 </select>
                 <div style="width:420px;margin-top: 20px;" class="sanLink">
                     <input type="text" id="city" />
+                    <input type="hidden" id="province" />
+                    <input type="hidden" id="citys" />
+                    <input type="hidden" id="district" />
                 </div>
             </div>
             <style type="text/css">
@@ -365,6 +368,9 @@ var user_id = "";
             data:{
                 level:$("#level").val(),
                 area:$("#city").val(),
+                province:$("#hcity").attr("data-id"),
+                city:$("#hproper").attr("data-id"),
+                district:$("#harea").attr("data-id"),
                 id:user_id
             },success:function(res){
                 if(res.status == 0){
