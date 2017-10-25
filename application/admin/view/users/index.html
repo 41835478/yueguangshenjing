@@ -374,7 +374,6 @@ var user_id = "";
                 id:user_id
             },success:function(res){
                 if(res.status == 0){
-                    $("#level_ss").attr("data-dismiss","modal");
                     history.go(0);
                 }else{
                     alert(res.msg);

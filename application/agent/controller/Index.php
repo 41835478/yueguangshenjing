@@ -37,6 +37,7 @@ class Index extends Controller
                             session('info', $info,'agent');
                             session('pic', $res->user_pic,'agent');
                             session('name',$res->name,'agent');
+                            session('id',$res->id,'agent');
                             $this->redirect(url('main/index'));
                         } else {
                             $this->error('验证码输入错误', 'index/index');
