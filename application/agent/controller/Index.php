@@ -32,10 +32,10 @@ class Index extends Controller
                 if($res) {
                     if($res->login_pwd==md5($date['login_pwd'].$res->unique)){
                         if (captcha_check($date['code'])) {
-                            $str = $date['mobile'] . '-' . $res['id'] . '-' . request()->header('user-agent') . '-' . uniqid() . time();
+                            $str = $date['mobile'] . '-' . $res->id . '-' . request()->header('user-agent') . '-' . uniqid() . time();
                             $info = $mod->getEncrypt($str);
                             session('info', $info,'agent');
-                            session('pic', $res['user_pic'],'agent');
+                            session('pic', $res->user_pic,'agent');
                             session('name',$res->name,'agent');
                             session('id',$res->id,'agent');
                             $this->redirect(url('main/index'));
