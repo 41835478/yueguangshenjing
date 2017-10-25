@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>店面奖</title>
+<meta charset="utf-8">
+<meta name="author" content="yy">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta name="author" content="yy">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Expires" content="-1">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="description" content="" />
+<meta name="Keywords" content="" />
+<link rel="stylesheet" type="text/css" href="/resource/home/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/public.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/resource/home/css/ly.css">
+<script type="text/javascript" src="/resource/home/js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/swiper.min.js"></script>
+<script type="text/javascript" src="/resource/home/js/public.js"></script>
+<style type="text/css">
+	body{
+		background: #f5f5f5;
+	}
+</style>
+</head>
+<body>
+<div class="storeAward_head">
+	<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>店面奖
+</div>
+<div class="storeAward_zje">
+	<span>总金额</span><span class="storeAward_price">￥{$totalstoreaward}</span>
+</div>
+<ul class="storeAward_ul">
+	<li class="storeAward_li"><img src="/resource/home/images/ly_1.png">一级店面</li>
+	<li><img src="/resource/home/images/ly_2.png">二级店面</li>
+</ul>
+<div class="storeAward_all">
+	<div class="storeAward_c" style="display: block;">
+		<ul id="storeAward_ul1">
+			{foreach $onestoreaward as $v}
+			<li><div>{$k+1}</div><img src="{$v['user_pic']}"><div><span>{$v['name']}</span>{$v['created_at']|date="Y-m-d",###}</div><div>￥{$v['money']}</div></li>
+			{/foreach}
+			
+		</ul>
+	</div>
+	<div class="storeAward_c">
+		<ul id="storeAward_ul2">
+			{foreach $towstoreaward as $v}
+			<li><div>{$k+1}</div><img src="{$v['user_pic']}"><div><span>{$v['name']}</span>{$v['created_at']|date="Y-m-d",###}</div><div>￥{$v['money']}</div></li>
+			{/foreach}			
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+	$(".storeAward_ul li").click(function() {
+		$(this).addClass('storeAward_li').siblings().removeClass('storeAward_li');
+		$(".storeAward_c").eq($(this).index()).show().siblings().hide();
+	});
+</script>
+</body>
+</html>

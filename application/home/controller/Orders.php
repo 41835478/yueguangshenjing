@@ -116,7 +116,12 @@ class Orders extends Base
     public function pay()//跳转支付页面
     {
         $totalMoney=0;
-        $order_id=Session::get('order_id','home');
+        $getId=input('param.order_id',0,'intval');
+        if($getId){
+            $order_id=$getId;
+        }else{
+            $order_id=Session::get('order_id','home');
+        }
         if($order_id){
             $order=model('admin/OrderModel')->get($order_id);
             $totalMoney=$order->price;

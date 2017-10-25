@@ -79,15 +79,16 @@
 				
 			{else/}
 <ul class="shopCenter_nav">
-	<li><a href="obligation.html"><img src="/resource/home/images/ly_19.png">待付款</a></li>
-	<li><a href="Shipment-one.html"><img src="/resource/home/images/ly_20.png">待发货</a></li>
-	<li><a href="delivery.html"><img src="/resource/home/images/ly_21.png">待收货</a></li>
-	<li><a href="stocks.html"><img src="/resource/home/images/ly_22.png">已完成</a></li>
+	<li><a href="{:url('Usersorder/orderindex',['type'=>1])}"><img src="/resource/home/images/ly_19.png">待付款</a></li>
+	<li><a href="{:url('Usersorder/orderindex',['type'=>2])}"><img src="/resource/home/images/ly_20.png">待发货</a></li>
+	<li><a href="{:url('Usersorder/orderindex',['type'=>3])}"><img src="/resource/home/images/ly_21.png">待收货</a></li>
+	<li><a href="{:url('Usersorder/orderindex',['type'=>4])}"><img src="/resource/home/images/ly_22.png">已完成</a></li>
 </ul>
 {/in}
 
 <!-- 判断客户订单 -->
-{in name="$user['level']" value="1,2"}				
+{in name="$user['level']" value="1,2"}
+<div class="shopCenter_5">				
 	{else/}
 <div class="shopCenter_5">
 		<div class="shopCenter_6">
@@ -146,7 +147,7 @@
 </div>
 
 <footer>
-	<a href="index.html"><img src="/resource/home/images/ly_31.png">首页</a>
+	<a href="/"><img src="/resource/home/images/ly_31.png">首页</a>
 	<a class="QR_li" href="javascript:void(0);"><img src="/resource/home/images/ly_33.png">二维码</a>
 	<a href="javascript:void(0);"><img src="/resource/home/images/ly_35.png">我的</a>
 </footer>
