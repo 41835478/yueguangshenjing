@@ -148,6 +148,9 @@
                 </select>
                 <div style="width:420px;margin-top: 20px;" class="sanLink">
                     <input type="text" id="city" />
+                    <input type="hidden" id="province" />
+                    <input type="hidden" id="citys" />
+                    <input type="hidden" id="district" />
                 </div>
             </div>
             <style type="text/css">
@@ -184,7 +187,7 @@
                 <button type="button" id="replenishment" class="btn btn-primary">补货</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-white" id="level_bu" data-dismiss="modal">关闭</button>
             </div>
         </div>
     </div>
@@ -365,10 +368,12 @@ var user_id = "";
             data:{
                 level:$("#level").val(),
                 area:$("#city").val(),
+                province:$("#hcity").attr("data-id"),
+                city:$("#hproper").attr("data-id"),
+                district:$("#harea").attr("data-id"),
                 id:user_id
             },success:function(res){
                 if(res.status == 0){
-                    $("#level_ss").attr("data-dismiss","modal");
                     history.go(0);
                 }else{
                     alert(res.msg);

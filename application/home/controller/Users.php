@@ -474,6 +474,7 @@ try{
 			$data['phone']=$post['phone'];
 			$data['street']=$post['street'];
 			$data['area']=$post['demo2'];
+            $data['area_ids']=$post['area_ids'];
 			$data['area_info']=$post['area_info'];
 			$data['created_at']=time();
 			$data['updated_at']=time();
@@ -503,6 +504,9 @@ try{
 				$data['phone']=$post['phone'];
 				$data['street']=$post['street'];
 				$data['area']=$post['demo2'];
+                if(isset($post['area_ids'])&&$post['area_ids']){
+                    $data['area_ids']=$post['area_ids'];
+                }
 				$data['area_info']=$post['area_info'];
 				$data['updated_at']=time();
 				$res=db('address')->where('id',$post['id'])->update($data);
