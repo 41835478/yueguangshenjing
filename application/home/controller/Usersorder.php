@@ -93,6 +93,12 @@ class Usersorder extends Base
 	public function qrcode(){
 
 		$user=User::where('id',$this->uid)->find();
+
+		if($user['user_pic']==''){
+			exit('<script>alert("资料不全,请先完善资料");location.href = "/home/Users/index"</script>');
+		}
+
+
 		if($user['nickname']==''){
 			$user['nickname']='用户名'.$user['mobile'];
 		}
