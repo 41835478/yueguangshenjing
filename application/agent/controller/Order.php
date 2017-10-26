@@ -23,7 +23,7 @@ class Order extends Base
         }
         if($request->has('name','param',true)){
             $user_id=$this->getUserInfo($request->param('name'),2);
-            $mod->where(['user_id'=>$user_id]);
+            $mod->whereOr('user_id','=',$user_id);
         }
         $data=$mod->paginate(config('page'),false, [
             'query' => Request::instance()->param(),//不丢失已存在的url参数
