@@ -3,6 +3,7 @@ namespace app\home\controller;
 use think\Controller;
 use app\admin\model\User;
 use app\admin\model\Alipay;
+use app\admin\model\RearviewRecordModel;
 use think\Cache;
 use think\Session;
 use think\File;
@@ -595,7 +596,22 @@ try{
 
 /******库存******************************************************************************************************************************************************************************************/
 	public function myInventory(){
-
+    #增加
+    $increaseInventory=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>1])->select();
+    // foreach ($increaseInventory as $key => $value) {
+    //     $user=db('user')->where('id',$value['sourceid'])->find();
+    //     $increaseInventory[$key]['name']=$user['nickname'];
+    //     $increaseInventory[$key]['user_pic']=$user['user_pic'];
+    //   }
+    #减少
+    $reducemyInventory=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>1])->select();
+    foreach ($reducemyInventory as $key => $value) {
+        $user=db('user')->where('id',$value['uid'])->find();
+        $reducemyInventory[$key]['name']=$user['nickname'];
+        $reducemyInventory[$key]['user_pic']=$user['user_pic'];
+      }
+    $count=$increaseInventory-$reducemyInventory;
+    $this->assign(['increaseInventory'=>$increaseInventory,'reducemyInventory'=>$reducemyInventory,'count'=>$count]);
 		return $this->fetch();
 	}
 

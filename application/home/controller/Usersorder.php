@@ -5,7 +5,7 @@ use app\admin\model\User;
 use app\admin\model\Alipay;
 use think\Cache;
 use think\Session;
-use think\File;
+use service\Qrcode;
 use app\admin\model\OrderModel;
 use app\admin\model\OrderInfo;
 use app\admin\model\Goods;
@@ -83,4 +83,36 @@ class Usersorder extends Base
 		
 	}
 
+
+
+/***二维码***********************/
+	public function qrcode(){
+
+
+		return $this->fetch();
+	}
+
+	/**
+	 * 生成二维码
+	 * @param int $id 
+	 * @param $level 容错等级
+	 * @param $size 图片大小
+	 * @return 
+	 */
+
+
+	 public function createqrcode(){
+   
+        ob_clean();  
+        $object = new \ QRcode();
+        $url = WAB_NAME.'/register/index/'.$this->uid;//网址或者是文本内容
+        $level=3;
+        $size=4;
+        $errorCorrectionLevel =intval($level) ;//容错级别
+        $matrixPointSize = intval($size);//生成图片大小       
+         $object->png($url, false, $errorCorrectionLevel, $matrixPointSize, 2); 
+
+        DIE();
+   
+    }
 }
