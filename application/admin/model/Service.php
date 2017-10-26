@@ -10,9 +10,9 @@ use think\Model;
 class Service extends Model
 {
     #  Access Key
-    protected $accessKey = "S1uIIGL0U0BJmdXtXGDK5FtetjRvBwcsWhXa4ZmK";
+    protected $accessKey = "Q9y8YPYqrtn4S3otPhAkFkq5bw1aFDmPqpZU_rL5";
     # Secret Key
-    protected $secretKey = "xmoM-4uj6xTOGJktTC0_OR7TmOL1FyD3q0LLco6R";
+    protected $secretKey = "2wCWcZgBtnMvL37c2Kv9oXHaWSAFr_GARUovWhG2";
     # 上传空间名称
     protected $Bucket_Name = "test";
     # 回话token
@@ -32,9 +32,9 @@ class Service extends Model
      */
     public function __construct(){
         # 初始化accessKey和aecreyKey和上传空间名称
-        $this -> accessKey = "S1uIIGL0U0BJmdXtXGDK5FtetjRvBwcsWhXa4ZmK";
-        $this -> secretKey = "xmoM-4uj6xTOGJktTC0_OR7TmOL1FyD3q0LLco6R";
-        $this -> Bucket_Name = "test";
+        $this -> accessKey = "Q9y8YPYqrtn4S3otPhAkFkq5bw1aFDmPqpZU_rL5";
+        $this -> secretKey = "2wCWcZgBtnMvL37c2Kv9oXHaWSAFr_GARUovWhG2";
+        $this -> Bucket_Name = "ygsj2017bucket";
         # 构建鉴权对象
         $auth = new Auth($this -> accessKey, $this -> secretKey);
         # 生成上传 Token

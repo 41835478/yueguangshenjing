@@ -52,7 +52,7 @@
             <span class="price">¥<em id="price">{$goods->goods_price}</em></span>
             <div class="num_div">
                 <span class="down_span">-</span>
-                <input id="num" type="text" value="1">
+                <input id="num" type="text" value="1" disabled="">
                 <span class="add_span">+</span>
             </div>
         </div>
@@ -134,7 +134,7 @@
             'type':'post',
             'dataType':'json',
             success:function(res){
-                if(res.status){
+                if(res.status==200){
                     window.location.href='{:url("orders/index")}';
                 }else{
                     alert(res.message);

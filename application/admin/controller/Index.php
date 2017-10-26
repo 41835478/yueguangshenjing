@@ -46,6 +46,8 @@ class Index extends Controller
                     } else {
                         $this->error('验证码输入错误', 'index/index');
                     }
+                }else{
+                    $this->error('账号或密码错误', 'index/index');
                 }
             }else{
                 $this->error($validate->getError(),url('index/index'));
