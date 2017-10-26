@@ -169,14 +169,13 @@ class Login extends Controller
             return jsonp(['status'=>401,'message'=>'今天发送的短信太多了,明天再试吧']);
         }
         $res=self::sendMsg($post['phone']);
-    	if($res){
             #发送成功插入一条数据
             $data=[];
             $data['phone']=$post['phone'];
             $data['created_at']=time();
             $data['updated_at']=time();
             db('coderecord')->insert($data);
-
+    	if($res){
             return jsonp(['status'=>200,'message'=>'发送成功,验证码十分钟内有效']);
          }else{
             return jsonp(['status'=>401,'message'=>'发送失败,请稍后再试']);
