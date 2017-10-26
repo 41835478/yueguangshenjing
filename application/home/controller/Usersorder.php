@@ -126,8 +126,6 @@ class Usersorder extends Base
         $errorCorrectionLevel =intval($level) ;//容错级别
         $matrixPointSize = intval($size);//生成图片大小       
         $object->png($url, false, $errorCorrectionLevel, $matrixPointSize, 2); 
-        DIE();
-        //createqrcode(7);
-   
+        DIE();   
     }
 }
