@@ -9,8 +9,12 @@ use service\Qrcode;
 use app\admin\model\OrderModel;
 use app\admin\model\OrderInfo;
 use app\admin\model\Goods;
+use Vendor\phpqrcode\phpqrcode;
+vendor('phpqrcode.phpqrcode');
 class Usersorder extends Base
 {
+	
+//vendor('AliPay.AlipayTradeService');
 	public function _initialize()
     {
         parent::_initialize();
@@ -88,7 +92,13 @@ class Usersorder extends Base
 /***二维码***********************/
 	public function qrcode(){
 
-
+		$user=User::where('id',$this->uid)->find();
+		if($user['nickname']==''){
+			$user['nickname']='用户名'.$user['mobile'];
+		}
+		//$user['user_pic']='http://'.$_SERVER['HTTP_HOST'].$user['user_pic'];
+		//dump($user['user_pic']);die;
+		$this->assign(['user'=>$user]);
 		return $this->fetch();
 	}
 
@@ -99,20 +109,19 @@ class Usersorder extends Base
 	 * @param $size 图片大小
 	 * @return 
 	 */
-
-
-	 public function createqrcode(){
+	 public function createqrcode()
+	 {
    
         ob_clean();  
         $object = new \ QRcode();
-        $url = WAB_NAME.'/register/index/'.$this->uid;//网址或者是文本内容
+        $url = 'http://'.$_SERVER['HTTP_HOST'].'/Login/register/'.$this->uid;//网址或者是文本内容
         $level=3;
         $size=4;
         $errorCorrectionLevel =intval($level) ;//容错级别
         $matrixPointSize = intval($size);//生成图片大小       
-         $object->png($url, false, $errorCorrectionLevel, $matrixPointSize, 2); 
-
+        $object->png($url, false, $errorCorrectionLevel, $matrixPointSize, 2); 
         DIE();
+        //createqrcode(7);
    
     }
 }

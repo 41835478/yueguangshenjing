@@ -47,7 +47,12 @@
 	<div class="shopCenter_1">
 		<img src="{$user['user_pic']}" class="shopCenter_img2">
 		<div class="shopCenter_2">
-			<div class="shopCenter_3"><span class="sC_name">{$user['nickname']}</span><span class="sC_type"><img src="/resource/home/images/ly_18.png"/>
+			<div class="shopCenter_3"><span class="sC_name">
+				{if condition="$user['nickname'] eq ''"/} 用户名{$user['mobile']}
+				{else}
+					{$user['nickname']} 
+				{/if}
+			</span><span class="sC_type"><img src="/resource/home/images/ly_18.png"/>
 
 
 				{if condition="$user['level'] eq 1"/} 普通会员

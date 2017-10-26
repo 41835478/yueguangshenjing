@@ -5,7 +5,6 @@ use app\admin\model\User;
 use think\Cache;
 use think\View;
 use think\Session;
-use think\Session;
 class Login extends Controller
 {
     
