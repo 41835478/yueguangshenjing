@@ -28,7 +28,7 @@ class Statistics extends Base
         $user["todayuser"] = User::where($where)->count();#今日会员数量
         $user["account"] = User::sum("account");#会员账户余额统计
         $user["account_xian"] = User::where(["level"=>User::LEVEL_THREE])->count();#县级市代理数量
-        $user["account_di"] = User::where(["level"=>User::LEVEL_FIVE])->count();#地级市代理数量
+        $user["account_di"] = User::where(["level"=>User::LEVEL_FOUR])->count();#地级市代理数量
         $user["account_sheng"] = User::where(["level"=>User::LEVEL_FIVE])->count();#省会城市代理数量
         $user["account_one"] = User::where(["level"=>User::LEVEL_SIX])->count();#一线城市理数量
 
