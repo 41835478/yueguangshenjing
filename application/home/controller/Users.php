@@ -45,13 +45,15 @@ class Users extends Base
     		$post=input('param.');
     		$data=[];
     		 	// 获取表单上传文件 
-    		if(input('?user_pic')){
+    		if(request()->file("user_pic")){
     			 $file = request()->file("user_pic");
 			    // 移动到框架应用根目录/public/uploads/ 目录下
 			    $info = $file->validate(['size'=>10485756,'ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS . 'uploads');
 			    if($info){
 			        // 成功上传后 获取上传信息
-			        $data['user_pic']='/uploads/'.$info->getSaveName();
+            //$aaa=$info[$fileName]['savepath'].$info[$fileName];
+            $php_self = str_replace('\\', '/', $info->getSaveName());
+			       $data['user_pic']='/uploads/'.$php_self;
 			    }else{
 			        // 上传失败获取错误信息
 			        $error= $file->getError() ;

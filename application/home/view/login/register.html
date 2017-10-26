@@ -74,6 +74,7 @@
 					<input class="text_input login_pwd2" type="password" name="login_pwd2" placeholder="请再次输入您的密码">
 				</div>
 			</li>
+            <input type="hidden" name="uid" value="{$uid}" class="uid" >
 			<li class="li">
 				<img class="login_icon" src="/resource/home/images/login_icon4.png" alt="支付密码">
 				<div class="input_box">
@@ -83,6 +84,7 @@
 		</ul>
 
 		<button class="login_btn true shop"  id="bid">立即注册</button>
+
 		<p class="regist_xieyi">注册即同意<a href="{:url('Login/registerProtocol')}">《用户注册协议》</a></p>
 	</div>
 
@@ -155,6 +157,7 @@ $('#code').on('click',function(){
             var login_pwd1=$('.login_pwd1').val();
             var login_pwd2=$('.login_pwd2').val();
             var pay_pwd=$('.pay_pwd').val();
+            var uid=$('.uid').val();
             if(phone==""){
                 alert("请输入您的手机号码！");
                 //window.location.reload();
@@ -196,6 +199,7 @@ $('#code').on('click',function(){
                 'login_pwd1':login_pwd1,
                 'login_pwd2':login_pwd2,
                 'pay_pwd':pay_pwd,
+                'uid':uid,
                
             }
            

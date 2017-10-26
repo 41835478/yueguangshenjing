@@ -5,7 +5,6 @@ use app\admin\model\User;
 use think\Cache;
 use think\View;
 use think\Session;
-use think\Session;
 class Login extends Controller
 {
     
@@ -24,6 +23,9 @@ class Login extends Controller
 		    { 
 		       	return jsonp(['status'=>401,'message'=>'手机验证码不符合规则']);
 		    }
+
+           
+            
 		    $user=db('user')->where('mobile',$post['phone'])->find();
 		    if($user){
 		    	return jsonp(['status'=>401,'message'=>'该手机号已经注册']);
@@ -46,6 +48,9 @@ class Login extends Controller
 			$password=md5($post['login_pwd1'].$randpwd);
 			#组合数据
 			$data=[];
+             if($post['uid'] != 0){
+                $data['pid']=$post['uid'];
+            }            
 			$data['mobile']=$post['phone'];
 			$data['unique']=$randpwd;
 			$data['login_pwd']=$password;
@@ -58,7 +63,13 @@ class Login extends Controller
     		}else{
     			return jsonp(['status'=>401,'message'=>'注册失败,请稍后再试']);
     		}			
-		}		
+		}
+        if(input('param.uid')){
+            $uid=input('param.uid');
+        }else{
+            $uid=0;
+        }
+        $this->assign('uid',$uid);
 		return view();
     }
     #登录
@@ -195,7 +206,7 @@ class Login extends Controller
         if($result){
             $data=[];
             $data['yzm']=$code;
-            $data['phone']=$post['phone'];
+            $data['phone']=$mobile;
             Cache::set('yzm',$data,600);
             return true;
         }else{
