@@ -178,9 +178,25 @@
         }
     })
     $(".placeOrder_msg").click(function() {
-        sessionStorage.setItem('address',1)
-        window.location.href = '{:url("users/manageaddress")}';
+        sessionStorage.setItem('address',1);
+        if(getPValue("shop") != ""){
+            window.location.href = '{:url("users/manageaddress")}?shop='+getPValue("shop");
+        }else{
+            window.location.href = '{:url("users/manageaddress")}';
+        }
     });
+    //获取链接上的pid
+    function getPValue(name, defaultValue) {
+        if (defaultValue == "") {
+            defaultValue = "";
+        }
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(r[2]);
+        }
+        return defaultValue;
+    }
 </script>
 </body>
 </html>
