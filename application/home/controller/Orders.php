@@ -18,9 +18,20 @@ class Orders extends Base
         $this->user_id=session('uid');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $num=$totalMoney=0;
+        $shop_id=$request->param('shop',0,'intval');
+        if($shop_id){//说明是扫描店面二维码购买
+            $user=model('admin/User')->get($shop_id);
+            if($user){
+                $shop_name=$user->shop_name;
+            }else{
+                $shop_name='';
+            }
+        }else{
+            $shop_name='';
+        }
         $id=Session::get('goods_id','home');
         $num=Session::get('num','home');
         $address='';
@@ -42,6 +53,8 @@ class Orders extends Base
         $this->assign('address',$address);
         $this->assign('goods',$goods);
         $this->assign('num',$num);
+        $this->assign('shop_id',$shop_id);
+        $this->assign('shop_name',$shop_name);
         $this->assign('totalMoney',$totalMoney);
         return view('orders/index');
     }
@@ -53,11 +66,11 @@ class Orders extends Base
         $id=Session::get('goods_id','home');
         $num=Session::get('num','home');
         if($id&&$num){
-            if($date['is_shop']==1){
-                if(!$date['shop_name']){
-                    return json(['status'=>true,'message'=>'请填写店铺名称']);
-                }
-            }
+//            if($date['is_shop']==1){
+//                if(!$date['shop_name']){
+//                    return json(['status'=>true,'message'=>'请填写店铺名称']);
+//                }
+//            }
             $res=$this->createOrder($id,$num,$date);
             if($res){
                 return json(['status'=>true,'message'=>'下单成功']);
@@ -74,6 +87,7 @@ class Orders extends Base
         $date['order_code']=$this->order_num();
         $date['is_shop']=$data['is_shop'];
         $date['shop_name']=$data['shop_name'];
+        $date['shop_id']=$data['shop_id'];
         $date['status']=1;
         $date['address_id']=$data['address_id'];
         $address=$this->getAddress($data['address_id']);

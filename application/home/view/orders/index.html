@@ -99,7 +99,7 @@
             <i class="right iconfont icon-kaiguanguan-copy-copy" _flag="1"></i>
         </li>
         <div class="edit_div">
-            <textarea class="textarea" id="shop_name" cols="30" rows="10" placeholder="请填写店铺名称"></textarea>
+            <textarea class="textarea" id="shop_name" cols="30" rows="10" disabled="disabled" style="background: none">{$shop_name}</textarea>
         </div>
     </ul>
 
@@ -144,20 +144,21 @@
         $("#orderPay").css("pointer-events","none");
         $(".loadingBox").css("display","block")
         var address_id='{$address->id|default=""}';
+        var shop_id='{$shop_id}';
         if(address_id){
             var flag=$('.pay_way').find('.icon-kaiguanguan-copy-copy').attr('_flag');
             var shop_name=$('#shop_name').val();
-            if(flag==1){
-                if(!shop_name){
-                    alert('请填写店面名称');
-                    $(".loadingBox").css("display","none");
-                    $("#orderPay").css("pointer-events","auto");
-                    return false;
-                }
-            }
+//            if(flag==1){
+//                if(!shop_name){
+//                    alert('请填写店面名称');
+//                    $(".loadingBox").css("display","none");
+//                    $("#orderPay").css("pointer-events","auto");
+//                    return false;
+//                }
+//            }
             $.ajax({
                 'url':'{:url("orders/create")}',
-                'data':{'address_id':address_id,'shop_name':shop_name,'is_shop':flag},
+                'data':{'address_id':address_id,'shop_id':shop_id,'shop_name':shop_name,'is_shop':flag},
                 'async':true,
                 'type':'post',
                 'dataType':'json',
