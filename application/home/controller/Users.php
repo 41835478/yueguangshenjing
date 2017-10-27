@@ -619,7 +619,7 @@ try{
 
     $count=$z-$x;
     $this->assign(['increaseInventory'=>$increaseInventory,'reducemyInventory'=>$reducemyInventory,'count'=>$count]);
-		return $this->fetch();
+		return $this->fetch("users/myinventory");
 	}
 
 
