@@ -8,6 +8,10 @@ class Index extends controller
 {
     public function index()
     {
+    	return $this->fetch("index/start");
+    }
+    public function content()
+    {
         $content = [];
 
         $content["banner"] = BannersModel::order("sort","desc")->select();#轮播图

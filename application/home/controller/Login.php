@@ -155,6 +155,37 @@ class Login extends Controller
 
     }
 
+    #注册时发送验证码
+    public function registercode(){
+        $post=input('param.');
+        $user=User::where('mobile',$post['phone'])->find();
+        if($user){
+            return jsonp(['status'=>401,'message'=>'该手机号已经注册过,您可以去登录或找回密码']);
+        }
+        $countnum=db('config')->where('name','codenum')->value('value');
+        #今天时间戳
+        $today=strtotime(date('Y-m-d'));
+        #明天时间戳
+        //$tomorrow=strtotime(date('Y-m-d',strtotime('+1 day')));
+        $count=db('coderecord')->where(['phone'=>$post['phone']])->where('created_at','>',$today)->count();
+        if($count >= $countnum){
+            return jsonp(['status'=>401,'message'=>'今天发送的短信太多了,明天再试吧']);
+        }
+        $res=self::sendMsg($post['phone']);
+            #发送成功插入一条数据
+            $data=[];
+            $data['phone']=$post['phone'];
+            $data['created_at']=time();
+            $data['updated_at']=time();
+            db('coderecord')->insert($data);
+        if($res){
+            return jsonp(['status'=>200,'message'=>'发送成功,验证码十分钟内有效']);
+         }else{
+            return jsonp(['status'=>401,'message'=>'发送失败,请稍后再试']);
+         } 
+
+
+    }
     #发送验证码
     public function sendyamcode()
     {

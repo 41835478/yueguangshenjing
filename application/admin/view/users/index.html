@@ -146,6 +146,9 @@
                     <option value="7">一级店面</option>
                     <option value="8">二级店面</option>
                 </select>
+                <div style="width:420px;margin-top: 20px;display: none;" class="sanLinks">
+                    <input type="text" id="shop_name" />
+                </div>
                 <div style="width:420px;margin-top: 20px;" class="sanLink">
                     <input type="text" id="city" />
                     <input type="hidden" id="province" />
@@ -334,6 +337,13 @@
             $(".sanLink").css("display","none");
 
         }
+        if(val == 7 || val == 8){
+            $("#city").val("");
+            $(".sanLinks").css("display","block");
+        }else{
+            $(".sanLinks").css("display","none");
+
+        }
     });
 var user_id = "";
     function editLevel(id,val){
@@ -347,11 +357,16 @@ var user_id = "";
                     console.log(res);
                     $("#level").val(res.data.level);
                     $("#city").val(res.data.area);
+                    $("#shop_name").val(res.data.shop_name);
                     if(res.data.level == 3 || res.data.level == 4 || res.data.level == 5 || res.data.level == 6){
                         $(".sanLink").css("display","block");
                     }else{
                         $(".sanLink").css("display","none");
-
+                    }
+                    if(res.data.level == 7 || res.data.level == 8){
+                        $(".sanLinks").css("display","block");
+                    }else{
+                        $(".sanLinks").css("display","none");
                     }
                 }else{
                     alert(res.msg);
@@ -362,6 +377,12 @@ var user_id = "";
         user_id = id;
     }
     function submitLevel() {
+        if($("#level").val() == 7 || $("#level").val() == 8){
+            if($("#shop_name").val() == ""){
+                alert("请填写店面名称");
+                return;
+            }
+        }
         $.ajax({
             url:"{:url('users/levelEdit')}",
             type:"post",
@@ -371,6 +392,7 @@ var user_id = "";
                 province:$("#hcity").attr("data-id"),
                 city:$("#hproper").attr("data-id"),
                 district:$("#harea").attr("data-id"),
+                shop_name:$("#shop_name").val(),
                 id:user_id
             },success:function(res){
                 if(res.status == 0){

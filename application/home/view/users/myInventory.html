@@ -34,7 +34,7 @@
 	<div class="shopAccount_1">
 		<i class="iconfont icon-mjiantou-copy" onclick="window.location.href='javascript:history.go(-1);'"></i>我的库存
 	</div>
-	<div class="shopAccount_2"><span>200</span>当前库存（台）</div>
+	<div class="shopAccount_2"><span>{$count}</span>当前库存（台）</div>
 </div>
 <ul class="myInventory_ul">
 	<li class="myInventory_li">发货明细</li>
@@ -43,7 +43,7 @@
 <div class="myInventory_c">
 	<div class="myInventory_1" style="display: block;">
 
-{foreach $reducemyInventory as $k=>$v}
+		{foreach $reducemyInventory as $k=>$v}
 
 		<div class="myInventory_2">
 			<span class="mit_span">1</span>

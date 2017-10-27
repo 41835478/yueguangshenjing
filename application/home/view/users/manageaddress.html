@@ -67,7 +67,7 @@
 </ul>
 
 
-<a href="{:url('Users/Addaddress')}" class="mA_btn">新增收货地址</a>
+<a href="javascript:void(0)" id="sendAddress" class="mA_btn">新增收货地址</a>
 <div class="yzz"></div>
 <div class="yzz_1">
 	<h3>提示</h3>
@@ -156,6 +156,25 @@ $(".mA_ul li").each(function() {
 		});
 	});
 });
+$("#sendAddress").click(function(){
+    if(getPValue("shop") != ""){
+        window.location.href = "{:url('Users/Addaddress')}?shop="+getPValue("shop");
+	}else{
+        window.location.href = "{:url('Users/Addaddress')}";
+	}
+});
+//获取链接上的pid
+function getPValue(name, defaultValue) {
+    if (defaultValue == "") {
+        defaultValue = "";
+    }
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) {
+        return decodeURI(r[2]);
+    }
+    return defaultValue;
+}
 </script>
 </body>
 </html>

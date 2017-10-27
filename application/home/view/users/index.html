@@ -96,7 +96,7 @@
 
 <div class="shopCenter_5">
 		<div class="shopCenter_6">
-		<a href="customerOrder.html"><img src="/resource/home/images/ly_23.png"><span>客户订单</span><i class="iconfont icon-arrow-right"></i></a>
+		<a href="{:url('Users/index')}"><img src="/resource/home/images/ly_23.png"><span>客户订单</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
 	{else/}
 <div class="shopCenter_5">				
@@ -160,8 +160,16 @@
 </div>
 
 <footer>
-	<a href="/"><img src="/resource/home/images/ly_31.png">首页</a>
-	<a class="QR_li" href="{:url('Usersorder/qrcode')}"><img src="/resource/home/images/ly_33.png">二维码</a>
+	<a href="{:url('index/content')}"><img src="/resource/home/images/ly_31.png">首页</a>
+
+	{if condition="$user['level'] eq 1"/} 
+	<a class="QR_li" href="javascript:void(0);"><img src="/resource/home/images/ly_33.png">二维码</a>
+	{else/}
+	<a class="QR_l" href="{:url('Usersorder/qrcode')}"><img src="/resource/home/images/ly_33.png">二维码</a>
+	{/if}
+
+
+
 	<a href="{:url('Users/index')}"><img src="/resource/home/images/ly_35.png">我的</a>
 </footer>
 

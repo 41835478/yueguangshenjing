@@ -46,6 +46,7 @@ class Users extends Controller
         $data=$user->paginate(config("page"),false, [
             'query' => Request::instance()->param(),//不丢失已存在的url参数
         ]);
+
         foreach ($data as $v){
             $v['pid'] = User::get($v['pid'])["mobile"];
             $v["level"] = config('level')[$v["level"]];
@@ -174,7 +175,7 @@ class Users extends Controller
 
     //修改用户等级
     public function levelEdit(){
-        $input = Request::instance()->only("id,level,area,province,city,district");
+        $input = Request::instance()->only("id,level,area,province,city,district,shop_name");
         $user = User::get($input['id']);
 
         if($input['level'] == 3 ||$input['level'] == 4 ||$input['level'] == 5 ||$input['level'] == 6){
