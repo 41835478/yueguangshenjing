@@ -94,7 +94,7 @@ class Usersorder extends Base
 
 		$user=User::where('id',$this->uid)->find();
 
-		if($user['user_pic']==''){
+		if($user['user_pic']=='' || $user['nickname']==''){
 			exit('<script>alert("资料不全,请先完善资料");location.href = "/home/Users/index"</script>');
 		}
 
@@ -116,8 +116,7 @@ class Usersorder extends Base
 	 * @return 
 	 */
 	 public function createqrcode()
-	 {
-   
+	 {   
         ob_clean();  
         $object = new \ QRcode();
         $url = 'http://'.$_SERVER['HTTP_HOST'].'/Login/register/'.$this->uid;//网址或者是文本内容

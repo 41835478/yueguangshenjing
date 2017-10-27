@@ -14,7 +14,7 @@ $(function(){
 
 
 	$(".popBox .btn2").click(function() {
-		window.location.href = 'QRcode.html';
+		window.location.href = '/';
 	});
 });
 (function() {

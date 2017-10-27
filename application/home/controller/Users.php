@@ -606,13 +606,18 @@ try{
     //     $increaseInventory[$key]['user_pic']=$user['user_pic'];
     //   }
     #减少
-    $reducemyInventory=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>1])->select();
+    $reducemyInventory=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>2])->select();
     foreach ($reducemyInventory as $key => $value) {
         $user=db('user')->where('id',$value['uid'])->find();
         $reducemyInventory[$key]['name']=$user['nickname'];
         $reducemyInventory[$key]['user_pic']=$user['user_pic'];
       }
-    $count=$increaseInventory-$reducemyInventory;
+      #增加总数
+      $z=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>1])->count();
+      #减少总数
+      $x=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>2])->count();
+
+    $count=$z-$x;
     $this->assign(['increaseInventory'=>$increaseInventory,'reducemyInventory'=>$reducemyInventory,'count'=>$count]);
 		return $this->fetch();
 	}
