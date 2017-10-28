@@ -75,6 +75,15 @@
                     </ul>
                 </li>
                 {/if}
+
+                {if($pid == "")}
+                    {if($level == 7 || $level == 8)}
+                        <li>
+                            <a class="J_menuItem" href="{:url('users/rearview')}"><i class="fa fa fa-bar-chart-o"></i> <span
+                                    class="nav-label">出货明细</span></a>
+                        </li>
+                    {/if}
+                {/if}
                 <li>
                     <a href="javascript:;">
                         <i class="fa fa fa-bar-chart-o"></i>

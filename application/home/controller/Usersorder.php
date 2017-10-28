@@ -119,7 +119,6 @@ class Usersorder extends Base
 	 {   
         ob_clean();  
         $object = new \ QRcode();
-        $shop = "";
         $isUser = User::find($this->uid);
         if($isUser->level == "7" || $isUser->level == "8"){
             $shop = $isUser->id;
