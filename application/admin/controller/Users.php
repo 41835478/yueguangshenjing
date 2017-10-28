@@ -239,5 +239,24 @@ class Users extends Controller
         $rearview->setInc("repertorys",$revcount);
         return json(["status"=>0,"data"=>$rearview]);
     }
+    public function jinhuo($id){
+        $rearview = RearviewModel::where(["uid"=>$id])->find();
+        $user = User::get($id);
+        if(!$rearview){
+            $rearviewAdd = new RearviewModel();
+            $rearview = $rearviewAdd->data(['uid'=>$id,'stock'=>0,'shipment'=>0,'repertorys'=>0,'level'=>$user->level]);
+            $rearview->save();
+        }
+        return json(["status"=>0,"data"=>$rearview]);
+    }
+    public function addjinhuo($id,$repertorys){
+        $rearview = RearviewModel::get($id);
+        $rearview->setInc('repertorys',$repertorys);
+
+        $rearviewRecord = new RearviewRecordModel();
+        $rearviewRecord->data(["uid"=>$rearview->uid,'is_add'=>1,"info"=>"直属店面进货","num"=>$repertorys,"gid"=>0]);
+
+        return json(["status"=>0,"data"=>$rearview]);
+    }
 
 }
