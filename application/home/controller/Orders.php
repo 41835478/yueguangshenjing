@@ -81,8 +81,10 @@ class Orders extends Base
         }
     }
 
-    public function createOrder($id,$num,$data)//生成订单
+    public function createOrder($id,$num,$data)//生成订单(需要判断库存是否充足，如果库存不足则订单给平台)
     {
+        $mark=1;
+        $user_id='';
         $date['user_id']=$this->user_id;
         $date['order_code']=$this->order_num();
         $date['is_shop']=$data['is_shop'];
@@ -92,11 +94,33 @@ class Orders extends Base
         $date['address_id']=$data['address_id'];
         $address=$this->getAddress($data['address_id']);
         $send_id=$this->getAgentId($address->area_ids);
-        if($send_id){
-            $date['send_id']=$send_id;
-        }else{
-            $date['type']=1;
+        if($send_id||$data['shop_id']){
+            if($data['shop_id']){
+                if($this->checkStock($data['shop_id'])){
+                    $mark=2;
+                    $date['sign']=2;
+                    $user_id=$data['shop_id'];
+                }else{
+                    $data['shop_id']=0;
+                    $date['type']=1;
+                }
+            }elseif($send_id&&!$data['shop_id']){
+                if($this->checkStock($data['shop_id'])){
+                    $mark=2;
+                    $date['send_id']=$send_id;
+                    $date['sign']=1;
+                    $user_id=$data['shop_id'];
+                }else{
+                    $data['send_id']='';
+                    $date['type']=1;
+                }
+            }
         }
+//        if($send_id){
+//            $date['send_id']=$send_id;
+//        }else{
+//            $date['type']=1;
+//        }
         $date['area_ids']=$address->area_ids;
         $date['name']=$address->name;
         $date['phone']=$address->phone;
@@ -117,6 +141,12 @@ class Orders extends Base
                 $orderData['goods_num']=$num;
                 $result=model('admin/OrderInfo')->data($orderData)->save();
                 if($result){
+                    if($mark==2){
+                        $result2=$this->getStock($user_id,$num);
+                        if(!$result2){
+                            throw new Exception();
+                        }
+                    }
                     session('order_id',$res,'home');
                     Session::delete('goods_id','home');
                     Session::delete('num','home');
@@ -132,6 +162,35 @@ class Orders extends Base
             Db::rollback();
             return false;
         }
+    }
+
+    public function checkStock($id)
+    {
+        $mod=model('RearviewModel')->where(['uid'=>$id])->find();
+        if($mod->repertorys>0){
+            return true;
+        }
+        return false;
+    }
+
+    public function getStock($id,$num)//判断库存同时减掉库存  如果flag等于1则是店面id,如果flag==2则是代理商id
+    {
+        $mod=model('RearviewModel')->where(['uid'=>$id])->find();
+        if($mod->repertorys){
+            $mod->repertorys=$mod->repertorys-1;
+            $mod->shipment=$mod->shipment+1;
+            if($mod->save()){
+                $date['uid']=$id;
+                $date['is_add']=2;
+                $date['info']='销售了'.$num.'台产品';
+                $date['num']=$num;
+                $res=model('ReariewRecordModel')->data($date)->save();
+                if($res){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public function getAgentId($area_ids)//生成订单时得到该订单属于谁的订单

@@ -32,6 +32,14 @@
         <div class="ibox-content">
             <form action="{:url('orders/index')}" method="get">
                 <div class="input-group">
+                    <span style="float: right; margin-left: 5px;margin-right:5px">订单类型：
+                        <select name="sign" class="input-sm">
+                            <option value="">--请选择--</option>
+                            <option value="1">代理商订单</option>
+                            <option value="2">店面订单</option>
+                            <option value="3">平台订单</option>
+                        </select>
+                    </span>
                     <span style="float: right; margin-left: 5px;margin-right:5px">状态：
                         <select name="status" class="input-sm">
                             <option value="">--请选择--</option>
