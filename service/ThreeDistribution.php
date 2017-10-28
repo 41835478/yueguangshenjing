@@ -6,6 +6,8 @@ use app\admin\model\OrderModel;
 use app\admin\model\User;
 use think\Db;
 use think\Exception;
+use app\admin\model\AccountRecordModel;
+use think\Log;
 
 /**
  * 三级分佣
@@ -25,28 +27,35 @@ class ThreeDistribution{
     {
         $order = OrderModel::get($orderid);
         $user = User::all();
+
         $prent = getUpUser($user,$order->user_id);
         $configOne =  Config::get(2)->value / 100;
         $configTwo =  Config::get(3)->value / 100;
         $configThree =  Config::get(4)->value / 100;
 
-//        if(isset($prent[1]) && $prent[1]){#1
-//            Db::startTrans();
-//            try{
-//                if(User::where('id',$prent[1])->value('status') == 1){
-//                    $resOne = UserModel::where('id',$prent[1])->setInc('account',$orderid->price * $configOne);
-//                }
-//                if(User::where('id',$prent[2])->value('status') == 1){
-//                    $resOne = UserModel::where('id',$prent[2])->setInc('account',$orderid->price * $configTwo);
-//                }
-//                if(User::where('id',$prent[3])->value('status') == 1){
-//                    $resOne = UserModel::where('id',$prent[3])->setInc('account',$orderid->price * $configThree);
-//                }
-//                Db::commit();
-//            }catch (Exception $e){
-//                Db::rollback();
-//            }
-//        }
+        $threeArray = ["",$configOne,$configTwo,$configThree];
+
+        $account = new AccountRecord();
+
+        if(isset($prent[1]) && $prent[1]){#1
+            Db::startTrans();
+            try{
+                for( $i=1; $i<=3; $i++ ){
+                    if(User::where(["id"=>$prent[$i]])->value('status') == 1){#冻结不能享受三级分佣 普通会员也不能享受
+                        $resOne = User::where('id',$prent[$i])
+                            ->setInc('account',$order->price * $threeArray[$i]);
+                    }
+                    if($resOne){
+                        $account->setAccountRecord($prent[$i],"{$i}级分佣",
+                            AccountRecordModel::TYPE_ONE,1,$order->price * $threeArray[$i]);
+                    }
+                    Log::record("{$i}级分佣完成");
+                }
+                Db::commit();
+            }catch (Exception $e){
+                Db::rollback();
+            }
+        }
 
     }
 }
