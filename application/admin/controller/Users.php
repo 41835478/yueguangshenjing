@@ -255,6 +255,7 @@ class Users extends Controller
 
         $rearviewRecord = new RearviewRecordModel();
         $rearviewRecord->data(["uid"=>$rearview->uid,'is_add'=>1,"info"=>"直属店面进货","num"=>$repertorys,"gid"=>0]);
+        $rearviewRecord->save();
 
         return json(["status"=>0,"data"=>$rearview]);
     }
