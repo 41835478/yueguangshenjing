@@ -43,7 +43,7 @@ class Users extends Controller
         if($request->has('end','param',true)){#结束日期
             $user->where('created_at','<=',$request->input('end'));
         }
-        $data=$user->paginate(config("page"),false, [
+        $data=$user->order("created_at","desc")->paginate(config("page"),false, [
             'query' => Request::instance()->param(),//不丢失已存在的url参数
         ]);
 
