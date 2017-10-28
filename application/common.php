@@ -84,3 +84,48 @@ function getUpUser($arr,$prentId){
     }
     return $totalNum;
 }
+//获取所有下级
+function getChildenAll($uid,$users,$userall = '',$class=''){
+    if(empty($userall)){
+        static $userall = [];
+    }else{
+        static $userall = [];
+        $userall = [];
+    }
+    if(!in_array($uid, $userall)) {
+        if(is_array($uid)){
+            foreach($uid as $v){
+                $userall[] = $v;
+            }
+        }else{
+            array_push($userall, $uid);
+        }
+    }
+    $userChildren = [];
+    foreach($users as $k=>$v){
+        if(is_array($uid)){
+            if(in_array($v['pid'],$uid)){
+                array_push($userChildren,$v['id']);
+            }
+        }else{
+            if($v['pid'] == $uid){
+                array_push($userChildren,$v['id']);
+            }
+        }
+    }
+    $userall = array_unique(array_merge($userall, $userChildren));
+    if(!empty($userChildren)){
+        if($class){
+            $class--;
+            if($class > 0){
+                getChildenAll($userChildren,$users,'',$class);
+            }
+        }else{
+            getChildenAll($userChildren,$users);
+        }
+    }
+    sort($userall);
+
+    // dump($userall);
+    return $userall;
+}
