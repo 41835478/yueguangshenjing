@@ -19,10 +19,6 @@ class ThreeDistribution{
         $this->order = new OrderModel();
     }
 
-    /**
-     * 三级分佣
-     * @return bool
-     */
     public function addThree($orderid)
     {
         $order = OrderModel::get($orderid);
@@ -43,11 +39,11 @@ class ThreeDistribution{
                 for( $i=1; $i<=3; $i++ ){
                     if(User::where(["id"=>$prent[$i]])->value('status') == 1){#冻结不能享受三级分佣 普通会员也不能享受
                         $resOne = User::where('id',$prent[$i])
-                            ->setInc('account',$order->price * $threeArray[$i]);
+                            ->setInc('account',($order->price* $order->num) * $threeArray[$i]);
                     }
                     if($resOne){
                         $account->setAccountRecord($prent[$i],"{$i}级分佣",
-                            AccountRecordModel::TYPE_ONE,1,$order->price * $threeArray[$i]);
+                            AccountRecordModel::TYPE_ONE,1,($order->price* $order->num) * $threeArray[$i]);
                     }
                     Log::record("{$i}级分佣完成");
                 }
