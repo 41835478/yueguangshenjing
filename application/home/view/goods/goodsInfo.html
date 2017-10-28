@@ -135,7 +135,7 @@
             'dataType':'json',
             success:function(res){
                 if(res.status==200){
-                    if(getPValue("shop") != ""){
+                    if(getPValue("shop") != undefined){
                         window.location.href='{:url("orders/index")}?shop='+getPValue("shop");
                     }else{
                         window.location.href='{:url("orders/index")}';

@@ -219,7 +219,7 @@ $('#code').on('click',function(){
                 				 
                 	 		if(data.status==200){
                 	 			alert(data.message);
-                	 			if(getPValue("shop") != ""){
+                	 			if(getPValue("shop") != undefined){
                                     window.location.href="/home/Login/login.html?shop="+getPValue("shop");
 								}else{
                                     window.location.href="/home/Login/login.html";
@@ -241,7 +241,7 @@ $('#code').on('click',function(){
             })
         }
         $("#isLogin").click(function(){
-            if(getPValue("shop") != ""){
+            if(getPValue("shop") != undefined){
                 window.location.href = "{:url('Login/login')}?shop="+getPValue("shop");
 			}else{
                 window.location.href = "{:url('Login/login')}";
