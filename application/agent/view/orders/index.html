@@ -141,7 +141,11 @@
                     <td>{$v->created_at}</td>
                     <td>
                         {if condition="$v->status==2"}
+                        {if condition="$flag==1"}
                         <a class="sendGoods" style="color:green">发货</a> |
+                        {elseif condition="($flag==2) AND ($v->shop_id==0)"/}
+                        <a class="sendGoods" style="color:green">发货</a> |
+                        {/if}
                         {/if}
                         <a onclick="cour('{$v->id}')" data-toggle="modal" data-target="#myModal4">添加物流号</a> |
                         <a href="{:url('order/orderInfo',array('id'=>$v->id))}">详情</a>

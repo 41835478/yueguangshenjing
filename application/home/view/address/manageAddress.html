@@ -55,7 +55,7 @@
     {/foreach}
     {/if}
 </ul>
-<a href="{:url('address/addressCreate')}" class="mA_btn">新增收货地址</a>
+<a href="javascript:void(0)" id="addre" class="mA_btn">新增收货地址</a>
 <div class="yzz"></div>
 <div class="yzz_1">
     <h3>提示</h3>
@@ -97,6 +97,28 @@
         });
 
     });
+    $("#addre").click(function(){
+        if(getPValue("shop") != undefined){
+            window.location.href = "{:url('address/addressCreate')}?shop="+getPValue("shop");
+        }else{
+            window.location.href = "{:url('address/addressCreate')}";
+        }
+
+    });
+
+
+    //获取链接上的pid
+    function getPValue(name, defaultValue) {
+        if (defaultValue == "") {
+            defaultValue = "";
+        }
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(r[2]);
+        }
+        return defaultValue;
+    }
 </script>
 </body>
 </html>

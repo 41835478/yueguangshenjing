@@ -5,6 +5,7 @@ use app\admin\model\User;
 use think\Cache;
 use think\View;
 use think\Session;
+use think\Cookie;
 class Login extends Controller
 {
     
@@ -72,42 +73,106 @@ class Login extends Controller
         $this->assign('uid',$uid);
 		return view();
     }
-    #登录
+      #登录
     public function login()
     {
-    	$post=input('param.');
-    	if(request()->isPost())
-    	{
-    		$user=db('user')->where('mobile',$post['phone'])->find();
-    		if(!$user){
-    			return jsonp(['status'=>401,'message'=>'用户不存在']);
-    		}
-    		$password=md5($post['login_pwd1'].$user['unique']);
-    		if($user['login_pwd'] == $password){
-    			Session::set('uid',$user['id']);
-    			if($post['change']==1){
-    				   	setcookie("username",$post['phone'],time()+3600*24*365);
-   						setcookie("password",$post['login_pwd1'],time()+3600*24*365);
-    			}elseif($post['change']==0){
-    					setcookie("username",$post['phone'],time()-3600);
-   						setcookie("password",$post['login_pwd1'],time()-3600);
-    			}
-    			return jsonp(['status'=>200,'message'=>'登录成功']);
-    		}else{
-    			return jsonp(['status'=>401,'message'=>'账户或密码错误']);
-    		}
+        $post=input('param.');
+        if(request()->isPost())
+        {
+            $user=db('user')->where('mobile',$post['phone'])->find();
+            if(!$user){
+                return jsonp(['status'=>401,'message'=>'用户不存在']);
+            }
+            //dump($post['login_pwd1']);die;
+           $password=md5($post['login_pwd1'].$user['unique']);
+            #判断是否存在Cookie 
+            if(Cookie::has('username') && Cookie::has('password')){
+            	$random='ygsj';
+            	$password=md5(self::encrypt($post['login_pwd1'], 'D', $random).$user['unique']);
+            	$num=1;
+            	if($user['login_pwd'] != $password){
+            		$password=md5($post['login_pwd1'].$user['unique']);
+            		$num=2;
 
-    	}
-    	$user='';
-    	$pwd='';
-    	if(!empty($_COOKIE['username']) && !empty($_COOKIE['password'])){
-    		$user=$_COOKIE['username'];
-    		$pwd=$_COOKIE['password'];    		
-    	}
-    	$this->assign('user',$user);
-    	$this->assign('pwd',$pwd);
-    	return view();
+            	}
+            }
+
+            if($user['login_pwd'] == $password){
+                Session::set('uid',$user['id']);
+                if($post['change']==1){               	
+                    Cookie::set('username',$post['phone'],3600 * 24 *30);                   
+                    #开始加密
+                    $random='ygsj';
+
+                    $pass=self::encrypt($post['login_pwd1'], 'E', $random);
+                    #不通过cookie进入,就进行加密
+                    if($num==2) {
+                    	Cookie::set('password',$pass,3600 * 24 *30);
+                    }                  
+                                  
+                }elseif($post['change']==0){
+                    Cookie::delete('username');
+                    Cookie::delete('password');
+                }
+                     
+                return jsonp(['status'=>200,'message'=>'登录成功']);
+            }else{
+                return jsonp(['status'=>401,'message'=>'账户或密码错误']);
+            }
+
+        }
+        $user='';
+        $pwd='';
+
+
+        if(Cookie::has('username') && Cookie::has('password')){
+            $user=Cookie::get('username');
+            $pwd=Cookie::get('password'); 
+
+        }
+
+        $this->assign('user',$user);
+        $this->assign('pwd',$pwd);
+        return view();
     }
+
+    #加密规则
+    static public   function encrypt($string,$operation,$key=''){
+			   	$key=md5($key); 
+			    $key_length=strlen($key); 
+			    $string=$operation=='D'?base64_decode($string):substr(md5($string.$key),0,8).$string; 
+			     $string_length=strlen($string); 
+			     $rndkey=$box=array(); 
+			     $result=''; 
+			     for($i=0;$i<=255;$i++){ 
+			            $rndkey[$i]=ord($key[$i%$key_length]); 
+			         $box[$i]=$i; 
+			     } 
+			    for($j=$i=0;$i<256;$i++){ 
+			         $j=($j+$box[$i]+$rndkey[$i])%256; 
+			         $tmp=$box[$i]; 
+			         $box[$i]=$box[$j]; 
+			         $box[$j]=$tmp; 
+			     } 
+			    for($a=$j=$i=0;$i<$string_length;$i++){ 
+				         $a=($a+1)%256; 
+				         $j=($j+$box[$a])%256; 
+				         $tmp=$box[$a]; 
+				         $box[$a]=$box[$j]; 
+				         $box[$j]=$tmp; 
+				         $result.=chr(ord($string[$i])^($box[($box[$a]+$box[$j])%256])); 
+				     } 
+			    if($operation=='D'){ 
+			         if(substr($result,0,8)==substr(md5(substr($result,8).$key),0,8)){ 
+			             return substr($result,8); 
+		        }else{ 
+			             return''; 
+			         } 
+			    }else{ 
+			         return str_replace('=','',base64_encode($result)); 
+			    } 
+    }
+
     #忘记密码
     public function findpassword()
     {
@@ -213,7 +278,7 @@ class Login extends Controller
          }    	
     }
     #注册协议页面
-    public function registerProtocol(){
+    public function registerprotocol(){
     	return $this->fetch();
     }
 
@@ -304,4 +369,6 @@ class Login extends Controller
             }
         }
     }
+
+
 }

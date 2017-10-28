@@ -28,7 +28,7 @@ class Index extends Controller
         if($date['token']==session('token')){
             $validate=validate('Login');
             if($validate->check($date)){
-                $res=$mod->where(['mobile'=>$date['mobile']])->where('level','in',[3,4,5,6])->find();
+                $res=$mod->where(['mobile'=>$date['mobile']])->where('level','in',[3,4,5,6,7,8])->find();
                 if($res) {
                     if($res->login_pwd==md5($date['login_pwd'].$res->unique)){
                         if (captcha_check($date['code'])) {
@@ -38,7 +38,7 @@ class Index extends Controller
                             session('pic', $res->user_pic,'agent');
                             session('name',$res->name,'agent');
                             session('id',$res->id,'agent');
-                            $this->redirect(url('main/index'));
+                            $this->redirect(url('main/index',array('id'=>$res->id)));
                         } else {
                             $this->error('验证码输入错误', 'index/index');
                         }

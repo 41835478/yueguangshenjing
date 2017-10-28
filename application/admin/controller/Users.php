@@ -43,9 +43,10 @@ class Users extends Controller
         if($request->has('end','param',true)){#结束日期
             $user->where('created_at','<=',$request->input('end'));
         }
-        $data=$user->paginate(config("page"),false, [
+        $data=$user->order("created_at","desc")->paginate(config("page"),false, [
             'query' => Request::instance()->param(),//不丢失已存在的url参数
         ]);
+
         foreach ($data as $v){
             $v['pid'] = User::get($v['pid'])["mobile"];
             $v["level"] = config('level')[$v["level"]];
@@ -174,7 +175,7 @@ class Users extends Controller
 
     //修改用户等级
     public function levelEdit(){
-        $input = Request::instance()->only("id,level,area,province,city,district");
+        $input = Request::instance()->only("id,level,area,province,city,district,shop_name");
         $user = User::get($input['id']);
 
         if($input['level'] == 3 ||$input['level'] == 4 ||$input['level'] == 5 ||$input['level'] == 6){
@@ -236,6 +237,26 @@ class Users extends Controller
         $reaRecord->save();
 
         $rearview->setInc("repertorys",$revcount);
+        return json(["status"=>0,"data"=>$rearview]);
+    }
+    public function jinhuo($id){
+        $rearview = RearviewModel::where(["uid"=>$id])->find();
+        $user = User::get($id);
+        if(!$rearview){
+            $rearviewAdd = new RearviewModel();
+            $rearview = $rearviewAdd->data(['uid'=>$id,'stock'=>0,'shipment'=>0,'repertorys'=>0,'level'=>$user->level]);
+            $rearview->save();
+        }
+        return json(["status"=>0,"data"=>$rearview]);
+    }
+    public function addjinhuo($id,$repertorys){
+        $rearview = RearviewModel::get($id);
+        $rearview->setInc('repertorys',$repertorys);
+
+        $rearviewRecord = new RearviewRecordModel();
+        $rearviewRecord->data(["uid"=>$rearview->uid,'is_add'=>1,"info"=>"直属店面进货","num"=>$repertorys,"gid"=>0]);
+        $rearviewRecord->save();
+
         return json(["status"=>0,"data"=>$rearview]);
     }
 

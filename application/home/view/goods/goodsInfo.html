@@ -135,13 +135,29 @@
             'dataType':'json',
             success:function(res){
                 if(res.status==200){
-                    window.location.href='{:url("orders/index")}';
+                    if(getPValue("shop") != undefined){
+                        window.location.href='{:url("orders/index")}?shop='+getPValue("shop");
+                    }else{
+                        window.location.href='{:url("orders/index")}';
+                    }
                 }else{
                     alert(res.message);
                 }
             },
         })
     })
+    //获取链接上的pid
+    function getPValue(name, defaultValue) {
+        if (defaultValue == "") {
+            defaultValue = "";
+        }
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(r[2]);
+        }
+        return defaultValue;
+    }
 </script>
 </body>
 </html>

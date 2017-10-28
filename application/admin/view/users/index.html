@@ -104,6 +104,10 @@
                         {if($v->level == "县级市代理" || $v->level == "地级市代理"|| $v->level == "省会城市代理"|| $v->level == "一线城市代理")}
                         <a href="javascript:void(0)" onclick="rearview('{$v->id}')" data-toggle="modal" data-target="#myModal8" >代理商详情</a>
                         {/if}
+                        {if($v->pid) == "" || $v->pid == 7 || $v->pid == 8}
+                        <a href="javascript:void(0)"
+                           onclick="getjinhuo('{$v->id}')" data-toggle="modal" data-target="#myModal9" >进货</a>
+                        {/if}
                         <!--<a href="#">出货</a>-->
                         <!--<a href="#">库存</a>-->
                     </td>
@@ -146,6 +150,9 @@
                     <option value="7">一级店面</option>
                     <option value="8">二级店面</option>
                 </select>
+                <div style="width:420px;margin-top: 20px;display: none;" class="sanLinks">
+                    <input type="text" id="shop_name" />
+                </div>
                 <div style="width:420px;margin-top: 20px;" class="sanLink">
                     <input type="text" id="city" />
                     <input type="hidden" id="province" />
@@ -188,6 +195,26 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" id="level_bu" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal inmodal fade" id="myModal9" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">直属店面详情</h4>
+                <small class="font-bold">这里可以显示副标题。</small>
+            </div>
+            <div class="modal-body">
+                出货量: <input id="storefront_val" type="text" value="0" disabled="disabled">
+                库存: <input id="storefront_ku" type="text" disabled="disabled">
+                进货数量: <input id="add_storefront" type="number" placeholder="这里填写补货">
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn_bu" class="btn btn-white" data-dismiss="modal">保存</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
             </div>
         </div>
     </div>
@@ -334,6 +361,13 @@
             $(".sanLink").css("display","none");
 
         }
+        if(val == 7 || val == 8){
+            $("#city").val("");
+            $(".sanLinks").css("display","block");
+        }else{
+            $(".sanLinks").css("display","none");
+
+        }
     });
 var user_id = "";
     function editLevel(id,val){
@@ -347,11 +381,16 @@ var user_id = "";
                     console.log(res);
                     $("#level").val(res.data.level);
                     $("#city").val(res.data.area);
+                    $("#shop_name").val(res.data.shop_name);
                     if(res.data.level == 3 || res.data.level == 4 || res.data.level == 5 || res.data.level == 6){
                         $(".sanLink").css("display","block");
                     }else{
                         $(".sanLink").css("display","none");
-
+                    }
+                    if(res.data.level == 7 || res.data.level == 8){
+                        $(".sanLinks").css("display","block");
+                    }else{
+                        $(".sanLinks").css("display","none");
                     }
                 }else{
                     alert(res.msg);
@@ -362,6 +401,12 @@ var user_id = "";
         user_id = id;
     }
     function submitLevel() {
+        if($("#level").val() == 7 || $("#level").val() == 8){
+            if($("#shop_name").val() == ""){
+                alert("请填写店面名称");
+                return;
+            }
+        }
         $.ajax({
             url:"{:url('users/levelEdit')}",
             type:"post",
@@ -371,6 +416,7 @@ var user_id = "";
                 province:$("#hcity").attr("data-id"),
                 city:$("#hproper").attr("data-id"),
                 district:$("#harea").attr("data-id"),
+                shop_name:$("#shop_name").val(),
                 id:user_id
             },success:function(res){
                 if(res.status == 0){
@@ -412,6 +458,41 @@ var user_id = "";
                 }
             });
         }
+    });
+    var jin_id = "";
+    function getjinhuo(id){
+        $.ajax({
+            url:"{:url('users/jinhuo')}",
+            type:"get",
+            data:{
+                id:id,
+            },success:function(res){
+                $("#storefront_val").val(res.data.shipment);
+                $("#storefront_ku").val(res.data.repertorys);
+                jin_id = res.data.id;
+            }
+        });
+    }
+    $("#btn_bu").click(function () {
+        if($("#add_storefront").val() == ""){
+            alert("请填写补货量");
+            return;
+        }
+        if($("#add_storefront").val() <= 0){
+            alert("非法操作");
+            return;
+        }
+        $.ajax({
+            url:"{:url('users/addjinhuo')}",
+            type:"get",
+            data:{
+                repertorys : $("#add_storefront").val(),
+                id : jin_id
+            },success:function(res){
+                alert("成功进货"+$("#add_storefront").val()+",剩余"+res.data.repertorys);
+                history.go(0);
+            }
+        });
     });
 </script>
 </body>

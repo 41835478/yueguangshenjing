@@ -10,6 +10,9 @@ class Orders extends Base
     public function index(Request $request)
     {
         $mod=model('OrderModel');
+        if($request->has('sign','param',true)){
+            $mod->where(['sign'=>$request->param('sign')]);
+        }
         if($request->has('status','param',true)){
             $mod->where(['status'=>$request->param('status')]);
         }

@@ -10,7 +10,14 @@ class Order extends Base
     public function index(Request $request)
     {
         $user=$this->getStatic();
-        $mod=model('admin/OrderModel')->where(['send_id'=>$user[1]]);
+        $user_info=model('User')->get($user[1]);
+        if(in_array($user_info->level,[7,8])){
+            $flag=1;//店铺
+            $mod=model('admin/OrderModel')->where(['shop_id'=>$user[1]]);
+        }else{
+            $flag=2;//代理商
+            $mod=model('admin/OrderModel')->where(['send_id'=>$user[1]]);
+        }
         if($request->has('status','param',true)){
             $mod->where(['status'=>$request->param('status')]);
         }
@@ -32,6 +39,7 @@ class Order extends Base
         $this->assign('currentPage',$page['currentPage']);
         $this->assign('total',$page['total']);
         $this->assign('data', $data);
+        $this->assign('flag',$flag);
         $this->assign('render', $page['page']);
         return view('orders/index');
     }

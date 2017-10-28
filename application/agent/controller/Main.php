@@ -9,7 +9,9 @@ class Main extends Base
 {
     public function index()
     {
-        return view('main/index');
+        $user_id=input('param.id');
+        $level=model('User')->get($user_id);
+        return view('main/index',['level'=>$level->level,'pid'=>$level->pid]);
     }
 
     public function base(Request $request)
