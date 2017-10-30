@@ -10,7 +10,6 @@ class Test extends Controller
 {
     public function index()
     {
-        halt(config('WEB'));
 //        $redis=new Redis();
 //        $bool=$redis->connect('127.0.0.1');
 //        if($bool){

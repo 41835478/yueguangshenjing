@@ -40,7 +40,7 @@
 	<div class="storeAward_c" style="display: block;">
 		<ul id="storeAward_ul1">
 			{foreach $subsidy as $v}
-			<li><div>{$k+1}</div><img src="{$v['user_pic']}"><div><span>{$v['name']}</span>{$v['created_at']|date="Y-m-d",###}</div><div>￥{$v['money']}</div></li>
+			<li><div>{$k+1}</div><img src="{$v['user_pic']}"><div><span>{$v['name']}</span>{$v['created_at']|date="Y-m-d H:i:s",###}</div><div>￥{$v['money']}</div></li>
 			{/foreach}
 	
 		</ul>

@@ -32,10 +32,17 @@ class Users extends Base
     		$user['pphone']=$this->user->where('id',$user['pid'])->value('mobile');
     	}
     	$alipay=Alipay::where('user_id',$uid)->find();
+    	#查询团队业绩
+    	$zid=self::get_nodetotal([$uid],0,3,[]);
+    	$user['count']=db('order')->whereIn('user_id',$zid)->count();
+    	//dump($user['count']);die;
     	$this->assign('alipay',$alipay);
     	$this->assign('user',$user);
     	return $this->fetch();
     }
+
+
+
     #修改个人资料
     public function editdata()
     {
@@ -176,21 +183,21 @@ try{
 
 	#收入明细
 	public function incomedetails(){
-		$incomedetails=db('account_record')->where(['user_id'=>$this->uid,'status'=>1])->select();
+		$incomedetails=db('account_record')->where(['user_id'=>$this->uid,'status'=>1])->order('id desc')->select();
 
 		$this->assign('incomedetails',$incomedetails);
 		return $this->fetch();
 	}
 	#支出明细
 	public function expendituredetails(){
-		$expendituredetails=db('account_record')->where(['user_id'=>$this->uid,'status'=>2])->select();
+		$expendituredetails=db('account_record')->where(['user_id'=>$this->uid,'status'=>2])->order('id desc')->select();
 
 		$this->assign('expendituredetails',$expendituredetails);
 		return $this->fetch();
 	}
 	#提现记录
 	public function withdrawaldetails(){
-		$withdrawaldetails=db('withdrawals')->where(['user_id'=>$this->uid])->select();
+		$withdrawaldetails=db('withdrawals')->where(['user_id'=>$this->uid])->order('id desc')->select();
 
 		$this->assign('withdrawaldetails',$withdrawaldetails);
 		return $this->fetch();
@@ -210,21 +217,21 @@ try{
   		$zzid=self::get_nodetotal([$uid],0,3,[]);
   		$totaldistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zzid)->sum('money');
   		#查询一级分销
-  		$onedistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zid[0])->select();
+  		$onedistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zid[0])->order('id desc')->select();
   		foreach ($onedistribution as $key => $value) {
   				$user=$this->user->where('id',$value['sourceid'])->find();
   				$onedistribution[$key]['name']=$user['nickname'];
   				$onedistribution[$key]['user_pic']=$user['user_pic'];
   		}
   		#查询二级分销
-  		$twodistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zid[1])->select();
+  		$twodistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zid[1])->order('id desc')->select();
   		foreach ($twodistribution as $key => $value) {
   				$user=$this->user->where('id',$value['sourceid'])->find();
   				$twodistribution[$key]['name']=$user['nickname'];
   				$twodistribution[$key]['user_pic']=$user['user_pic'];
   		}
   		#查询三级分销
-  		$threedistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zid[2])->select();
+  		$threedistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zid[2])->order('id desc')->select();
   		foreach ($threedistribution as $key => $value) {
   				$user=$this->user->where('id',$value['sourceid'])->find();
   				$threedistribution[$key]['name']=$user['nickname'];
@@ -304,7 +311,7 @@ try{
   	}
   	#公用方法获取奖信息
   	public static function public_node($type,$uid){
-  		$installred=db('account_record')->where(['type'=>$type,'user_id'=>$uid])->select();
+  		$installred=db('account_record')->where(['type'=>$type,'user_id'=>$uid])->order('id desc')->select();
   		foreach ($installred as $key => $value) {
   			$user=db('user')->where('id',$value['sourceid'])->find();
   			$installred[$key]['name']=$user['nickname'];
@@ -335,12 +342,12 @@ try{
 	protected static function get_node($uid){
 		# 获取下级的(一级)ids
 
-		$one = db('user') -> field('id') -> where(['pid'=>$uid]) ->select();
+		$one = db('user') -> field('id') -> where(['pid'=>$uid]) ->order('id desc')->select();
 		$two = [];
 		$three = [];
 		# 获取二级用户
 		foreach($one as $key=>$value){
-			$tmp = db('user') -> field('id') -> where(['pid'=>$value['id']]) ->select();
+			$tmp = db('user') -> field('id') -> where(['pid'=>$value['id']]) ->order('id desc')->select();
 			if($tmp){
 				foreach ($tmp as $value) {
 					$two[] = $value;
@@ -349,7 +356,7 @@ try{
 		}
 		# 获取三级用户
 		foreach ($two as $key => $value) {
-			$tmp = db('user') -> field('id') -> where(['pid'=>$value['id']]) ->select();
+			$tmp = db('user') -> field('id') -> where(['pid'=>$value['id']]) ->order('id desc')->select();
 			if($tmp){
 				foreach ($tmp as $value) {
 					$three[] = $value;
@@ -413,9 +420,9 @@ try{
 		}
 		#消费未消费
 		if($post['type']==1){
-			$user=$this->user->where('level','=',1)->whereIn('id',$nid)->select();
+			$user=$this->user->where('level','=',1)->whereIn('id',$nid)->order('id desc')->select();
 		}elseif($post['type']==2){
-			$user=$this->user->where('level','<>',1)->whereIn('id',$nid)->select();
+			$user=$this->user->where('level','<>',1)->whereIn('id',$nid)->order('id desc')->select();
 		}
 		foreach ($user as $key => $value) {
 			$user[$key]['phone']=substr_replace($value['mobile'],'****',3,4);
@@ -464,7 +471,7 @@ try{
 
 /*****管理收货地址*********************************************************************************************************************************************************************************************/
 	public function manageaddress(){
-		$address=db('address')->where('user_id',$this->uid)->select();
+		$address=db('address')->where('user_id',$this->uid)->order('id desc')->select();
 
 
 		$this->assign('address',$address);
@@ -619,14 +626,14 @@ try{
 /******库存******************************************************************************************************************************************************************************************/
 	public function myInventory(){
     #增加
-    $increaseInventory=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>1])->select();
+    $increaseInventory=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>1])->order('id desc')->select();
     // foreach ($increaseInventory as $key => $value) {
     //     $user=db('user')->where('id',$value['sourceid'])->find();
     //     $increaseInventory[$key]['name']=$user['nickname'];
     //     $increaseInventory[$key]['user_pic']=$user['user_pic'];
     //   }
     #减少
-    $reducemyInventory=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>2])->select();
+    $reducemyInventory=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>2])->order('id desc')->select();
     foreach ($reducemyInventory as $key => $value) {
         $user=db('user')->where('id',$value['uid'])->find();
         $reducemyInventory[$key]['name']=$user['nickname'];

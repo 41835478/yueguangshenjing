@@ -35,7 +35,7 @@
 	<div class="wR">
 		<img src="/resource/home/images/ly_45.png">
 		<div>
-			<span class="wR_name">提现</span><span class="wR_time">{$v['created_at']|date="Y-m-d",###}</span>
+			<span class="wR_name">提现</span><span class="wR_time">{$v['created_at']|date="Y-m-d H:i:s",###}</span>
 		</div>
 		<div><span class="wR_price">￥{$v['money']}</span><span class="wR_ffbh">
 			{if condition="$v['status'] eq 1"/} 待审核
