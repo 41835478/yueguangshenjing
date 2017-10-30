@@ -7,10 +7,10 @@ use think\Request;
 
 class Goods extends Controller
 {
-    public function goodsInfo($id)//商品详情
+    public function goodsInfo($id,$num=1)//商品详情
     {
         $goods=model('admin/Goods')->get($id);
-        return view('goods/goodsInfo',['goods'=>$goods]);
+        return view('goods/goodsInfo',['goods'=>$goods,'num'=>$num]);
     }
 
     public function checkGoodsNum()//检查商品数量

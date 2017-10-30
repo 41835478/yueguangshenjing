@@ -232,7 +232,7 @@
                 <span class="out-box_inpass_bot"></span>
             </label>
             <input class="out-inpass" id="out-inpass" type="number" />
-            <a href="{:url('Users/loginpassword')}" class="yy_1">忘记密码?</a>
+            <a href="{:url('Users/alipaypassword')}" class="yy_1">忘记密码?</a>
 
             <div class="out_btnBox">
                 <button class="out_btn out_btn1" type="button">取消</button>
@@ -385,6 +385,7 @@
                        window.location.href="{:url('orders/paySuccess')}";
                     }else{
                         alert(res.message);
+                        window.location.reload();
                     }
                 },
             })

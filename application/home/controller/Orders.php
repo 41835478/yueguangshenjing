@@ -122,7 +122,7 @@ class Orders extends Base
         $date['name']=$address->name;
         $date['phone']=$address->phone;
         $date['area_info']=$address->area.','.$address->street.','.$address->area_info;
-        $date['price']=$this->getGoods($id)->goods_price;
+        $date['price']=$this->getGoods($id)->goods_price*$num;
         $date['num']=$num;
         $date['created_at']=time();
         $res=model('admin/OrderModel')->insertGetId($date);
@@ -269,13 +269,15 @@ class Orders extends Base
             Db::startTrans();
             try{
                 $order->status=2;
+                $order->flag=3;
                 if($order->save()){
                     $res=$this->writeRecord($order->price);
                     if($res){
                         $res2=$this->userAccountChange($order->price);
                         if($res2){
                             $serviceDb=model('InstallFeeService','service');
-                            if($serviceDb->index($id)){//安装红包奖励
+                            $res3=$serviceDb->index($id);
+                            if($res3){//安装红包奖励
                                 Db::commit();
                                 return true;
                             }else{

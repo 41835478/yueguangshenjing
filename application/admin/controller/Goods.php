@@ -191,4 +191,21 @@ class Goods extends Base
        }
        return json(['status'=>false,'message'=>'删除失败']);
    }
+
+   public function editGoodsInfo()//修改商品详情
+   {
+       $date=input('post.');
+       if(!$date['content']){
+           $url=popBox('error','商品详情不能为空');
+           $this->redirect($url);
+       }
+       $goods=model('Goods')->get($date['id']);
+       $goods->content=$date['content'];
+       if($goods->save()){
+           $url=popBox('error','商品详情修改成功');
+       }else{
+           $url=popBox('error','商品详情修改失败');
+       }
+       $this->redirect($url);
+   }
 }

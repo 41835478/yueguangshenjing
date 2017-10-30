@@ -15,4 +15,9 @@ class WithdrawalsModel extends Model
     const STATUS_ONE = "1";#待审核
     const STATUS_TWO = "2";#同意
     const STATUS_THREE = "3";#驳回
+
+    public function user()
+    {
+        return $this->belongsTo("User","user_id");
+    }
 }

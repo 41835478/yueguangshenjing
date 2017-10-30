@@ -19,6 +19,10 @@ class User extends Model
     {
         return $this->hasMany("AccountRecordModel","user_id","id");
     }
+    public function withdraw()
+    {
+        return $this->hasMany("WithdrawalsModel","user_id","id");
+    }
     public function upUser($pid)
     {
         return $this->where(["id"=>$pid])->find();

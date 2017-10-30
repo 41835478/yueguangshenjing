@@ -31,14 +31,13 @@ class Usersorder extends Base
 		$type=input('param.type');
 		#1 代付,2待发 3待收货,4已完成
 		$order=self::userorder($type,$this->uid);
-		
 		$this->assign(['order'=>$order,'type'=>$type]);
 		return $this->fetch();
 	}
 
 	#查询订单方法
 	public	static function userorder($type,$uid){
-		$orderinfo=db('order')->where(['status'=>$type,'user_id'=>$uid])->select();		
+		$orderinfo=db('order')->where(['status'=>$type,'user_id'=>$uid])->order('id desc')->select();		
 		foreach ($orderinfo as $k => $v ){
 			$orderinfo[$k]['created_at']=date('Y-m-d H:i:s',$v['created_at']);
 					$info=db('order_info')->where('order_id',$v['id'])->select();
@@ -100,7 +99,7 @@ class Usersorder extends Base
 	}
 	#查询客户订单方法
 	public	static function clientsorder($type,$uid){
-		$orderinfo=db('order')->where(['status'=>$type,'shop_id'=>$uid])->select();		
+		$orderinfo=db('order')->where(['status'=>$type,'shop_id'=>$uid])->order('id desc')->select();		
 		foreach ($orderinfo as $k => $v ){
 			$orderinfo[$k]['created_at']=date('Y-m-d H:i:s',$v['created_at']);
 					$info=db('order_info')->where('order_id',$v['id'])->select();

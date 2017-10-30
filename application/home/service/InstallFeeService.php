@@ -15,7 +15,7 @@ class InstallFeeService extends Model
 {
     public function index($order_id)
     {
-        $order=model('admin/Order')->get($order_id);
+        $order=model('admin/OrderModel')->get($order_id);
         return $this->writeRecord($order->user_id,50);
     }
 
@@ -23,10 +23,10 @@ class InstallFeeService extends Model
     {
         $date['user_id']=$user_id;
         $date['record_info']='安装费补助'.$money.'元';
-        $date['type']=AccountRecordModel::TYPE_FOUR;
+        $date['type']=intval(AccountRecordModel::TYPE_FOUR);
         $date['status']=1;
         $date['money']=$money;
-        $res=model('admin/AccountRecordModel')->data($date)->save();
+        $res=model('AccountRecord')->data($date)->save();
         Db::startTrans();
         try{
             if($res){
