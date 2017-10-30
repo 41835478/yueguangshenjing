@@ -90,6 +90,7 @@
     <div class="msg_border"></div>
 
     <ul class="pay_way">
+        {if condition="$shop_id !=0"}
         <li class="li1">
             <span class="left">非店面购买</span>
             <i class="right iconfont icon-guan" _flag="2"></i>
@@ -98,6 +99,16 @@
             <span class="left">店面购买</span>
             <i class="right iconfont icon-kaiguanguan-copy-copy" _flag="1"></i>
         </li>
+        {else/}
+        <li class="li1">
+            <span class="left">非店面购买</span>
+            <i class="right iconfont icon-kaiguanguan-copy-copy" _flag="2"></i>
+        </li>
+        <li>
+            <span class="left">店面购买</span>
+            <i class="right iconfont icon-guan" _flag="1"></i>
+        </li>
+        {/if}
         <div class="edit_div">
             <textarea class="textarea" id="shop_name" cols="30" rows="10" disabled="disabled" style="background: none">{$shop_name}</textarea>
         </div>

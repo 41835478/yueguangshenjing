@@ -151,7 +151,9 @@
                         {if condition="$v->status==2"}
                         <a class="sendGoods" style="color:green">发货</a> |
                         {/if}
+                        {if condition="($v->status!=3) OR ($v->status!=4)"}
                         <a onclick="cour('{$v->id}')" data-toggle="modal" data-target="#myModal4">添加物流号</a> |
+                        {/if}
                         <a href="{:url('orders/orderInfo',array('id'=>$v->id))}">详情</a>
                     </td>
                 </tr>

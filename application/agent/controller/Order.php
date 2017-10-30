@@ -32,7 +32,7 @@ class Order extends Base
             $user_id=$this->getUserInfo($request->param('name'),2);
             $mod->whereOr('user_id','=',$user_id);
         }
-        $data=$mod->paginate(config('page'),false, [
+        $data=$mod->order('created_at','desc')->paginate(config('page'),false, [
             'query' => Request::instance()->param(),//不丢失已存在的url参数
         ]);
         $page=$this->getPage($data);
@@ -54,11 +54,15 @@ class Order extends Base
     {
         $id=input('post.id');
         $order=model('admin/OrderModel')->get($id);
-        $order->status=3;
-        if($order->save()){
-            return json(['status'=>true,'message'=>'发货成功']);
+        if(!$order->logistics_num){
+            return json(['status'=>false,'message'=>'请填写物流单号']);
+        }else{
+            $order->status=3;
+            if($order->save()){
+                return json(['status'=>true,'message'=>'发货成功']);
+            }
+            return json(['status'=>false,'message'=>'发货失败']);
         }
-        return json(['status'=>false,'message'=>'发货失败']);
     }
 
     public function cour()//填写物流单号

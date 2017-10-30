@@ -269,6 +269,7 @@ class Orders extends Base
             Db::startTrans();
             try{
                 $order->status=2;
+                $order->flag=3;
                 if($order->save()){
                     $res=$this->writeRecord($order->price);
                     if($res){
