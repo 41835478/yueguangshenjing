@@ -85,11 +85,11 @@ class SubsidyService
                 Log::record("平台发货!无需补助");
             }
             #非店面购买 升级后的代理商每销售1台，给上级额外补助60元/台
-            if ($order->is_shop == 2 && $order->type != 2) {
+            if ($order->is_shop == 2 && $order->sign != 3) {
                 $user_agent = User::get($order->send_id);
-                $user_agent->setInc("account", (Config::get(14)->value * $order->num));
+                $user_agent->setInc("account", Config::get(14)->value * $order->num);
                 $account->setAccountRecord($order->send_id, "招商销售奖",
-                    3, 2, (Config::get(10)->value * $order->num),$order->user_id);
+                    3, 2, Config::get(10)->value * $order->num,$order->user_id);
                 Log::record("升级后的代理商每销售1台");
             }
             return "wancheng";
