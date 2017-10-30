@@ -100,7 +100,7 @@ class Orders extends Base
                     $mark=2;
                     $date['sign']=2;
                     $user_id=$data['shop_id'];
-                }else{
+                }else{//如果是购买的店面但是库存不足则订单归平台
                     $data['shop_id']=0;
                     $date['type']=1;
                 }
@@ -110,17 +110,14 @@ class Orders extends Base
                     $date['send_id']=$send_id;
                     $date['sign']=1;
                     $user_id=$data['shop_id'];
-                }else{
+                }else{//如果购买的代理商但是库存不足则订单归平台
                     $data['send_id']='';
                     $date['type']=1;
                 }
             }
+        }else{
+            $date['type']=1;
         }
-//        if($send_id){
-//            $date['send_id']=$send_id;
-//        }else{
-//            $date['type']=1;
-//        }
         $date['area_ids']=$address->area_ids;
         $date['name']=$address->name;
         $date['phone']=$address->phone;
@@ -277,8 +274,13 @@ class Orders extends Base
                     if($res){
                         $res2=$this->userAccountChange($order->price);
                         if($res2){
-                            Db::commit();
-                            return true;
+                            $serviceDb=model('InstallFeeService','service');
+                            if($serviceDb->index($id)){//安装红包奖励
+                                Db::commit();
+                                return true;
+                            }else{
+                                throw new Exception();
+                            }
                         }else{
                             throw new Exception();
                         }

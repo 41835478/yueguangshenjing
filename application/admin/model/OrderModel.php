@@ -22,6 +22,11 @@ class OrderModel extends Model
         return $this->belongsTo('User','send_id');
     }
 
+    public function shop()
+    {
+        return $this->belongsTo('User','shop_id');
+    }
+
     public function getUser()
     {
         return $this->belongsTo('User','user_id');
