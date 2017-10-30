@@ -18,7 +18,7 @@ class Index extends controller
 
         $content["banner"] = BannersModel::order("sort","desc")->select();#轮播图
         $uid = Session::get("uid");
-
+        
         return $this->fetch("index/index",["content"=>$content,"user"=>User::get($uid)]);
     }
 

@@ -2,9 +2,7 @@
 namespace app\home\controller;
 
 use Service\ThreeDistribution;
-
 use Service\SubsidyService;
-
 use think\Controller;
 use app\admin\model\ContentsModel;
 
@@ -56,7 +54,6 @@ class Content extends controller
     {
         $three = new ThreeDistribution();
         $three->addThree(23);
-
         $subsydy = new SubsidyService();
         $subsydy->subsidy(23);
         if($three){
@@ -65,7 +62,6 @@ class Content extends controller
         if($subsydy){
             echo "补助发放完毕";
         }
-
 
     }
 }

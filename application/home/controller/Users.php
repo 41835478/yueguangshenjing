@@ -555,7 +555,9 @@ try{
         if(strlen(trim($post['login_pwd1'])) < 6 || strlen(trim($post['login_pwd1'])) > 20){
                 return jsonp(['status'=>401,'message'=>'请填写6位到20位登录密码']);
             }  
-            
+        if(!preg_match("/[A-Za-z]/",$post['login_pwd1']) ||  !preg_match("/\d/",$post['login_pwd1'])){
+          return jsonp(['status'=>401,'message'=>'请填写字母加数字的组合']);
+        }
 				    #判断验证码
 				    $code=Cache::get('yzm');
 

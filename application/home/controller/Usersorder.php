@@ -11,6 +11,8 @@ use app\admin\model\OrderInfo;
 use app\admin\model\Goods;
 use Vendor\phpqrcode\phpqrcode;
 vendor('phpqrcode.phpqrcode');
+use Service\SubsidyService;
+use Service\ThreeDistribution;
 class Usersorder extends Base
 {
 	
@@ -73,6 +75,12 @@ class Usersorder extends Base
 		if(request()->isPost()){
 			$order_id=input('param.order_id');
 			$orderinfo=$this->Order->where(['id'=>$order_id])->update(['status'=>4]);
+			$three = new ThreeDistribution();
+			$three->addThree($order_id);
+
+			$subsydy = new SubsidyService();
+			$subsydy->subsidy($order_id);
+
 			if($orderinfo){
 				return jsonp(['status'=>200,'message'=>'执行成功']);
 			}else{
@@ -82,12 +90,33 @@ class Usersorder extends Base
 	}
 
 	/******客户订单***************************************************************************************/
-	public function  clientsorder(){
-		
+	public function  clientsindex(){
+		$type=input('param.type');
+		#1 代付,2待发 3待收货,4已完成
+		$clients=self::clientsorder($type,$this->uid);
+		$this->assign(['clients'=>$clients,'type'=>$type]);
+		return $this->fetch();
 		
 	}
-
-
+	#查询客户订单方法
+	public	static function clientsorder($type,$uid){
+		$orderinfo=db('order')->where(['status'=>$type,'shop_id'=>$uid])->select();		
+		foreach ($orderinfo as $k => $v ){
+			$orderinfo[$k]['created_at']=date('Y-m-d H:i:s',$v['created_at']);
+					$info=db('order_info')->where('order_id',$v['id'])->select();
+				$orderinfo[$k]['info']=$info;
+		}
+		return $orderinfo;
+	}
+	public function clientsorderinfo(){
+		$order_id=input('param.order_id');
+		$orderinfo=$this->Order->where(['id'=>$order_id])->find();
+		$info=$this->OrderInfo->where('order_id',$orderinfo['id'])->select();
+		$orderinfo['info']=$info;
+		$orderinfo['shop_name']=db('user')->where('id',$this->uid)->value('nickname');
+		$this->assign(['orderinfo'=>$orderinfo]);
+		return $this->fetch();		
+	}
 
 /***二维码***********************/
 	public function qrcode(){
@@ -120,6 +149,7 @@ class Usersorder extends Base
         ob_clean();  
         $object = new \ QRcode();
         $isUser = User::find($this->uid);
+        $shop='';
         if($isUser->level == "7" || $isUser->level == "8"){
             $shop = $isUser->id;
         }

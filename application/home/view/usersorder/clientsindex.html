@@ -75,7 +75,7 @@
         background-color: #fff;
     }
     .title ul li{
-        width: 25%;
+        width: 33.3%;
         float: left;
     }
     .title ul li a{
@@ -125,31 +125,27 @@
 <body>
 <div class="public_head">
     <i class="iconfont icon-mjiantou-copy" onclick="javascript:history.back(-1);"></i>
-    我的订单
+    客户订单
 </div>
 
 <div class="title">
     <ul>
         {if condition="$type eq 1"/} 
-        <li><a href="{:url('Usersorder/orderindex',['type'=>1])}" class="active">待付款</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>2])}">待发货</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>3])}">待收货</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>4])}">已完成</a></li>
-                {elseif condition="$type eq 2"/}
-        <li><a href="{:url('Usersorder/orderindex',['type'=>1])}">待付款</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>2])}" class="active">待发货</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>3])}">待收货</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>4])}">已完成</a></li>
+        <li><a href="{:url('Usersorder/clientsindex',['type'=>1])}" class="active">待付款</a></li>
+
+        <li><a href="{:url('Usersorder/clientsindex',['type'=>3])}">待收货</a></li>
+        <li><a href="{:url('Usersorder/clientsindex',['type'=>4])}">已完成</a></li>
+               
                 {elseif condition="$type eq 3"/}
-        <li><a href="{:url('Usersorder/orderindex',['type'=>1])}">待付款</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>2])}">待发货</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>3])}" class="active">待收货</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>4])}">已完成</a></li>
+        <li><a href="{:url('Usersorder/clientsindex',['type'=>1])}">待付款</a></li>
+
+        <li><a href="{:url('Usersorder/clientsindex',['type'=>3])}" class="active">待收货</a></li>
+        <li><a href="{:url('Usersorder/clientsindex',['type'=>4])}">已完成</a></li>
                 {elseif condition="$type eq 4"/}
-         <li><a href="{:url('Usersorder/orderindex',['type'=>1])}" >待付款</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>2])}">待发货</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>3])}">待收货</a></li>
-        <li><a href="{:url('Usersorder/orderindex',['type'=>4])}" class="active">已完成</a></li>
+         <li><a href="{:url('Usersorder/clientsindex',['type'=>1])}" >待付款</a></li>
+
+        <li><a href="{:url('Usersorder/clientsindex',['type'=>3])}">待收货</a></li>
+        <li><a href="{:url('Usersorder/clientsindex',['type'=>4])}" class="active">已完成</a></li>
 
         {/if}
 
@@ -159,7 +155,7 @@
 
 <div class="orderDetails_6">
 
-    {foreach $order as $v}
+    {foreach $clients as $v}
     <div class="orderDetails_7">
         <div class="orderDetails_8 left">订单编号：<span>{$v['order_code']}</span><div class="right">
            {if condition="$type eq 1"/} 
@@ -190,26 +186,11 @@
         </div>
         {/foreach}
 
-        {if condition="$type eq 1"/} 
-        <div class="orderDetails_9">应付￥{$v['price']}
-            <a href="{:url('Orders/pay',['order_id'=>$v['id']])}" class="right">去付款</a>
-            <input type="hidden"  value="{$v['id']}" id="order_id">
-            <a href="javascript:void(0);" class="right go">取消订单</a>
-        </div>
-                {elseif condition="$type eq 2"/}
+      
         <div class="orderDetails_9">实付￥{$v['price']}
-            <a href="{:url('Usersorder/orderinfo',['order_id'=>$v['id']])}" class="right">查看详情</a>
+            <a href="{:url('Usersorder/clientsorderinfo',['order_id'=>$v['id']])}" class="right">查看详情</a>
         </div>
-                {elseif condition="$type eq 3"/}
-        <div class="orderDetails_9">实付￥{$v['price']}
-            <input type="hidden"  value="{$v['id']}" id="order_id">
-            <a href="javascript:void(0);" class="right save">确认收货</a>
-        </div>
-                {elseif condition="$type eq 4"/}
-        <div class="orderDetails_9">实付￥{$v['price']}
-            <a href="{:url('Usersorder/orderinfo',['order_id'=>$v['id']])}" class="right">查看订单</a>
-        </div> 
-        {/if}         
+    
     </div>
 {/foreach}
 <script>

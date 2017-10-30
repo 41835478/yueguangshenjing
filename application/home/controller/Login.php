@@ -24,9 +24,6 @@ class Login extends Controller
 		    { 
 		       	return jsonp(['status'=>401,'message'=>'手机验证码不符合规则']);
 		    }
-
-           
-            
 		    $user=db('user')->where('mobile',$post['phone'])->find();
 		    if($user){
 		    	return jsonp(['status'=>401,'message'=>'该手机号已经注册']);
@@ -39,6 +36,10 @@ class Login extends Controller
             if(strlen(trim($post['login_pwd1'])) < 6 || strlen(trim($post['login_pwd1'])) > 20){
                 return jsonp(['status'=>401,'message'=>'请填写6位到20位登录密码']);
             } 
+
+            if(!preg_match("/[A-Za-z]/",$post['login_pwd1']) ||  !preg_match("/\d/",$post['login_pwd1'])){
+            	return jsonp(['status'=>401,'message'=>'请填写字母加数字的组合']);
+            }
 		    #判断验证码
 		    $code=Cache::get('yzm');
 		    if($post['yzm']!=$code['yzm'] || $post['phone']!=$code['phone'] ){
