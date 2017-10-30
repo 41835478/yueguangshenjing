@@ -43,7 +43,8 @@ class ThreeDistribution{
                     }
                     if($resOne){
                         $account->setAccountRecord($prent[$i],"{$i}级分佣",
-                            AccountRecordModel::TYPE_ONE,1,($order->price* $order->num) * $threeArray[$i]);
+                            AccountRecordModel::TYPE_ONE,1,
+                            ($order->price* $order->num) * $threeArray[$i],$order->user_id);
                     }
                     Log::record("{$i}级分佣完成");
                 }

@@ -59,8 +59,8 @@
 			<i class="iconfont icon-weixuanzhong" data-id="{$v['id']}"></i>默认地址</span>
 			{/if}
 			<span class="masc mascss"><i class="iconfont icon-shanchu" data-id="{$v['id']}"></i>删除</span>
-			<span class="mabj"><a href="{:url('Users/editaddress',['id'=>$v['id']])}" class="iconfont icon-bianji">编辑</a></span>
-			<!-- <span class="mabj"><i class="iconfont icon-bianji" data-id="{$v['id']}"></i>编辑</span> -->
+			
+			<span class="mabj"><a href="{:url('Users/editaddress',['id'=>$v['id']])}"><i class="iconfont icon-bianji" data-id="{$v['id']}"></i>编辑</a></span>
 		</div>
 	</li>
 	{/foreach}

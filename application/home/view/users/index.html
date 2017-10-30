@@ -96,7 +96,7 @@
 
 <div class="shopCenter_5">
 		<div class="shopCenter_6">
-		<a href="{:url('Users/index')}"><img src="/resource/home/images/ly_23.png"><span>客户订单</span><i class="iconfont icon-arrow-right"></i></a>
+		<a href="{:url('Usersorder/clientsindex',['type'=>1])}"><img src="/resource/home/images/ly_23.png"><span>客户订单</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
 	{else/}
 <div class="shopCenter_5">				
@@ -123,7 +123,7 @@
 <div class="shopCenter_5" style="margin-top: 10px;">
 	{if condition="$alipay eq ''"/} 
 		<div class="shopCenter_6">
-		<a href="{:url('Users/bingdingalipay')}"><img src="/resource/home/images/ly_26.png"><span>账户绑定</span><i class="iconfont icon-arrow-right"></i><span class="shopCenter_span1">未支付宝,前往绑定</span></a>
+		<a href="{:url('Users/bingdingalipay')}"><img src="/resource/home/images/ly_26.png"><span>账户绑定</span><i class="iconfont icon-arrow-right"></i><span class="shopCenter_span1">未绑定支付宝,前往绑定</span></a>
 		</div>
 
 	{else}

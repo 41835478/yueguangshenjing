@@ -111,7 +111,9 @@ class Users extends Base
     		$starttime=db('config')->where('name','starttime')->value('value');
     		$endtime=db('config')->where('name','endtime')->value('value');
     		$time=strtotime(date('Y-m-d'));
-    		if(time() < $starttime || time() > $endtime){
+
+    		
+    		if(time() < $starttime * 3600 + $time  || time() > $endtime * 3600 + $time ){
     			return jsonp(['status'=>401,'message'=>'提现时间为'.$starttime.'点与'.$endtime.'点之间']);   			
     		}
 
@@ -548,11 +550,18 @@ try{
 				if ($post['login_pwd1'] !=$post['login_pwd2']) 
 				    { 
 				       	return jsonp(['status'=>401,'message'=>'两次密码不一致']);
-				    } 
+				    }
+
+        if(strlen(trim($post['login_pwd1'])) < 6 || strlen(trim($post['login_pwd1'])) > 20){
+                return jsonp(['status'=>401,'message'=>'请填写6位到20位登录密码']);
+            }  
+        if(!preg_match("/[A-Za-z]/",$post['login_pwd1']) ||  !preg_match("/\d/",$post['login_pwd1'])){
+          return jsonp(['status'=>401,'message'=>'请填写字母加数字的组合']);
+        }
 				    #判断验证码
 				    $code=Cache::get('yzm');
 
-				    if($post['yzm']!=$code['yzm'] || $user['phone']!=$code['phone'] ){
+				    if($post['yzm']!=$code['yzm'] || $user['mobile']!=$code['phone'] ){
 				    	return jsonp(['status'=>401,'message'=>'手机验证码有误']);
 				    }
 				    #生成随机密码
@@ -585,12 +594,15 @@ try{
 				    { 
 				       	return jsonp(['status'=>401,'message'=>'两次密码不一致']);
 				    } 
+				if(strlen(trim($post['login_pwd1'])) != 6){
+                		return jsonp(['status'=>401,'message'=>'请填写6位支付密码']);
+            		}
 				    #判断验证码
 				    $code=Cache::get('yzm');				 
 				    if($post['yzm']!=$code['yzm'] || $user['mobile']!=$code['phone'] ){
 				    	return jsonp(['status'=>401,'message'=>'手机验证码有误']);
 				    }
-					$password=md5($post['login_pwd1']);
+					$password=md5(trim($post['login_pwd1']));
 					$data=[];
 					$data['pay_pwd']=$password;
 					$data['updated_at']=time();

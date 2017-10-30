@@ -24,9 +24,6 @@ class Login extends Controller
 		    { 
 		       	return jsonp(['status'=>401,'message'=>'手机验证码不符合规则']);
 		    }
-
-           
-            
 		    $user=db('user')->where('mobile',$post['phone'])->find();
 		    if($user){
 		    	return jsonp(['status'=>401,'message'=>'该手机号已经注册']);
@@ -34,19 +31,30 @@ class Login extends Controller
 		    if ($post['login_pwd1'] !=$post['login_pwd2']) 
 		    { 
 		       	return jsonp(['status'=>401,'message'=>'两次密码不一致']);
-		    } 
+		    }
+
+            if(strlen(trim($post['login_pwd1'])) < 6 || strlen(trim($post['login_pwd1'])) > 20){
+                return jsonp(['status'=>401,'message'=>'请填写6位到20位登录密码']);
+            } 
+
+            if(!preg_match("/[A-Za-z]/",$post['login_pwd1']) ||  !preg_match("/\d/",$post['login_pwd1'])){
+            	return jsonp(['status'=>401,'message'=>'请填写字母加数字的组合']);
+            }
 		    #判断验证码
 		    $code=Cache::get('yzm');
 		    if($post['yzm']!=$code['yzm'] || $post['phone']!=$code['phone'] ){
 		    	return jsonp(['status'=>401,'message'=>'手机验证码有误']);
 		    }
+            if(strlen(trim($post['pay_pwd'])) != 6){
+                return jsonp(['status'=>401,'message'=>'请填写6位支付密码']);
+            }
 		    #生成随机密码
 		    $randpwd='';
 		    for ($i = 0; $i < 5; $i++) 
 			{ 
 			$randpwd .= chr(mt_rand(97, 122)); 
 			}
-			$password=md5($post['login_pwd1'].$randpwd);
+			$password=md5(trim($post['login_pwd1']).$randpwd);
 			#组合数据
 			$data=[];
              if($post['uid'] != 0){
@@ -55,7 +63,7 @@ class Login extends Controller
 			$data['mobile']=$post['phone'];
 			$data['unique']=$randpwd;
 			$data['login_pwd']=$password;
-			$data['pay_pwd']=md5($post['pay_pwd']);
+			$data['pay_pwd']=md5(trim($post['pay_pwd']));
 			$data['created_at']=time();
 			$data['updated_at']=time();
 			$res=db('user')->insert($data);			

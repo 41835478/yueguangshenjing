@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="__FONTS__/iconfont.css">
 <script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
 <script type="text/javascript" src="__JS__/swiper.min.js"></script>
-<script type="text/javascript" src="__JS__/public.js"></script>
+<!--<script type="text/javascript" src="__JS__/public.js"></script>-->
 <link rel="stylesheet" href="__CSS__/main.css">
 <style type="text/css">
 	/* body{ background: #f5f5f5; } */
@@ -107,10 +107,11 @@
 					<p class="p_on">首页</p>
 				</a>
 			</li>
-			<li class="footer_li QR_li">
+			<li class="footer_li QR_li" id="click_code">
 				<a href="javascript:void(0);">
 					<img src="__IMG__/ly_33.png" alt="">
 					<p>二维码</p>
+					<input type="hidden" id="user" value="{$user.level}"/>
 				</a>
 			</li>
 			<li class="footer_li">
@@ -149,18 +150,23 @@
 	        observerParents:true
 	    });
 
-//	     $(".QR_li").click(function() {
-//	     	$(".popBox").fadeIn('fast');
-//	     });
-//	     $(".popBox .btn1").click(function() {
-//	     	$(".popBox").fadeOut('fast');
-//	     });
-//
-//
-//	     $(".popBox .btn2").click(function() {
-//	     	window.location.href = '{:url("code/index")}';
-//	     });
 	});
+	$("#click_code").click(function () {
+		var userLevel = $("#user").val();
+		if(userLevel > 1){
+			window.location.href = '{:url("usersorder/qrcode")}';
+		}else{
+			$(".popBox").show();
+			return;
+		}
+    });
+
+    $(".popBox .btn2").click(function() {
+        $(".popBox").fadeOut('fast');
+    });
+    $(".popBox .btn1").click(function() {
+        $(".popBox").fadeOut('fast');
+    });
 </script>
 </body>
 </html>
