@@ -36,7 +36,7 @@ class SubsidyService
                 if ($user_storefront['level'] == "7") {#一级 补助100 直属代理商余额减去10
                     $user_storefront->setInc("account", (Config::get(11)->value * $order->num));
                     $account->setAccountRecord($order->shop_id, "一级店面补助",
-                        9, 1, (Config::get(11)->value * $order->num));
+                        9, 1, (Config::get(11)->value * $order->num),$order->user_id);
                     Log::record("1店面补助");
 
                     if ($user_storefront->agency_id != 0) {#为0  系统直属店面
@@ -46,7 +46,7 @@ class SubsidyService
                             - (Config::get(11)->value * $order->num)));
                         $account->setAccountRecord($order->agency_id, "店面补助直属代理扣款",
                             11, 1, ((Config::get(9)->value * $order->num)
-                                - (Config::get(11)->value * $order->num)));
+                                - (Config::get(11)->value * $order->num)),$order->user_id);
                         Log::record("1店面补助直属代理扣款");
                     }
 
@@ -54,7 +54,7 @@ class SubsidyService
                 if ($user_storefront['level'] == "8") {#二级 补助50 直属代理商余额减去50
                     $user_storefront->setInc("account", (Config::get(12)->value * $order->num));
                     $account->setAccountRecord($order->shop_id, "二级店面补助",
-                        9, 1, (Config::get(12)->value * $order->num));
+                        9, 1, (Config::get(12)->value * $order->num),$order->user_id);
                     Log::record("二级店面补助");
 
                     if ($user_storefront->agency_id != 0) {#为0  系统直属店面
@@ -63,7 +63,7 @@ class SubsidyService
                             - (Config::get(12)->value * $order->num)));
                         $account->setAccountRecord($order->agency_id, "店面补助直属代理扣款",
                             11, 2, ((Config::get(9)->value * $order->num)
-                                - (Config::get(12)->value * $order->num)));
+                                - (Config::get(12)->value * $order->num)),$order->user_id);
                         Log::record("2店面补助直属代理扣款");
                     }
                 }
@@ -74,10 +74,10 @@ class SubsidyService
                 $user_agent = User::get($order->send_id);
                 $user_agent->setInc("account", (Config::get(10)->value * $order->num));
                 $account->setAccountRecord($order->send_id, "代理商发货奖",
-                    12, 2, (Config::get(10)->value * $order->num));
+                    12, 2, (Config::get(10)->value * $order->num),$order->user_id);
                 Log::record("代理商发货补助完成");
 
-                if ($this->umbrella($order->user_id, $order->num)) {
+                if ($this->umbrella($order->user_id, $order->num, $order->user_id)) {
                     Log::record("伞下购货补助完成");
                 }
             }
@@ -89,7 +89,7 @@ class SubsidyService
                 $user_agent = User::get($order->send_id);
                 $user_agent->setInc("account", (Config::get(14)->value * $order->num));
                 $account->setAccountRecord($order->send_id, "招商销售奖",
-                    3, 2, (Config::get(10)->value * $order->num));
+                    3, 2, (Config::get(10)->value * $order->num),$order->user_id);
                 Log::record("升级后的代理商每销售1台");
             }
             return "wancheng";
@@ -100,7 +100,7 @@ class SubsidyService
     }
 
     #理商伞下购货，额外补助200元/台（同级别不重复拿）
-    public function umbrella($id, $num)
+    public function umbrella($id, $num,$uid)
     {
         $user_list = getUpUser(User::all(), $id);
         $account = new AccountRecord();
@@ -108,7 +108,7 @@ class SubsidyService
             if (in_array(User::get($user_list[$i])->level, [3, 4, 5, 6])) {
                 User::get($user_list[$i])->setInc("account", (Config::get(9)->value * $num));
                 $account->setAccountRecord($id, "代理商伞下购货",
-                    11, 2, (Config::get(9)->value * $num - Config::get(12)->value * $num));
+                    11, 2, (Config::get(9)->value * $num - Config::get(12)->value * $num),$uid);
                 if ($account) {
                     return true;
                 }
