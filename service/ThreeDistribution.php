@@ -37,7 +37,7 @@ class ThreeDistribution{
             Db::startTrans();
             try{
                 for( $i=1; $i<=3; $i++ ){
-                    if(User::where(["id"=>$prent[$i]])->value('status') == 1){#冻结不能享受三级分佣 普通会员也不能享受
+                    if(User::where(["id"=>$prent[$i]])->value('status') == 1){#冻结不能享受三级分佣
                         $resOne = User::where('id',$prent[$i])
                             ->setInc('account',($order->price* $order->num) * $threeArray[$i]);
                     }
