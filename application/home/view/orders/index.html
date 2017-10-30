@@ -188,9 +188,11 @@
             sessionStorage.setItem('address',1);
 
             if(getPValue("shop") != undefined){
-                window.location.href = '{:url("users/manageaddress")}?shop='+getPValue("shop");
+                window.location.href = '{:url("users/addaddress")}?shop='+getPValue("shop");
+//                window.location.href = '{:url("users/manageaddress")}?shop='+getPValue("shop");
             }else{
-                window.location.href = '{:url("users/manageaddress")}';
+                window.location.href = '{:url("users/addaddress")}';
+//                window.location.href = '{:url("users/manageaddress")}';
             }
         }
     })
