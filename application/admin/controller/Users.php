@@ -197,6 +197,14 @@ class Users extends Controller
         }else{
             $input["area"] = "";
         }
+        #系统直接指定的店面 0
+        if($input['level'] == 7 ||$input['level'] == 8 ){
+            if($user->agency_id != ""){
+                $userOne = User::get($user->agency_id);
+                return json(["status"=>100,"msg"=>"该店面已被用户".($user->agency_id == '0' ?"系统":$userOne->mobile)."指定"]);
+            }
+            $input["agency_id"] = 0;
+        }
 
 
         $user->save($input,["id"=>$input["id"]]);

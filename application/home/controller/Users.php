@@ -43,6 +43,11 @@ class Users extends Base
     	$user=$this->user->where('id',$uid)->find();
     	if(request()->isPost()){
     		$post=input('param.');
+
+        if(strlen($post['nickname']) > 15 ){
+             $this->error('昵称过长,请输入1~5个汉字');
+        }
+
     		$data=[];
     		 	// 获取表单上传文件 
     		if(request()->file("user_pic")){
@@ -349,6 +354,9 @@ try{
 				}
 			}
 		}
+    $res_one=[];
+    $res_two=[];
+    $res_three=[];
 		# 处理数据
 		foreach ($one as $key => $value) {
 			$res_one[] = $value['id'];
@@ -460,7 +468,7 @@ try{
 		$this->assign('address',$address);
 		return $this->fetch();	
 	}
-	public function Addaddress(){
+	public function addaddress(){
 		if(request()->isPost()){
 			$num=db('address')->where('user_id',$this->uid)->count();
 			if($num >= 5){

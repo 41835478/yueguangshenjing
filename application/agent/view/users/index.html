@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
     <title> - 用户列表</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
-
     {include file="public/header"}
     <link href="__PUBLIC__/admin/css/plugins/jsTree/style.min.css" rel="stylesheet">
-
 </head>
-
 <body class="gray-bg">
 {include file="public/popBox"}
 <div class="col-sm-12">
@@ -96,6 +89,8 @@
                     <td>
                         <a href="javascript:void(0)" onclick="editLevel('{$v->id}','{$v->level}')"
                            data-toggle="modal" data-target="#myModal5">修改店面</a>
+                        <a href="javascript:void(0)" onclick="childen('{$v->id}')">
+                            {$v->downUser($v->id) == "" ? "没有下级" : "查看下级"}</a>
                     </td>
                 </tr>
                 <input type="hidden" id="area_{$v->id}" value="{$v->area}">
@@ -130,6 +125,9 @@
                     <option value="7">一级店面</option>
                     <option value="8">二级店面</option>
                 </select>
+                <div style="width:420px;margin-top: 20px;display: none;" class="sanLinks">
+                    <input type="text" id="shop_name" />
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
@@ -144,23 +142,94 @@
 <script>
     var user_id = "";
     function editLevel(id) {
+        $.ajax({
+            url:"{:url('users/userOne')}",
+            type:"get",
+            data:{
+                id:id
+            },success:function(res){
+                if(res.status == 0){
+                    console.log(res);
+                    $("#level").val(res.data.level);
+                    $("#city").val(res.data.area);
+                    $("#shop_name").val(res.data.shop_name);
+                    if(res.data.level == 7 || res.data.level == 8){
+                        $(".sanLinks").css("display","block");
+                    }else{
+                        $(".sanLinks").css("display","none");
+                    }
+                }else{
+                    alert(res.msg);
+                }
+            }
+        });
+
         user_id = id;
     }
     function submitLevel() {
+        if($("#shop_name").val() == ""){
+            alert("请填写店面名称");
+            return;
+        }
         if(confirm("确定修改该店面?")){
             $.ajax({
                 url:"{:url('users/editStorefront')}",
                 type:"post",
                 data:{
                     id:user_id,
+                    shop_name:$("#shop_name").val(),
                     level:$("#level").val()
                 },success:function(res){
                     if(res.status == 0){
                         history.go(0);
                     }
+                    if(res.status == 100){
+                        alert(res.msg);
+                    }
                 }
             });
         }
+    }
+    //用户下级
+    function childen(id){
+        //加载层
+        index2 = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+
+        //获取权限信息
+        $.ajax({
+            url:"{:url('users/suborDinate')}",
+            type:"get",
+            data:{
+                id:id
+            }, success:function(res){
+                layer.close(index2);
+                if(res.message){
+                    layer.msg(res.message);
+                    return;
+                }
+                layer.open({
+                    type: 1,
+                    shade: 0,
+                    maxmin: true,//允许最大化
+                    resize: true,//允许拉伸
+                    offset: [ //随机坐标
+                        Math.random()*($(window).height()-500)
+                        ,Math.random()*($(window).width()-600)
+                    ],
+                    zIndex: 9, //重点1
+                    success: function(layero){
+                        layer.setTop(layero); //重点2
+                    },
+                    tipsMore: true,
+                    area:['600px', '500px'],
+                    title:'<b style="color:orange;">'+res.user.name+'</b>的下级　　人数：<b style="color:orange;">'+res.num+'</b>人',
+                    skin: 'layui-layer-demo', //加上边框
+                    content: res.data
+                });
+            },error:function(){
+                console.log("请稍后重试");
+            }
+        });
     }
 </script>
 </html>
