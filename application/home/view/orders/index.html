@@ -118,7 +118,7 @@
     <ul class="goodsBox">
         <li>
             {if condition="$goods neq ''"}
-            <a href="{:url('goods/goodsInfo',['id'=>$goods->id])}">
+            <a href="{:url('goods/goodsInfo',['id'=>$goods->id,'num'=>$num])}">
                 <img class="img" src="__PUBLIC__{$goods->main_pic}" alt="商品图">
                 <div class="right">
                     <p class="tit">{$goods->name|default=''}</p>
