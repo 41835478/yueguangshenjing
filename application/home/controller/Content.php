@@ -1,6 +1,7 @@
 <?php
 namespace app\home\controller;
 
+use Service\ThreeDistribution;
 use think\Controller;
 use app\admin\model\ContentsModel;
 
@@ -47,5 +48,11 @@ class Content extends controller
         $service = ContentsModel::get(2);#客服中心
         $service->content = strip_tags($service->content);
         return $this->fetch("content/kefu",["service"=>$service]);
+    }
+    public function ceshi()
+    {
+        $three = new ThreeDistribution();
+        $three->addThree(23);
+
     }
 }

@@ -175,11 +175,7 @@
                 success:function(data){
                 	 if(data.status){
 						 if(sessionStorage.getItem('address')==1){
-						     if(getPValue("shop") != ""){
-                                 window.location.href="{:url('orders/index')}?shop="+getPValue("shop");
-							 }else {
-                                 window.location.href="{:url('orders/index')}";
-							 }
+							 window.location.href="{:url('orders/index')}"
 						 }else{
 							 if(data.status==200){
 								 alert(data.message);
@@ -198,18 +194,6 @@
             })
         }
 
-    //获取链接上的pid
-    function getPValue(name, defaultValue) {
-        if (defaultValue == "") {
-            defaultValue = "";
-        }
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return decodeURI(r[2]);
-        }
-        return defaultValue;
-    }
 
 </script>
 </body>
