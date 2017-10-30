@@ -28,5 +28,11 @@
     },
     "require-dev": {
         "topthink/think-captcha": "1.*"
+    },
+    "autoload": {
+    "psr-4": {
+        "Service\\":"service/",
+        "App\\":"application/"
     }
+}
 }
