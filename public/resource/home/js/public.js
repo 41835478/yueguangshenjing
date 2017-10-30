@@ -14,7 +14,7 @@ $(function(){
 
 
 	$(".popBox .btn2").click(function() {
-		window.location.href = '/';
+		window.location.href = "{:url('index/content')}";
 	});
 });
 (function() {
