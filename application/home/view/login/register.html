@@ -158,6 +158,7 @@ $('#code').on('click',function(){
             var login_pwd2=$('.login_pwd2').val();
             var pay_pwd=$('.pay_pwd').val();
             var uid=$('.uid').val();
+          	var regNum=/^\d{6}\b/;
             if(phone==""){
                 alert("请输入您的手机号码！");
                 //window.location.reload();
@@ -192,6 +193,10 @@ $('#code').on('click',function(){
                 alert("请输入支付密码！");
                 //window.location.reload();
                 return false;
+            }
+		    if(!regNum.test(pay_pwd)){
+                alert("支付密码必须为6位纯数字");
+                return;
             }
             var data={
                 'phone':phone,
