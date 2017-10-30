@@ -4,7 +4,6 @@ namespace app\admin\controller;
 
 use app\admin\model\WithdrawalsModel;
 use Service\AccountRecord;
-use think\Request;
 
 class Withdrawals extends Base
 {

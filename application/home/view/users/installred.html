@@ -38,7 +38,7 @@
 <div class="irp_1"><span>时间</span><span>金额</span></div>
 <ul class="irp_ul">
 	{foreach $installred as $k=>$v}
-	<li><span>{$v['created_at']|date="Y-m-d",###}</span><span>￥{$v['money']}</span></li>
+	<li><span>{$v['created_at']|date="Y-m-d H:i:s",###}</span><span>￥{$v['money']}</span></li>
 {/foreach}
 
 		

@@ -124,7 +124,7 @@
 </head>
 <body>
 <div class="public_head">
-    <i class="iconfont icon-mjiantou-copy" onclick="javascript:history.back(-1);"></i>
+    <a href="{:url('Users/index')}"><i class="iconfont icon-mjiantou-copy" onclick="javascript:history(0);"></i></a>
     我的订单
 </div>
 
@@ -158,6 +158,11 @@
 </div>
 
 <div class="orderDetails_6">
+
+    {if condition="count($order) eq 0 "/} 
+        您还没有订单，先去逛逛吧
+
+    {/if}
 
     {foreach $order as $v}
     <div class="orderDetails_7">
