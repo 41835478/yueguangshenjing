@@ -171,7 +171,7 @@
 {if condition="$orderinfo['status'] eq 1"/} 
 <div class="content1">
     <a href="javascript:void(0);" class="btn1 left go">取消订单</a>
-    <a href="{:url('Order/pay',['order_id'=>$orderinfo['id']])}" class="btn2 right">去付款</a>
+    <a href="{:url('Orders/pay',['order_id'=>$orderinfo['id']])}" class="btn2 right">去付款</a>
 </div>
                 {elseif condition="$orderinfo['status'] eq 2"/}
     
