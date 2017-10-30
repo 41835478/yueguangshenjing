@@ -90,7 +90,7 @@ class SubsidyService
                 $user_agent->setInc("account", Config::get(14)->value * $order->num);
                 $account->setAccountRecord($order->send_id, "招商销售奖",
                     3, 2, Config::get(10)->value * $order->num,$order->user_id);
-                Log::record("升级后的代理商每销售1台");
+                Log::record("升级后的代理商每销售1台 奖励60");
             }
             return "wancheng";
             Db::commit();
