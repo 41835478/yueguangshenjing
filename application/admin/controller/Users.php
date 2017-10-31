@@ -77,6 +77,10 @@ class Users extends Controller
         $user = User::get($input["recharge_id"]);
         $account = new AccountRecord();
 
+        if($input["num"] > 50000){
+            $Url = popBox("error","单笔充值不能超过50000");
+            $this->redirect($Url);
+        }
         if($input["is_add"] == "1"){
             $user->setInc("account",$input["num"]);
             $account->setAccountRecord($input["recharge_id"],"系统充值",
@@ -205,7 +209,6 @@ class Users extends Controller
             }
             $input["agency_id"] = 0;
         }
-
 
         $user->save($input,["id"=>$input["id"]]);
 
