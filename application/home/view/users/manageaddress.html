@@ -157,6 +157,7 @@ $(".mA_ul li").each(function() {
 	});
 });
 $("#sendAddress").click(function(){
+    sessionStorage.setItem('address',2);
     if(getPValue("shop") != ""){
         window.location.href = "{:url('Users/Addaddress')}?shop="+getPValue("shop");
 	}else{
