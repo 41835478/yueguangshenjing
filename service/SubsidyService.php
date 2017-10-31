@@ -85,18 +85,19 @@ class SubsidyService
                 Log::record("代理商发货补助完成");
                 file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."代理商发货补助完成\n",
                     FILE_APPEND);
-
-                if ($this->umbrella($order['user_id'], $order['num'])) {
-                    Log::record("伞下购货补助完成");
-                    file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."伞下购货补助完成\n",
-                        FILE_APPEND);
-                }
             }
-            if ($order['sign'] == 3) {
-                Log::record("平台发货!无需补助");
-                file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."平台发货!无需补助\n",
+
+            if ($this->umbrella($order['user_id'], $order['num'])) {
+                Log::record("伞下购货补助完成");
+                file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."伞下购货补助完成\n",
                     FILE_APPEND);
             }
+
+//            if ($order['sign'] == 3) {
+//                Log::record("平台发货!无需补助");
+//                file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."平台发货!无需补助\n",
+//                    FILE_APPEND);
+//            }
             #非店面购买 升级后的代理商每销售1台，给上级额外补助60元/台
             if ($order['is_shop'] == 2 && $order['sign'] != 3) {
                 $user_agent = User::get($order['send_id']);

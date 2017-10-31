@@ -209,7 +209,9 @@ class Users extends Controller
         if($input['level'] == 7 ||$input['level'] == 8 ){
             if($user->agency_id != ""){
                 $userOne = User::get($user->agency_id);
-                return json(["status"=>100,"msg"=>"该店面已被用户".($user->agency_id == '0' ?"系统":$userOne->mobile)."指定"]);
+                if($userOne['agency_id'] != 0){
+                    return json(["status"=>100,"msg"=>"该店面已被用户".($user->agency_id == '0' ?"系统":$userOne->mobile)."指定"]);
+                }
             }
             $input["agency_id"] = 0;
         }

@@ -490,9 +490,10 @@
     }
 
     function submitLevel() {
+        $(".sanLinks span").remove();
         if ($("#level").val() == 7 || $("#level").val() == 8) {
             if ($("#shop_name").val() == "") {
-                alert("请填写店面名称");
+                $(".sanLinks").append("<span style='color:red;'>请填写店面名称</span>");
                 return;
             }
         }
