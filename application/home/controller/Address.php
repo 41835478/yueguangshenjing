@@ -56,4 +56,11 @@ class Address extends Base
         }
         return json(['status'=>false,'message'=>'删除失败']);
     }
+    public function orderAddress($id)//删除地址
+    {
+        $id=input('get.id');
+        $res=model('admin/Address')->where(['id'=>$id])->find();
+        session("addre",$res);
+        return json(['status'=>0]);
+    }
 }

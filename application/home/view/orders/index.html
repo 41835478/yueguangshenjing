@@ -177,6 +177,7 @@
                     $("#orderPay").css("pointer-events","auto");
                     $(".loadingBox").css("display","none")
                     if(res.status){
+                        sessionStorage.setItem('address',"");
                         window.location.href="{:url('orders/pay')}";
                     }else{
                         alert(res.message);

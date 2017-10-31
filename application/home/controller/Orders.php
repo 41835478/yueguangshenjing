@@ -35,15 +35,20 @@ class Orders extends Base
         $id=Session::get('goods_id','home');
         $num=Session::get('num','home');
         $address='';
-        $find=model('admin/Address')->where(['user_id'=>session('uid'),'default'=>1])->find();
-        if(!$find){
-            $mod=model('admin/Address')->where(['user_id'=>session('uid')])->order('id desc')->find();
-            if($mod){
-                $address=$mod;
-            }
+        if(Session::get('addre')){
+            $address = Session::get('addre');
         }else{
-            $address=$find;
+            $find=model('admin/Address')->where(['user_id'=>session('uid'),'default'=>1])->find();
+            if(!$find){
+                $mod=model('admin/Address')->where(['user_id'=>session('uid')])->order('id desc')->find();
+                if($mod){
+                    $address=$mod;
+                }
+            }else{
+                $address=$find;
+            }
         }
+
         if($id){
             $goods=model('admin/Goods')->get($id);
             $totalMoney=$goods->goods_price*$num;
@@ -73,6 +78,7 @@ class Orders extends Base
 //            }
             $res=$this->createOrder($id,$num,$date);
             if($res){
+                Session::delete('addre');
                 return json(['status'=>true,'message'=>'下单成功']);
             }
             return json(['status'=>false,'message'=>'下单失败']);

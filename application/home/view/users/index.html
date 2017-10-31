@@ -134,7 +134,7 @@
 	
 
 	<div class="shopCenter_6">
-		<a href="{:url('Users/manageaddress')}"><img src="/resource/home/images/ly_27.png"><span>收货地址</span><i class="iconfont icon-arrow-right"></i></a>
+		<a href="javascript:void(0)" id="addressUrl"><img src="/resource/home/images/ly_27.png"><span>收货地址</span><i class="iconfont icon-arrow-right"></i></a>
 	</div>
 	<div class="shopCenter_6">
 		<a href="{:url('Users/alterpassword')}"><img src="/resource/home/images/ly_28.png"><span>修改密码</span><i class="iconfont icon-arrow-right"></i></a>
@@ -189,6 +189,11 @@
 		}
 		return false;
 		});
+
+		$("#addressUrl").click(function () {
+            sessionStorage.setItem('address',"");
+			window.location.href = "{:url('Users/manageaddress')}";
+        });
 
 
 </script>
