@@ -35,15 +35,20 @@ class Orders extends Base
         $id=Session::get('goods_id','home');
         $num=Session::get('num','home');
         $address='';
-        $find=model('admin/Address')->where(['user_id'=>session('uid'),'default'=>1])->find();
-        if(!$find){
-            $mod=model('admin/Address')->where(['user_id'=>session('uid')])->order('id desc')->find();
-            if($mod){
-                $address=$mod;
-            }
+        if(Session::get('addre')){
+            $address = Session::get('addre');
         }else{
-            $address=$find;
+            $find=model('admin/Address')->where(['user_id'=>session('uid'),'default'=>1])->find();
+            if(!$find){
+                $mod=model('admin/Address')->where(['user_id'=>session('uid')])->order('id desc')->find();
+                if($mod){
+                    $address=$mod;
+                }
+            }else{
+                $address=$find;
+            }
         }
+
         if($id){
             $goods=model('admin/Goods')->get($id);
             $totalMoney=$goods->goods_price*$num;
@@ -73,6 +78,7 @@ class Orders extends Base
 //            }
             $res=$this->createOrder($id,$num,$date);
             if($res){
+                Session::delete('addre');
                 return json(['status'=>true,'message'=>'下单成功']);
             }
             return json(['status'=>false,'message'=>'下单失败']);
@@ -163,8 +169,8 @@ class Orders extends Base
 
     public function checkStock($id)
     {
-        $mod=model('RearviewModel')->where(['uid'=>$id])->find();
-        if($mod->repertorys>0){
+        $mod=model('admin/RearviewModel')->where(['uid'=>$id])->find();
+        if($mod['repertorys']>0){
             return true;
         }
         return false;
@@ -172,7 +178,7 @@ class Orders extends Base
 
     public function getStock($id,$num)//判断库存同时减掉库存  如果flag等于1则是店面id,如果flag==2则是代理商id
     {
-        $mod=model('RearviewModel')->where(['uid'=>$id])->find();
+        $mod=model('admin/RearviewModel')->where(['uid'=>$id])->find();
         if($mod->repertorys){
             $mod->repertorys=$mod->repertorys-1;
             $mod->shipment=$mod->shipment+1;

@@ -77,6 +77,10 @@ class Users extends Controller
         $user = User::get($input["recharge_id"]);
         $account = new AccountRecord();
 
+        if($input["num"] > 50000){
+            $Url = popBox("error","单笔充值不能超过50000");
+            $this->redirect($Url);
+        }
         if($input["is_add"] == "1"){
             $user->setInc("account",$input["num"]);
             $account->setAccountRecord($input["recharge_id"],"系统充值",
@@ -184,15 +188,19 @@ class Users extends Controller
             }
 
             $userOb = User::where(["area"=>$input["area"]])->find();
-            if($userOb){
+            if($userOb && $userOb["id"] != $input["id"]){
                 return json(["status"=>100,"msg"=>"该地区已有代理商,请重新选择!"]);
             }
             $rearviewOne = RearviewModel::where(["uid"=>$input["id"]])->find();
+            $rearview = new RearviewModel();
+
             if(!$rearviewOne){
-                $rearview = new RearviewModel();
                 $rearview->data(["uid"=>$input['id'],"stock"=>$this->stock($input['level']),
                     "level"=>$input['level'],"repertorys"=>$this->stock($input['level'])]);
                 $rearview->save();
+            }else{
+                $rearview->save(["stock"=>$this->stock($input['level']),
+                    "level"=>$input['level'],"repertorys"=>$this->stock($input['level'])],["id"=>$rearviewOne->id]);
             }
         }else{
             $input["area"] = "";
@@ -205,7 +213,6 @@ class Users extends Controller
             }
             $input["agency_id"] = 0;
         }
-
 
         $user->save($input,["id"=>$input["id"]]);
 

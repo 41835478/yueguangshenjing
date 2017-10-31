@@ -177,6 +177,7 @@
                     $("#orderPay").css("pointer-events","auto");
                     $(".loadingBox").css("display","none")
                     if(res.status){
+                        sessionStorage.setItem('address',"");
                         window.location.href="{:url('orders/pay')}";
                     }else{
                         alert(res.message);
@@ -187,7 +188,7 @@
             alert('请先填写收货地址');
             sessionStorage.setItem('address',1);
 
-            if(getPValue("shop") != undefined){
+            if(getPValue("shop") != ""){
                 window.location.href = '{:url("users/addaddress")}?shop='+getPValue("shop");
 //                window.location.href = '{:url("users/manageaddress")}?shop='+getPValue("shop");
             }else{
@@ -198,7 +199,7 @@
     })
     $(".placeOrder_msg").click(function() {
         sessionStorage.setItem('address',1);
-        if(getPValue("shop") != undefined){
+        if(getPValue("shop") != ""){
             window.location.href = '{:url("users/manageaddress")}?shop='+getPValue("shop");
         }else{
             window.location.href = '{:url("users/manageaddress")}';

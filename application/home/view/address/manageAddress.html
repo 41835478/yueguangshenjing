@@ -98,7 +98,7 @@
 
     });
     $("#addre").click(function(){
-        if(getPValue("shop") != undefined){
+        if(getPValue("shop") != ""){
             window.location.href = "{:url('address/addressCreate')}?shop="+getPValue("shop");
         }else{
             window.location.href = "{:url('address/addressCreate')}";

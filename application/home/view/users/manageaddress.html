@@ -38,7 +38,7 @@
 </div>
 <ul class="mA_ul">
 	{foreach $address as $v}
-	<li>
+	<li onclick="defAddress('{$v.id}')">
 		<div class="mA_d1">
 			{if condition="$v['default'] eq 1 "/} 
 			<span class="mA_s1" style="display: inline;">默认</span>
@@ -157,12 +157,29 @@ $(".mA_ul li").each(function() {
 	});
 });
 $("#sendAddress").click(function(){
+    sessionStorage.setItem('address',2);
     if(getPValue("shop") != ""){
         window.location.href = "{:url('Users/Addaddress')}?shop="+getPValue("shop");
 	}else{
         window.location.href = "{:url('Users/Addaddress')}";
 	}
 });
+function defAddress(id) {
+    if(sessionStorage.getItem('address')==1){
+     	$.ajax({
+			url:"{:url('address/orderAddress')}",
+			type:"get",
+			data:{
+			    id:id
+			},success:function(res){
+			    if(res.status == 0){
+                    window.location.href="{:url('orders/index')}";
+                    return;
+				}
+			}
+		});
+	}
+}
 //获取链接上的pid
 function getPValue(name, defaultValue) {
     if (defaultValue == "") {

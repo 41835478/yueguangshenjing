@@ -10,17 +10,18 @@ class Test extends Controller
 {
     public function index()
     {
-        return view('index');
-//        $redis=new Redis();
-//        $bool=$redis->connect('127.0.0.1');
-//        if($bool){
-//            $redis->del('test');
-//            $redis->lSet('test',1,'你好');
-//            $redis->lSet('test',2,'你好2');
-//            $redis->lSet('test',3,'你好3');
-//            $redis->lSet('test',4,'你好4');
-//            halt($redis->lGet('test',4));
-//        }
+        $redis=new Redis();
+        $bool=$redis->connect('127.0.0.1');
+        if($bool){
+//            $redis->set(1,'test1');
+//            $redis->set(2,'test2');
+//            $redis->set(3,'test3');
+//            $redis->set(4,'test4');
+//            $redis->set(5,'test5');
+//            $redis->set(5,'test6');
+            halt($redis->get(4));
+//            $redis->del(4);
+        }
     }
 
     public function index2()

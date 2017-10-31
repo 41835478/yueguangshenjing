@@ -74,7 +74,7 @@
 					<input class="text_input login_pwd2" type="password" name="login_pwd2" placeholder="请再次输入您的密码">
 				</div>
 			</li>
-            <input type="hidden" name="uid" value="{$uid}" class="uid" >
+            <input type="hidden" name="pid" value="{$pid}" class="pid" >
 			<li class="li">
 				<img class="login_icon" src="/resource/home/images/login_icon4.png" alt="支付密码">
 				<div class="input_box">
@@ -157,7 +157,7 @@ $('#code').on('click',function(){
             var login_pwd1=$('.login_pwd1').val();
             var login_pwd2=$('.login_pwd2').val();
             var pay_pwd=$('.pay_pwd').val();
-            var uid=$('.uid').val();
+            var pid=$('.pid').val();
           	var regNum=/^\d{6}\b/;
             if(phone==""){
                 alert("请输入您的手机号码！");
@@ -204,7 +204,7 @@ $('#code').on('click',function(){
                 'login_pwd1':login_pwd1,
                 'login_pwd2':login_pwd2,
                 'pay_pwd':pay_pwd,
-                'uid':uid,
+                'pid':pid,
                
             }
            
@@ -224,7 +224,7 @@ $('#code').on('click',function(){
                 				 
                 	 		if(data.status==200){
                 	 			alert(data.message);
-                	 			if(getPValue("shop") != undefined){
+                	 			if(getPValue("shop") != ""){
                                     window.location.href="/home/Login/login.html?shop="+getPValue("shop");
 								}else{
                                     window.location.href="/home/Login/login.html";
@@ -246,10 +246,10 @@ $('#code').on('click',function(){
             })
         }
         $("#isLogin").click(function(){
-            if(getPValue("shop") != undefined){
-                window.location.href = "{:url('Login/login')}?shop="+getPValue("shop");
+           if(getPValue("shop") != ""){
+               window.location.href = "{:url('Login/login')}?shop="+getPValue("shop");
 			}else{
-                window.location.href = "{:url('Login/login')}";
+               window.location.href = "{:url('Login/login')}";
 			}
 		});
 //获取链接上的pid

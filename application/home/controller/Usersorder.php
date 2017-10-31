@@ -152,7 +152,7 @@ class Usersorder extends Base
         if($isUser->level == "7" || $isUser->level == "8"){
             $shop = $isUser->id;
         }
-        $url = 'http://'.$_SERVER['HTTP_HOST'].'/home/Login/register/'.$this->uid."?shop=".$shop;//网址或者是文本内容
+        $url = 'http://'.$_SERVER['HTTP_HOST'].'/home/Login/register/pid/'.$this->uid."?shop=".$shop;//网址或者是文本内容
         $level=3;
         $size=4;
         $errorCorrectionLevel =intval($level) ;//容错级别

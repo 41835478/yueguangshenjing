@@ -26,4 +26,21 @@ class Withdrawals extends Base
             }
         }
     }
+    public function adopt($allId)
+
+    {
+        $withdrawId = explode(',',rtrim($allId,','));
+        $where["id"] = ["IN",$withdrawId];
+        $data = WithdrawalsModel::where($where)->update(["status"=>2]);#TODO
+        if($data){
+            $account = new AccountRecord();
+            for($i=0;$i<count($withdrawId);$i++){
+                $withdrawOne = WithdrawalsModel::get($withdrawId[$i]);
+                $account->setAccountRecord($withdrawId[$i],"提现成功",6,2,$withdrawOne->reality_money);
+            }
+            if($account){
+                return json(["status"=>0]);
+            }
+        }
+    }
 }

@@ -17,11 +17,11 @@ return [
     // 数据库名
     'database'        => 'ygsj',
     // 用户名
-    'username'        => 'ygsj',
+    'username'        => 'root',
     // 密码
-    'password'        => 'ygsj2017',
+    'password'        => 'root',
     // 端口
-    'hostport'        => '',
+    'hostport'        => '3306',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
