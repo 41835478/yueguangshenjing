@@ -169,8 +169,8 @@ class Orders extends Base
 
     public function checkStock($id)
     {
-        $mod=model('RearviewModel')->where(['uid'=>$id])->find();
-        if($mod->repertorys>0){
+        $mod=model('admin/RearviewModel')->where(['uid'=>$id])->find();
+        if($mod['repertorys']>0){
             return true;
         }
         return false;
@@ -178,7 +178,7 @@ class Orders extends Base
 
     public function getStock($id,$num)//判断库存同时减掉库存  如果flag等于1则是店面id,如果flag==2则是代理商id
     {
-        $mod=model('RearviewModel')->where(['uid'=>$id])->find();
+        $mod=model('admin/RearviewModel')->where(['uid'=>$id])->find();
         if($mod->repertorys){
             $mod->repertorys=$mod->repertorys-1;
             $mod->shipment=$mod->shipment+1;
