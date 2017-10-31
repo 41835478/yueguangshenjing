@@ -176,7 +176,7 @@
                     if(res.status){
                         if(sessionStorage.getItem('address')==1){
 
-                            if(getPValue("shop") != undefined){
+                            if(getPValue("shop") != ""){
                                 window.location.href="{:url('orders/index')}?shop="+getPValue("shop");
                             }else{
                                 window.location.href="{:url('orders/index')}";

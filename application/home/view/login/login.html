@@ -128,7 +128,7 @@
                 	 if(data.status){                				 
                 	 		if(data.status==200){
                 	 			alert(data.message);
-                	 			if(getPValue("shop") != undefined){
+                	 			if(getPValue("shop") != ""){
                                     window.location.href="{:url('goods/goodsinfo')}?id=1&shop="+getPValue("shop");
 								}else{
                                     window.location.href="{:url('index/content')}";
