@@ -140,14 +140,34 @@
 
 </body>
 <script>
+    $(".sel123").on("change", function () {
+        var val = $(this).children("option:selected").val();
+        console.log(val)
+        if (val == 3 || val == 4 || val == 5 || val == 6) {
+            $("#city").val("");
+            $(".sanLink").css("display", "block");
+        } else {
+            $(".sanLink").css("display", "none");
+
+        }
+        if (val == 7 || val == 8) {
+            $("#city").val("");
+            $(".sanLinks").css("display", "block");
+        } else {
+            $(".sanLinks").css("display", "none");
+
+        }
+    });
     var user_id = "";
     function editLevel(id) {
+        console.log(id);
         $.ajax({
             url:"{:url('users/userOne')}",
             type:"get",
             data:{
                 id:id
             },success:function(res){
+                console.log("2222222222222222222222222222"+res);
                 if(res.status == 0){
                     console.log(res);
                     $("#level").val(res.data.level);
@@ -166,6 +186,7 @@
 
         user_id = id;
     }
+
     function submitLevel() {
         if($("#shop_name").val() == ""){
             alert("请填写店面名称");
