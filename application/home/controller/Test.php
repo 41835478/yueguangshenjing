@@ -10,6 +10,7 @@ class Test extends Controller
 {
     public function index()
     {
+<<<<<<< HEAD
         $redis=new Redis();
         $bool=$redis->connect('127.0.0.1');
         if($bool){
@@ -22,6 +23,18 @@ class Test extends Controller
             halt($redis->get(4));
 //            $redis->del(4);
         }
+=======
+//        $redis=new Redis();
+//        $bool=$redis->connect('127.0.0.1');
+//        if($bool){
+//            $redis->del('test');
+//            $redis->lSet('test',1,'你好');
+//            $redis->lSet('test',2,'你好2');
+//            $redis->lSet('test',3,'你好3');
+//            $redis->lSet('test',4,'你好4');
+//            halt($redis->lGet('test',4));
+//        }
+>>>>>>> 14ad9bb43717c2e7bed508899e4305c359660038
     }
 
     public function index2()
