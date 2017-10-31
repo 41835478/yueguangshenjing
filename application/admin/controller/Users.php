@@ -188,7 +188,7 @@ class Users extends Controller
             }
 
             $userOb = User::where(["area"=>$input["area"]])->find();
-            if($userOb->id != $input["id"]){
+            if($userOb && $userOb["id"] != $input["id"]){
                 return json(["status"=>100,"msg"=>"该地区已有代理商,请重新选择!"]);
             }
             $rearviewOne = RearviewModel::where(["uid"=>$input["id"]])->find();
