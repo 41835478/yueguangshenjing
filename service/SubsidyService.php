@@ -103,6 +103,9 @@ class SubsidyService
                 file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
                     "升级后的代理商每销售1台 奖励60");
             }
+
+            file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
+                "---------------------------------------");
             return "wancheng";
             Db::commit();
         } catch (Exception $e) {

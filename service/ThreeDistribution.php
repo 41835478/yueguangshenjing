@@ -42,16 +42,16 @@ class ThreeDistribution
                 if (isset($prent[$i])) {
                     $user = User::where(["id" => $prent[$i]])->value('status');
                     if ($user == "1") {
-                        if (User::where(["id" => $prent[$i]])->value('status') == 1) {#冻结不能享受三级分佣
                             $threePrice = ($order['price'] * $order['num']) * $threeArray[$i];
                             $resOne = User::where('id', $prent[$i])
                                 ->setInc('account', $threePrice);
-                        }
                         if ($resOne) {
                             $account->setAccountRecord($prent[$i], "{$i}级分佣",
                                 AccountRecordModel::TYPE_ONE, 1,
-                                ($order['price'] * $order['num']) * $threeArray[$i], $order['user_id']);
+                                $order['price'] * $threeArray[$i], $order['user_id']);
                             Log::record("{$i}级分佣完成");
+                            file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
+                                "用户".$order['user_id']."一级返佣".$order['price'] * $threeArray[$i]);
                         }
                     }
                 }
