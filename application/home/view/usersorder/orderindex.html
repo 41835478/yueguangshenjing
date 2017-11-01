@@ -120,6 +120,38 @@
         display: block;
         overflow: hidden;
     }
+
+
+        body{ background: #fff; }
+    
+   
+   .paySuccess_body {
+    text-align: center;
+   }
+    .paySuccess_body a{
+        width: 80%;
+        height: 42px;
+        line-height: 42px;
+        display: block;
+        border: 1px solid #2d3238;
+        border-radius: 5px;
+        text-align: center;
+            background: #eaeaeb;
+            margin: 30px auto;
+    }
+    .pay_successimg{
+        display: block;
+        width: 40%;
+        margin: 60px auto 30px;
+    }
+    .paySuccess_body .p1 {
+        color: #333;
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+    .paySuccess_body .p2 {
+        color: #999;
+    }
 </style>
 </head>
 <body>
@@ -130,7 +162,7 @@
 
 <div class="title">
     <ul>
-        {if condition="$type eq 1"/} 
+                {if condition="$type eq 1"/} 
         <li><a href="{:url('Usersorder/orderindex',['type'=>1])}" class="active">待付款</a></li>
         <li><a href="{:url('Usersorder/orderindex',['type'=>2])}">待发货</a></li>
         <li><a href="{:url('Usersorder/orderindex',['type'=>3])}">待收货</a></li>
@@ -160,7 +192,16 @@
 <div class="orderDetails_6">
 
     {if condition="count($order) eq 0 "/} 
-        您还没有订单，先去逛逛吧
+       <div class="fenge"></div>
+       <div class="paySuccess_body">
+            <img class="pay_successimg" src="/resource/home/images/whitePage_img.png" alt="">
+            <p class="p1">您还没有相关订单</p>
+            <p class="p2">去首页逛逛吧</p>
+            <div class="btn_div">
+                <a class="a1" href="/home/index/content.html">返回首页</a>
+            </div>
+       </div>
+    
 
     {/if}
 

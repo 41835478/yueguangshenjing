@@ -35,15 +35,20 @@ class Orders extends Base
         $id=Session::get('goods_id','home');
         $num=Session::get('num','home');
         $address='';
-        $find=model('admin/Address')->where(['user_id'=>session('uid'),'default'=>1])->find();
-        if(!$find){
-            $mod=model('admin/Address')->where(['user_id'=>session('uid')])->order('id desc')->find();
-            if($mod){
-                $address=$mod;
-            }
+        if(Session::get('addre')){
+            $address = Session::get('addre');
         }else{
-            $address=$find;
+            $find=model('admin/Address')->where(['user_id'=>session('uid'),'default'=>1])->find();
+            if(!$find){
+                $mod=model('admin/Address')->where(['user_id'=>session('uid')])->order('id desc')->find();
+                if($mod){
+                    $address=$mod;
+                }
+            }else{
+                $address=$find;
+            }
         }
+
         if($id){
             $goods=model('admin/Goods')->get($id);
             $totalMoney=$goods->goods_price*$num;
@@ -73,6 +78,7 @@ class Orders extends Base
 //            }
             $res=$this->createOrder($id,$num,$date);
             if($res){
+                Session::delete('addre');
                 return json(['status'=>true,'message'=>'下单成功']);
             }
             return json(['status'=>false,'message'=>'下单失败']);
@@ -165,6 +171,7 @@ class Orders extends Base
     public function checkAgentId($shop_id,$send_id)//在扫店面过来时，先检查该地区是否有代理商，如有则消耗该代理商的库存，
         //若没有则看该点面是否有指定代理商，若有则消耗其库存，若没有则是系统直属店面则消耗其自己的库存
     {
+<<<<<<< HEAD
         if($shop_id&&$send_id){//说明该订单在该地区有代理商
             if($this->checkStock($send_id)){
                 return $send_id;
@@ -191,6 +198,10 @@ class Orders extends Base
     {
         $mod=model('admin/RearviewModel')->where(['uid'=>$id])->find();
         if($mod->repertorys>0){
+=======
+        $mod=model('admin/RearviewModel')->where(['uid'=>$id])->find();
+        if($mod['repertorys']>0){
+>>>>>>> 10d36fa93c2d53047924e73eba2bcd873efffc9b
             return true;
         }
         return false;

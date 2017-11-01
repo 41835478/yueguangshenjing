@@ -34,8 +34,7 @@ class Users extends Base
     	$alipay=Alipay::where('user_id',$uid)->find();
     	#查询团队业绩
     	$zid=self::get_nodetotal([$uid],0,3,[]);
-    	$user['count']=db('order')->whereIn('user_id',$zid)->count();
-    	//dump($user['count']);die;
+    	$user['count']=db('order')->whereIn('user_id',$zid)->sum('num');
     	$this->assign('alipay',$alipay);
     	$this->assign('user',$user);
     	return $this->fetch();
@@ -93,7 +92,6 @@ class Users extends Base
     public function myaccount(){
     	$uid=Session::get('uid');
     	$user=$this->user->where('id',$uid)->find();
-
     	$this->assign('user',$user);
     	return $this->fetch();
     }
@@ -215,23 +213,24 @@ try{
   		$zid=self::get_node($this->uid);
   		$uid=$this->uid;
   		$zzid=self::get_nodetotal([$uid],0,3,[]);
-  		$totaldistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zzid)->sum('money');
+      //dump($zid[2]);die;
+  		$totaldistribution=db('account_record')->where(['type'=>1,'user_id'=>$this->uid])->whereIn('sourceid',$zzid)->sum('money');
   		#查询一级分销
-  		$onedistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zid[0])->order('id desc')->select();
+  		$onedistribution=db('account_record')->where(['type'=>1,'user_id'=>$this->uid])->whereIn('sourceid',$zid[0])->order('id desc')->select();
   		foreach ($onedistribution as $key => $value) {
   				$user=$this->user->where('id',$value['sourceid'])->find();
   				$onedistribution[$key]['name']=$user['nickname'];
   				$onedistribution[$key]['user_pic']=$user['user_pic'];
   		}
   		#查询二级分销
-  		$twodistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zid[1])->order('id desc')->select();
+  		$twodistribution=db('account_record')->where(['type'=>1,'user_id'=>$this->uid])->whereIn('sourceid',$zid[1])->order('id desc')->select();
   		foreach ($twodistribution as $key => $value) {
   				$user=$this->user->where('id',$value['sourceid'])->find();
   				$twodistribution[$key]['name']=$user['nickname'];
   				$twodistribution[$key]['user_pic']=$user['user_pic'];
   		}
   		#查询三级分销
-  		$threedistribution=db('account_record')->where('type',1)->whereIn('sourceid',$zid[2])->order('id desc')->select();
+  		$threedistribution=db('account_record')->where(['type'=>1,'user_id'=>$this->uid])->whereIn('sourceid',$zid[2])->order('id desc')->select();
   		foreach ($threedistribution as $key => $value) {
   				$user=$this->user->where('id',$value['sourceid'])->find();
   				$threedistribution[$key]['name']=$user['nickname'];
@@ -601,8 +600,8 @@ try{
 				    { 
 				       	return jsonp(['status'=>401,'message'=>'两次密码不一致']);
 				    } 
-				if(strlen(trim($post['login_pwd1'])) != 6){
-                		return jsonp(['status'=>401,'message'=>'请填写6位支付密码']);
+				if(strlen(trim($post['login_pwd1'])) != 6 || !preg_match("/^\d*$/",$post['login_pwd1'])){
+                		return jsonp(['status'=>401,'message'=>'请填写6位数字支付密码']);
             		}
 				    #判断验证码
 				    $code=Cache::get('yzm');				 
@@ -639,12 +638,12 @@ try{
         $reducemyInventory[$key]['name']=$user['nickname'];
         $reducemyInventory[$key]['user_pic']=$user['user_pic'];
       }
-      #增加总数
-      $z=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>1])->count();
-      #减少总数
-      $x=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>2])->count();
+      // #增加总数
+      // $z=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>1])->count();
+      // #减少总数
+      // $x=RearviewRecordModel::where(['uid'=>$this->uid,'is_add'=>2])->count();
 
-    $count=$z-$x;
+    	$count=db('rearview')->where(['uid'=>$this->uid])->value('repertorys');
     $this->assign(['increaseInventory'=>$increaseInventory,'reducemyInventory'=>$reducemyInventory,'count'=>$count]);
 		return $this->fetch("users/myinventory");
 	}

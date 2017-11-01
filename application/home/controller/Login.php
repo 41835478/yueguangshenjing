@@ -20,6 +20,8 @@ class Login extends Controller
 		$post=input('param.');
 		if(request()->isPost()){
 			 #判断手机号
+
+            //dump($post);die;
 		    if (preg_match("/^(13|15)d{9}$/",$post['phone'])) 
 		    { 
 		       	return jsonp(['status'=>401,'message'=>'手机验证码不符合规则']);
@@ -57,8 +59,8 @@ class Login extends Controller
 			$password=md5(trim($post['login_pwd1']).$randpwd);
 			#组合数据
 			$data=[];
-             if($post['uid'] != 0){
-                $data['pid']=$post['uid'];
+             if($post['pid'] != 0){
+                $data['pid']=$post['pid'];
             }            
 			$data['mobile']=$post['phone'];
 			$data['unique']=$randpwd;
@@ -73,12 +75,12 @@ class Login extends Controller
     			return jsonp(['status'=>401,'message'=>'注册失败,请稍后再试']);
     		}			
 		}
-        if(input('param.uid')){
-            $uid=input('param.uid');
+        if(input('param.pid')){
+            $pid=input('param.pid');
         }else{
-            $uid=0;
+            $pid=0;
         }
-        $this->assign('uid',$uid);
+        $this->assign('pid',$pid);
 		return view();
     }
       #登录
@@ -189,8 +191,9 @@ class Login extends Controller
     	{
     		if (preg_match("/^(13|15)d{9}$/",$post['phone'])) 
 		    { 
-		       	return jsonp(['status'=>401,'message'=>'手机验证码不符合规则']);
+		       	return jsonp(['status'=>401,'message'=>'手机号码不符合规则']);
 		    }
+
 		    $user=db('user')->where('mobile',$post['phone'])->find();
 		    if(!$user){
 		    	return jsonp(['status'=>401,'message'=>'用户不存在']);
@@ -198,7 +201,14 @@ class Login extends Controller
 		    if ($post['login_pwd1'] !=$post['login_pwd2']) 
 		    { 
 		       	return jsonp(['status'=>401,'message'=>'两次密码不一致']);
-		    } 
+		    }
+		     if(strlen(trim($post['login_pwd1'])) < 6 || strlen(trim($post['login_pwd1'])) > 20){
+                return jsonp(['status'=>401,'message'=>'请填写6位到20位登录密码']);
+            } 
+
+            if(!preg_match("/[A-Za-z]/",$post['login_pwd1']) ||  !preg_match("/\d/",$post['login_pwd1'])){
+            	return jsonp(['status'=>401,'message'=>'请填写字母加数字的组合']);
+            } 
 		    #判断验证码
 		    $code=Cache::get('yzm');
 		    if($post['yzm']!=$code['yzm'] || $post['phone']!=$code['phone'] ){
@@ -231,28 +241,33 @@ class Login extends Controller
     #注册时发送验证码
     public function registercode(){
         $post=input('param.');
-        $user=User::where('mobile',$post['phone'])->find();
-        if($user){
-            return jsonp(['status'=>401,'message'=>'该手机号已经注册过,您可以去登录或找回密码']);
-        }
-        $countnum=db('config')->where('name','codenum')->value('value');
-        #今天时间戳
-        $today=strtotime(date('Y-m-d'));
-        #明天时间戳
-        //$tomorrow=strtotime(date('Y-m-d',strtotime('+1 day')));
-        $count=db('coderecord')->where(['phone'=>$post['phone']])->where('created_at','>',$today)->count();
-        if($count >= $countnum){
-            return jsonp(['status'=>401,'message'=>'今天发送的短信太多了,明天再试吧']);
-        }
-        $res=self::sendMsg($post['phone']);
-            #发送成功插入一条数据
+        // $user=User::where('mobile',$post['phone'])->find();
+        // if($user){
+        //     return jsonp(['status'=>401,'message'=>'该手机号已经注册过,您可以去登录或找回密码']);
+        // }
+        // $countnum=db('config')->where('name','codenum')->value('value');
+        // #今天时间戳
+        // $today=strtotime(date('Y-m-d'));
+        // #明天时间戳
+        // //$tomorrow=strtotime(date('Y-m-d',strtotime('+1 day')));
+        // $count=db('coderecord')->where(['phone'=>$post['phone']])->where('created_at','>',$today)->count();
+        // if($count >= $countnum){
+        //     return jsonp(['status'=>401,'message'=>'今天发送的短信太多了,明天再试吧']);
+        // }
+        // $res=self::sendMsg($post['phone']);
+        //     #发送成功插入一条数据
+        //     $data=[];
+        //     $data['phone']=$post['phone'];
+        //     $data['created_at']=time();
+        //     $data['updated_at']=time();
+        //     db('coderecord')->insert($data);
+            $code=111111;
             $data=[];
+            $data['yzm']=$code;
             $data['phone']=$post['phone'];
-            $data['created_at']=time();
-            $data['updated_at']=time();
-            db('coderecord')->insert($data);
+            $res=Cache::set('yzm',$data,600);
         if($res){
-            return jsonp(['status'=>200,'message'=>'发送成功,验证码十分钟内有效']);
+            return jsonp(['status'=>200,'message'=>$code]);
          }else{
             return jsonp(['status'=>401,'message'=>'发送失败,请稍后再试']);
          } 
@@ -263,24 +278,30 @@ class Login extends Controller
     public function sendyamcode()
     {
         $post=input('param.');
-        $countnum=db('config')->where('name','codenum')->value('value');
-        #今天时间戳
-        $today=strtotime(date('Y-m-d'));
-        #明天时间戳
-        //$tomorrow=strtotime(date('Y-m-d',strtotime('+1 day')));
-        $count=db('coderecord')->where(['phone'=>$post['phone']])->where('created_at','>',$today)->count();
-        if($count >= $countnum){
-            return jsonp(['status'=>401,'message'=>'今天发送的短信太多了,明天再试吧']);
-        }
-        $res=self::sendMsg($post['phone']);
-            #发送成功插入一条数据
+        // $countnum=db('config')->where('name','codenum')->value('value');
+        // #今天时间戳
+        // $today=strtotime(date('Y-m-d'));
+        // #明天时间戳
+        // //$tomorrow=strtotime(date('Y-m-d',strtotime('+1 day')));
+        // $count=db('coderecord')->where(['phone'=>$post['phone']])->where('created_at','>',$today)->count();
+        // if($count >= $countnum){
+        //     return jsonp(['status'=>401,'message'=>'今天发送的短信太多了,明天再试吧']);
+        // }
+        // $res=self::sendMsg($post['phone']);
+        //     #发送成功插入一条数据
+        //     $data=[];
+        //     $data['phone']=$post['phone'];
+        //     $data['created_at']=time();
+        //     $data['updated_at']=time();
+        //     db('coderecord')->insert($data);
+            $code=111111;
             $data=[];
+            $data['yzm']=$code;
             $data['phone']=$post['phone'];
-            $data['created_at']=time();
-            $data['updated_at']=time();
-            db('coderecord')->insert($data);
+            $res=Cache::set('yzm',$data,600);
     	if($res){
-            return jsonp(['status'=>200,'message'=>'发送成功,验证码十分钟内有效']);
+            return jsonp(['status'=>200,'message'=>$code]);
+            //return jsonp(['status'=>200,'message'=>'发送成功,验证码十分钟内有效']);
          }else{
             return jsonp(['status'=>401,'message'=>'发送失败,请稍后再试']);
          }    	

@@ -94,19 +94,26 @@
                     <td>{$v->account}</td>
                     <td id="editLevel_{$v->id}">{$v->level}</td>
                     <td>
-                        <a href="javascript:void(0)" onclick="editLevel('{$v->id}','{$v->level}')" data-toggle="modal" data-target="#myModal5">修改等级</a> |
-                        <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal7" onclick="recharge('{$v->id}')">充值</a>
-                        <a href="javascript:void(0)" id="lo_{$v->id}" onclick="lock('{$v->id}')">{$v->status == "1" ? "锁定" : "解锁定"}</a>
+                        <a href="javascript:void(0)" onclick="editLevel('{$v->id}','{$v->level}')" data-toggle="modal"
+                           data-target="#myModal5">修改等级</a> |
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#myModal7"
+                           onclick="recharge('{$v->id}')">充值</a>
+                        <a href="javascript:void(0)" id="lo_{$v->id}" onclick="lock('{$v->id}')">{$v->status == "1" ?
+                            "锁定" : "解锁定"}</a>
                         <a href="javascript:void(0)" id="pw_{$v->id}" onclick="pwdreset('{$v->id}')">密码重置</a>
                         <a href="javascript:void(0)" onclick="childen('{$v->id}')">
                             {$v->downUser($v->id) == "" ? "没有下级" : "查看下级"}</a>
 
-                        {if($v->level == "县级市代理" || $v->level == "地级市代理"|| $v->level == "省会城市代理"|| $v->level == "一线城市代理")}
-                        <a href="javascript:void(0)" onclick="rearview('{$v->id}')" data-toggle="modal" data-target="#myModal8" >代理商详情</a>
+                        {if($v->level == "县级市代理" || $v->level == "地级市代理"|| $v->level == "省会城市代理"|| $v->level ==
+                        "一线城市代理")}
+                        <a href="javascript:void(0)" onclick="rearview('{$v->id}')" data-toggle="modal"
+                           data-target="#myModal8">代理商详情</a>
                         {/if}
-                        {if($v->pid) == "" || $v->pid == 7 || $v->pid == 8}
+                        {if($v->pid) == ""}
+                        {if( $v->pid == 7 || $v->pid == 8 )}
                         <a href="javascript:void(0)"
-                           onclick="getjinhuo('{$v->id}')" data-toggle="modal" data-target="#myModal9" >进货</a>
+                           onclick="getjinhuo('{$v->id}')" data-toggle="modal" data-target="#myModal9">进货</a>
+                        {/if}
                         {/if}
                         <!--<a href="#">出货</a>-->
                         <!--<a href="#">库存</a>-->
@@ -131,11 +138,12 @@
     </div>
 </div>
 
-<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">修改会员等级</h4>
                 <small class="font-bold">这里可以显示副标题。</small>
             </div>
@@ -151,26 +159,98 @@
                     <option value="8">二级店面</option>
                 </select>
                 <div style="width:420px;margin-top: 20px;display: none;" class="sanLinks">
-                    <input type="text" id="shop_name" />
+                    <input type="text" id="shop_name"/>
                 </div>
                 <div style="width:420px;margin-top: 20px;" class="sanLink">
-                    <input type="text" id="city" />
-                    <input type="hidden" id="province" />
-                    <input type="hidden" id="citys" />
-                    <input type="hidden" id="district" />
+                    <input type="text" id="city"/>
+                    <input type="hidden" id="province"/>
+                    <input type="hidden" id="citys"/>
+                    <input type="hidden" id="district"/>
                 </div>
             </div>
             <style type="text/css">
-                * { -ms-word-wrap: break-word; word-wrap: break-word; }
-                ._citys {background: #fff; width: 450px; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative; }
-                ._citys span { color: #56b4f8; height: 15px; width: 15px; line-height: 15px; text-align: center; border-radius: 3px; position: absolute; right: 10px; top: 10px; border: 1px solid #56b4f8; cursor: pointer; }
-                ._citys0 { width: 100%; height: 34px; display: inline-block; border-bottom: 2px solid #56b4f8; padding: 0; margin: 0; }
-                ._citys0 li { display: inline-block; line-height: 34px; font-size: 15px; color: #888; width: 80px; text-align: center; cursor: pointer; }
-                .citySel { background-color: #56b4f8; color: #fff !important; }
-                ._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
-                ._citys1 a { width: 83px; height: 35px; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 6px; margin-top: 3px; line-height: 35px; text-align: center; cursor: pointer; font-size: 13px; overflow: hidden; }
-                ._citys1 a:hover { color: #fff; background-color: #56b4f8; }
-                .AreaS { background-color: #56b4f8 !important; color: #fff !important; }
+                * {
+                    -ms-word-wrap: break-word;
+                    word-wrap: break-word;
+                }
+
+                ._citys {
+                    background: #fff;
+                    width: 450px;
+                    display: inline-block;
+                    border: 2px solid #eee;
+                    padding: 5px;
+                    position: relative;
+                }
+
+                ._citys span {
+                    color: #56b4f8;
+                    height: 15px;
+                    width: 15px;
+                    line-height: 15px;
+                    text-align: center;
+                    border-radius: 3px;
+                    position: absolute;
+                    right: 10px;
+                    top: 10px;
+                    border: 1px solid #56b4f8;
+                    cursor: pointer;
+                }
+
+                ._citys0 {
+                    width: 100%;
+                    height: 34px;
+                    display: inline-block;
+                    border-bottom: 2px solid #56b4f8;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                ._citys0 li {
+                    display: inline-block;
+                    line-height: 34px;
+                    font-size: 15px;
+                    color: #888;
+                    width: 80px;
+                    text-align: center;
+                    cursor: pointer;
+                }
+
+                .citySel {
+                    background-color: #56b4f8;
+                    color: #fff !important;
+                }
+
+                ._citys1 {
+                    width: 100%;
+                    display: inline-block;
+                    padding: 10px 0;
+                }
+
+                ._citys1 a {
+                    width: 83px;
+                    height: 35px;
+                    display: inline-block;
+                    background-color: #f5f5f5;
+                    color: #666;
+                    margin-left: 6px;
+                    margin-top: 3px;
+                    line-height: 35px;
+                    text-align: center;
+                    cursor: pointer;
+                    font-size: 13px;
+                    overflow: hidden;
+                }
+
+                ._citys1 a:hover {
+                    color: #fff;
+                    background-color: #56b4f8;
+                }
+
+                .AreaS {
+                    background-color: #56b4f8 !important;
+                    color: #fff !important;
+                }
             </style>
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
@@ -179,11 +259,12 @@
         </div>
     </div>
 </div>
-<div class="modal inmodal fade" id="myModal8" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal fade" id="myModal8" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">代理商详情</h4>
                 <small class="font-bold">这里可以显示副标题。</small>
             </div>
@@ -199,11 +280,12 @@
         </div>
     </div>
 </div>
-<div class="modal inmodal fade" id="myModal9" tabindex="-1" role="dialog"  aria-hidden="true">
+<div class="modal inmodal fade" id="myModal9" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
                 <h4 class="modal-title">直属店面详情</h4>
                 <small class="font-bold">这里可以显示副标题。</small>
             </div>
@@ -241,6 +323,7 @@
                         <label for="" class="form-inline">金额：</label>
                         <input type="number" class="form-control" min="1" name="num">
                     </div>
+                    <span style="color: red;">* 单笔充值不能超过50000</span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
@@ -262,64 +345,68 @@
     function recharge(id) {
         $("#recharge_id").val(id);
     }
+
     function lock(id) {
         var flag = 0;
-        if($("#lo_"+id).html() == "锁定"){
+        if ($("#lo_" + id).html() == "锁定") {
             flag = 1;
-            if(confirm("确定锁定该用户?")){
-                sendAjax(id,flag);
+            if (confirm("确定锁定该用户?")) {
+                sendAjax(id, flag);
             }
-        }else{
+        } else {
             flag = 2;
-            if(confirm("确定解锁?")) {
+            if (confirm("确定解锁?")) {
                 sendAjax(id, flag);
             }
         }
     }
-    function sendAjax(id,flag){
+
+    function sendAjax(id, flag) {
         $.ajax({
-            url:"{:url('users/lock')}",
-            type:"post",
-            data:{
-                id:id,
-                flag:flag
+            url: "{:url('users/lock')}",
+            type: "post",
+            data: {
+                id: id,
+                flag: flag
             },
-            success:function(res){
-                if(res.status == 0){
-                    $("#lo_"+id).html(res.msg);
+            success: function (res) {
+                if (res.status == 0) {
+                    $("#lo_" + id).html(res.msg);
                 }
             }
         });
     }
-    function pwdreset(id){
-        if(confirm("确定重置?")) {
+
+    function pwdreset(id) {
+        if (confirm("确定重置?")) {
             $.ajax({
-                url:"{:url('users/pwdreset')}",
-                type:"post",
-                data:{
-                    id:id
-                },success:function(res){
-                    if(res.status == 0){
+                url: "{:url('users/pwdreset')}",
+                type: "post",
+                data: {
+                    id: id
+                }, success: function (res) {
+                    if (res.status == 0) {
                         alert(res.msg);
                     }
                 }
             });
         }
     }
+
     //用户下级
-    function childen(id){
+    function childen(id) {
         //加载层
         index2 = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
 
         //获取权限信息
         $.ajax({
-            url:"{:url('users/suborDinate')}",
-            type:"get",
-            data:{
-                id:id
-            }, success:function(res){
+            url: "{:url('users/suborDinate')}",
+            type: "get",
+            data: {
+                id: id
+            }, success: function (res) {
                 layer.close(index2);
-                if(res.message){
+                if (res.message) {
                     layer.msg(res.message);
                     return;
                 }
@@ -329,70 +416,71 @@
                     maxmin: true,//允许最大化
                     resize: true,//允许拉伸
                     offset: [ //随机坐标
-                        Math.random()*($(window).height()-500)
-                        ,Math.random()*($(window).width()-600)
+                        Math.random() * ($(window).height() - 500)
+                        , Math.random() * ($(window).width() - 600)
                     ],
                     zIndex: layer.zIndex, //重点1
-                    success: function(layero){
+                    success: function (layero) {
                         layer.setTop(layero); //重点2
                     },
                     tipsMore: true,
-                    area:['600px', '500px'],
-                    title:'<b style="color:orange;">'+res.user.name+'</b>的下级　　人数：<b style="color:orange;">'+res.num+'</b>人',
+                    area: ['600px', '500px'],
+                    title: '<b style="color:orange;">' + res.user.name + '</b>的下级　　人数：<b style="color:orange;">' + res.num + '</b>人',
                     skin: 'layui-layer-demo', //加上边框
                     content: res.data
                 });
-            },error:function(){
+            }, error: function () {
                 console.log("请稍后重试");
             }
         });
     }
 
     $("#city").click(function (e) {
-        SelCity(this,e);
+        SelCity(this, e);
     });
-    $(".sel123").on("change",function () {
+    $(".sel123").on("change", function () {
         var val = $(this).children("option:selected").val();
         console.log(val)
-        if(val == 3 || val == 4 || val == 5 || val == 6){
+        if (val == 3 || val == 4 || val == 5 || val == 6) {
             $("#city").val("");
-            $(".sanLink").css("display","block");
-        }else{
-            $(".sanLink").css("display","none");
+            $(".sanLink").css("display", "block");
+        } else {
+            $(".sanLink").css("display", "none");
 
         }
-        if(val == 7 || val == 8){
+        if (val == 7 || val == 8) {
             $("#city").val("");
-            $(".sanLinks").css("display","block");
-        }else{
-            $(".sanLinks").css("display","none");
+            $(".sanLinks").css("display", "block");
+        } else {
+            $(".sanLinks").css("display", "none");
 
         }
     });
-var user_id = "";
-    function editLevel(id,val){
+    var user_id = "";
+
+    function editLevel(id, val) {
         $.ajax({
-            url:"{:url('users/userOne')}",
-            type:"get",
-            data:{
-                id:id
-            },success:function(res){
-                if(res.status == 0){
+            url: "{:url('users/userOne')}",
+            type: "get",
+            data: {
+                id: id
+            }, success: function (res) {
+                if (res.status == 0) {
                     console.log(res);
                     $("#level").val(res.data.level);
                     $("#city").val(res.data.area);
                     $("#shop_name").val(res.data.shop_name);
-                    if(res.data.level == 3 || res.data.level == 4 || res.data.level == 5 || res.data.level == 6){
-                        $(".sanLink").css("display","block");
-                    }else{
-                        $(".sanLink").css("display","none");
+                    if (res.data.level == 3 || res.data.level == 4 || res.data.level == 5 || res.data.level == 6) {
+                        $(".sanLink").css("display", "block");
+                    } else {
+                        $(".sanLink").css("display", "none");
                     }
-                    if(res.data.level == 7 || res.data.level == 8){
-                        $(".sanLinks").css("display","block");
-                    }else{
-                        $(".sanLinks").css("display","none");
+                    if (res.data.level == 7 || res.data.level == 8) {
+                        $(".sanLinks").css("display", "block");
+                    } else {
+                        $(".sanLinks").css("display", "none");
                     }
-                }else{
+                } else {
                     alert(res.msg);
                 }
             }
@@ -400,40 +488,43 @@ var user_id = "";
 
         user_id = id;
     }
+
     function submitLevel() {
-        if($("#level").val() == 7 || $("#level").val() == 8){
-            if($("#shop_name").val() == ""){
-                alert("请填写店面名称");
+        $(".sanLinks span").remove();
+        if ($("#level").val() == 7 || $("#level").val() == 8) {
+            if ($("#shop_name").val() == "") {
+                $(".sanLinks").append("<span style='color:red;'>请填写店面名称</span>");
                 return;
             }
         }
         $.ajax({
-            url:"{:url('users/levelEdit')}",
-            type:"post",
-            data:{
-                level:$("#level").val(),
-                area:$("#city").val(),
-                province:$("#hcity").attr("data-id"),
-                city:$("#hproper").attr("data-id"),
-                district:$("#harea").attr("data-id"),
-                shop_name:$("#shop_name").val(),
-                id:user_id
-            },success:function(res){
-                if(res.status == 0){
+            url: "{:url('users/levelEdit')}",
+            type: "post",
+            data: {
+                level: $("#level").val(),
+                area: $("#city").val(),
+                province: $("#hcity").attr("data-id"),
+                city: $("#hproper").attr("data-id"),
+                district: $("#harea").attr("data-id"),
+                shop_name: $("#shop_name").val(),
+                id: user_id
+            }, success: function (res) {
+                if (res.status == 0) {
                     history.go(0);
-                }else{
+                } else {
                     alert(res.msg);
                 }
             }
         });
     }
+
     function rearview(id) {
         $.ajax({
-            url:"{:url('users/rearview')}",
-            type:"get",
-            data:{
-                id:id
-            },success:function(res){
+            url: "{:url('users/rearview')}",
+            type: "get",
+            data: {
+                id: id
+            }, success: function (res) {
                 $("#stock").val(res.data.stock);
                 $("#shipment").val(res.data.shipment);
                 $("#repertorys").val(res.data.repertorys);
@@ -441,18 +532,19 @@ var user_id = "";
             }
         });
     }
-    $("#replenishment").click(function(){
-        if(confirm("确定补货?")){
+
+    $("#replenishment").click(function () {
+        if (confirm("确定补货?")) {
             $.ajax({
-                url:"{:url('users/replenishment')}",
-                type:"get",
-                data:{
-                  id:user_id
+                url: "{:url('users/replenishment')}",
+                type: "get",
+                data: {
+                    id: user_id
                 },
-                success:function(res){
-                    if(res.status == 0){
+                success: function (res) {
+                    if (res.status == 0) {
                         alert("补货成功");
-                    }else{
+                    } else {
                         alert("无需补货");
                     }
                 }
@@ -460,36 +552,38 @@ var user_id = "";
         }
     });
     var jin_id = "";
-    function getjinhuo(id){
+
+    function getjinhuo(id) {
         $.ajax({
-            url:"{:url('users/jinhuo')}",
-            type:"get",
-            data:{
-                id:id,
-            },success:function(res){
+            url: "{:url('users/jinhuo')}",
+            type: "get",
+            data: {
+                id: id,
+            }, success: function (res) {
                 $("#storefront_val").val(res.data.shipment);
                 $("#storefront_ku").val(res.data.repertorys);
                 jin_id = res.data.id;
             }
         });
     }
+
     $("#btn_bu").click(function () {
-        if($("#add_storefront").val() == ""){
+        if ($("#add_storefront").val() == "") {
             alert("请填写补货量");
             return;
         }
-        if($("#add_storefront").val() <= 0){
+        if ($("#add_storefront").val() <= 0) {
             alert("非法操作");
             return;
         }
         $.ajax({
-            url:"{:url('users/addjinhuo')}",
-            type:"get",
-            data:{
-                repertorys : $("#add_storefront").val(),
-                id : jin_id
-            },success:function(res){
-                alert("成功进货"+$("#add_storefront").val()+",剩余"+res.data.repertorys);
+            url: "{:url('users/addjinhuo')}",
+            type: "get",
+            data: {
+                repertorys: $("#add_storefront").val(),
+                id: jin_id
+            }, success: function (res) {
+                alert("成功进货" + $("#add_storefront").val() + ",剩余" + res.data.repertorys);
                 history.go(0);
             }
         });
