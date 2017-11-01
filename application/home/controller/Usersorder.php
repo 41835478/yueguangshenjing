@@ -93,19 +93,22 @@ class Usersorder extends Base
 		$type=input('param.type');
 		#1 代付,2待发 3待收货,4已完成
 		$clients=self::clientsorder($type,$this->uid);
+		//dump($clients);
 		$this->assign(['clients'=>$clients,'type'=>$type]);
 		return $this->fetch();
 		
 	}
 	#查询客户订单方法
 	public	static function clientsorder($type,$uid){
-		$orderinfo=db('order')->where(['status'=>$type,'shop_id'=>$uid])->order('id desc')->select();		
+		$orderinfo=db('order')->where(['status'=>$type,'shop_id'=>$uid])->order('id desc')->select();
+			
 		foreach ($orderinfo as $k => $v ){
 			$orderinfo[$k]['created_at']=date('Y-m-d H:i:s',$v['created_at']);
 					$info=db('order_info')->where('order_id',$v['id'])->select();
 				$orderinfo[$k]['info']=$info;
 		}
 		return $orderinfo;
+
 	}
 	public function clientsorderinfo(){
 		$order_id=input('param.order_id');
@@ -152,12 +155,7 @@ class Usersorder extends Base
         if($isUser->level == "7" || $isUser->level == "8"){
             $shop = $isUser->id;
         }
-<<<<<<< HEAD
         $url = 'http://'.$_SERVER['HTTP_HOST'].'/home/Login/register/pid/'.$this->uid."?shop=".$shop;//网址或者是文本内容
-=======
-
-        $url = 'http://'.$_SERVER['HTTP_HOST'].'/home/Login/register/'.$this->uid."?shop=".$shop;//网址或者是文本内容
->>>>>>> 14ad9bb43717c2e7bed508899e4305c359660038
         $level=3;
         $size=4;
         $errorCorrectionLevel =intval($level) ;//容错级别

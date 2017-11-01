@@ -42,7 +42,7 @@ class ThreeDistribution
                 if (isset($prent[$i])) {
                     $user = User::where(["id" => $prent[$i]])->value('status');
                     if ($user == "1") {
-                            $threePrice = ($order['price'] * $order['num']) * $threeArray[$i];
+                            $threePrice = $order['price'] * $threeArray[$i];
                             $resOne = User::where('id', $prent[$i])
                                 ->setInc('account', $threePrice);
                         if ($resOne) {
@@ -51,7 +51,7 @@ class ThreeDistribution
                                 $order['price'] * $threeArray[$i], $order['user_id']);
                             Log::record("{$i}级分佣完成");
                             file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
-                                "用户".$order['user_id']."{$i}级返佣".$order['price'] * $threeArray[$i]."\n",FILE_APPEND);
+                                "用户:".$order['user_id'] ."  {$i}级返佣".$order['price'] * $threeArray[$i]."\n",FILE_APPEND);
                         }
                     }
                 }
