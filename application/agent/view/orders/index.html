@@ -95,12 +95,12 @@
                         <img src="{$v->getUser->user_pic}" width="50px" height="50px">
                     </td>
                     <td>
-                        {if condition="$v->type==2"}
-                        {if condition="$v->send_id>0"}
-                        {$v->user->name}
-                        {/if}
-                        {elseif condition="$v->type==1"/}
-                        平台发货
+                        {if condition="$v->sign==1"}
+                            {$v->user->name}
+                        {elseif condition="$v->sign==2"/}
+                            {$v->shop->name}
+                        {elseif condition="$v->sign==3"/}
+                            平台发货
                         {/if}
                     </td>
                     <td>{$v->order_code}</td>

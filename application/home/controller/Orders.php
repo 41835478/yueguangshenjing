@@ -96,20 +96,21 @@ class Orders extends Base
         $send_id=$this->getAgentId($address->area_ids);
         if($send_id||$data['shop_id']){
             if($data['shop_id']){
-                if($this->checkStock($data['shop_id'])){
+                $result3=$this->checkAgentId($data['shop_id'],$send_id);
+                if($result3){
                     $mark=2;
                     $date['sign']=2;
-                    $user_id=$data['shop_id'];
+                    $user_id=$result3;
                 }else{//如果是购买的店面但是库存不足则订单归平台
                     $data['shop_id']=0;
                     $date['type']=1;
                 }
             }elseif($send_id&&!$data['shop_id']){
-                if($this->checkStock($data['shop_id'])){
+                if($this->checkStock($send_id)){
                     $mark=2;
                     $date['send_id']=$send_id;
                     $date['sign']=1;
-                    $user_id=$data['shop_id'];
+                    $user_id=$send_id;
                 }else{//如果购买的代理商但是库存不足则订单归平台
                     $data['send_id']='';
                     $date['type']=1;
@@ -161,9 +162,34 @@ class Orders extends Base
         }
     }
 
-    public function checkStock($id)
+    public function checkAgentId($shop_id,$send_id)//在扫店面过来时，先检查该地区是否有代理商，如有则消耗该代理商的库存，
+        //若没有则看该点面是否有指定代理商，若有则消耗其库存，若没有则是系统直属店面则消耗其自己的库存
     {
-        $mod=model('RearviewModel')->where(['uid'=>$id])->find();
+        if($shop_id&&$send_id){//说明该订单在该地区有代理商
+            if($this->checkStock($send_id)){
+                return $send_id;
+            }
+            return false;
+        }
+        if($shop_id&&!$send_id){
+            $user=model('admin/User')->get($shop_id);
+            if($user->agency_id){//说明该店面有代理商
+                if($this->checkStock($user->agency_id)){
+                    return $user->agency_id;
+                }
+                return false;
+            }elseif($user->agency_id==0&&$user->agency_id!=''){//说明是平台的店面
+                if($this->checkStock($user->agency_id)){
+                    return $user->agency_id;
+                }
+                return false;
+            }
+        }
+    }
+
+    public function checkStock($id)//检验库存是否充足
+    {
+        $mod=model('admin/RearviewModel')->where(['uid'=>$id])->find();
         if($mod->repertorys>0){
             return true;
         }
@@ -172,7 +198,7 @@ class Orders extends Base
 
     public function getStock($id,$num)//判断库存同时减掉库存  如果flag等于1则是店面id,如果flag==2则是代理商id
     {
-        $mod=model('RearviewModel')->where(['uid'=>$id])->find();
+        $mod=model('admin/RearviewModel')->where(['uid'=>$id])->find();
         if($mod->repertorys){
             $mod->repertorys=$mod->repertorys-1;
             $mod->shipment=$mod->shipment+1;
@@ -181,7 +207,7 @@ class Orders extends Base
                 $date['is_add']=2;
                 $date['info']='销售了'.$num.'台产品';
                 $date['num']=$num;
-                $res=model('ReariewRecordModel')->data($date)->save();
+                $res=model('admin/RearviewRecordModel')->data($date)->save();
                 if($res){
                     return true;
                 }
