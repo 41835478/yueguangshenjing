@@ -104,9 +104,10 @@
                     </td>
                     <td>
                         {if condition="$v->sign==1"}
-                            {$v->user->name}
+                            {$v->user->nickname}
                         {elseif condition="$v->sign==2"/}
-                            {$v->shop->name}
+                        222
+                            {$v->shop->nickname}
                         {elseif condition="$v->sign==3"/}
                             平台发货
                         {/if}
