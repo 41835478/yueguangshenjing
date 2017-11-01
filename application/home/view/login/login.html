@@ -128,7 +128,8 @@
                 	 if(data.status){                				 
                 	 		if(data.status==200){
                 	 			alert(data.message);
-                	 			if(getPValue("shop") == "undefined" || getPValue("shop") === undefined ||getPValue("shop") == ""){
+                	 			if(getPValue("shop") == "undefined" || getPValue("shop") === undefined ||
+									getPValue("shop") == ""){
                                     window.location.href="{:url('index/content')}";
                 	 			    return;
 								}else{

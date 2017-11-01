@@ -34,9 +34,8 @@ class SubsidyService
             $user_agent->setInc("account", (Config::get(10)->value * $order['num']));
             $account->setAccountRecord($order['send_id'], "代理商发货奖",
                 12, 2, (Config::get(12)->value * $order['num']),$order['user_id']);
-            Log::record("代理商发货补助完成");
-            file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."代理商发货补给id:{$order['send_id']}\n",
-                FILE_APPEND);
+            file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."代理商发货补给id:
+            {$order['send_id']}\n", FILE_APPEND);
         }
         if($order['send_id'] != ""){
             if ($this->umbrella($order['user_id'], $order['num'],$order['send_id'])) {
@@ -56,10 +55,13 @@ class SubsidyService
         #非店面购买 升级后的代理商每销售1台，给上级额外补助60元/台
         if ($order['is_shop'] == 2 && $order['sign'] != 3) {
             $user_agent = User::get($order['send_id']);
-            $user_agent->setInc("account", Config::get(14)->value * $order['num']);
-            $account->setAccountRecord($order['send_id'], "招商销售奖",
-                3, 2, Config::get(14)->value * $order['num'],$order['user_id']);
+            $user_agent_up = User::get($user_agent['pid']);#查询该代理商的上级
+            $user_agent_up->setInc("account", Config::get(14)->value * $order['num']);
+
+            $account->setAccountRecord($user_agent_up["id"], "招商销售奖",
+                3, 2, Config::get(14)->value * $order['num'],$order['send_id']);#来源id为该代理商
             Log::record("升级后的代理商每销售1台 奖励60");
+
             if($account){
                 file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
                     "奖励成 奖励60\n",FILE_APPEND);

@@ -188,21 +188,24 @@
             alert('请先填写收货地址');
             sessionStorage.setItem('address',1);
 
-            if(getPValue("shop") != ""){
-                window.location.href = '{:url("users/addaddress")}?shop='+getPValue("shop");
+            if(getPValue("shop") == "undefined" || getPValue("shop") === undefined ||
+                getPValue("shop") == ""){
+                window.location.href = '{:url("users/addaddress")}';
 //                window.location.href = '{:url("users/manageaddress")}?shop='+getPValue("shop");
             }else{
-                window.location.href = '{:url("users/addaddress")}';
+                window.location.href = '{:url("users/addaddress")}?shop='+getPValue("shop");
 //                window.location.href = '{:url("users/manageaddress")}';
             }
         }
     })
     $(".placeOrder_msg").click(function() {
         sessionStorage.setItem('address',1);
-        if(getPValue("shop") != ""){
-            window.location.href = '{:url("users/manageaddress")}?shop='+getPValue("shop");
-        }else{
+
+        if(getPValue("shop") == "undefined" || getPValue("shop") === undefined ||
+            getPValue("shop") == ""){
             window.location.href = '{:url("users/manageaddress")}';
+        }else{
+            window.location.href = '{:url("users/manageaddress")}?shop='+getPValue("shop");
         }
     });
     //获取链接上的pid
