@@ -50,10 +50,26 @@ class SubsidyService
                 FILE_APPEND);
         }
 
+        #非店面购买 升级后的代理商每销售1台，给上级额外补助60元/台
+        if ($order['is_shop'] == 2 && $order['sign'] != 3) {
+            $user_agent = User::get($order['send_id']);
+            $user_agent->setInc("account", Config::get(14)->value * $order['num']);
+            $account->setAccountRecord($order['send_id'], "招商销售奖",
+                3, 2, Config::get(14)->value * $order['num'],$order['user_id']);
+            Log::record("升级后的代理商每销售1台 奖励60");
+            if($account){
+                file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
+                    "奖励成 奖励60\n",FILE_APPEND);
+            }else{
+                file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
+                    "奖励no 奖励60\n",FILE_APPEND);
+            }
+            file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
+                "升级后的代理商每销售1台 奖励60\n",FILE_APPEND);
+        }
         #店面 一级店面  100元补助，直属代理商减100
         Db::startTrans();
         try {
-
             if ($order->sign == 2) {
                 $user_storefront = User::get($order->shop_id);#查询店面
 
@@ -116,23 +132,6 @@ class SubsidyService
 //                file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."平台发货!无需补助\n",
 //                    FILE_APPEND);
 //            }
-            #非店面购买 升级后的代理商每销售1台，给上级额外补助60元/台
-            if ($order['is_shop'] == 2 && $order['sign'] != 3) {
-                $user_agent = User::get($order['send_id']);
-                $user_agent->setInc("account", Config::get(14)->value * $order['num']);
-                $account->setAccountRecord($order['send_id'], "招商销售奖",
-                    3, 2, Config::get(14)->value * $order['num'],$order['user_id']);
-                Log::record("升级后的代理商每销售1台 奖励60");
-                if($account){
-                    file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
-                        "奖励成 奖励60\n",FILE_APPEND);
-                }else{
-                    file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
-                        "奖励no 奖励60\n",FILE_APPEND);
-                }
-                file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
-                    "升级后的代理商每销售1台 奖励60\n",FILE_APPEND);
-            }
 
             file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
                 "--------------\n",FILE_APPEND);
