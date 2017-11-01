@@ -26,13 +26,16 @@ class SubsidyService
 
         $account = new AccountRecord();
 
+
+//        Db::startTrans();
+//        try {
         if ($order['sign'] == 1 && $order['send_id'] != "") {#代理发货奖 奖励50
             $user_agent = User::get($order['send_id']);
             $user_agent->setInc("account", (Config::get(10)->value * $order['num']));
             $account->setAccountRecord($order['send_id'], "代理商发货奖",
                 12, 2, (Config::get(12)->value * $order['num']),$order['user_id']);
             Log::record("代理商发货补助完成");
-            file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."代理商发货补助完成\n",
+            file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."代理商发货补给id:{$order['send_id']}\n",
                 FILE_APPEND);
         }
         if($order['send_id'] != ""){
@@ -147,9 +150,13 @@ class SubsidyService
         $account = new AccountRecord();
         for ($i = 0; $i < count($user_list); $i++) {
             if (in_array(User::get($user_list[$i])['level'], [3, 4, 5, 6])) {
-                User::get($user_list[$i])->setInc("account", (Config::get(9)->value * $num));
+                User::get($user_list[$i])->setInc("account", Config::get(9)->value * $num);
                 $account->setAccountRecord($sendid, "代理商伞下购货",
                     11, 2, Config::get(9)->value * $num,$id);
+                file_put_contents("./log.txt",
+                    date("Y-m-d H:i:s",time())."伞下购货补助给id{$user_list[$i]}:".
+                    Config::get(9)->value * $num."\n",
+                    FILE_APPEND);
                 if ($account) {
                     return true;
                 }
