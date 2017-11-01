@@ -246,13 +246,8 @@ $('#code').on('click',function(){
             })
         }
         $("#isLogin").click(function(){
-<<<<<<< HEAD
-           if(getPValue("shop") != ""){
+           if(getPValue("shop") != "" && getPValue("shop") != undefined){
                window.location.href = "{:url('Login/login')}?shop="+getPValue("shop");
-=======
-            if(getPValue("shop") != ""){
-                window.location.href = "{:url('Login/login')}?shop="+getPValue("shop");
->>>>>>> 14ad9bb43717c2e7bed508899e4305c359660038
 			}else{
                window.location.href = "{:url('Login/login')}";
 			}
