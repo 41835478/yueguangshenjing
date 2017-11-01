@@ -53,9 +53,9 @@ class Content extends controller
     public function ceshi()
     {
         $three = new ThreeDistribution();
-        $three->addThree(67);
+        $three->addThree(84);
         $subsydy = new SubsidyService();
-        $subsydy->subsidy(67);
+        $subsydy->subsidy(84);
         if($three){
             echo "三级分佣发放完毕<br>";
         }
