@@ -68,27 +68,27 @@ class SubsidyService
                 "升级后的代理商每销售1台 奖励60\n",FILE_APPEND);
         }
         #店面 一级店面  100元补助，直属代理商减100
-        Db::startTrans();
-        try {
+//        Db::startTrans();
+//        try {
             if ($order->sign == 2) {
                 $user_storefront = User::get($order->shop_id);#查询店面
 
                 if ($user_storefront['level'] == "7") {#一级 补助100 直属代理商余额减去100
                     $user_storefront->setInc("account", (Config::get(11)->value * $order['num']));
                     $account->setAccountRecord($order->shop_id, "一级店面补助",
-                        9, 1, (Config::get(11)->value * $order['num']),$order['user_id']);
+                        9, 1, Config::get(11)->value * $order['num'],$order['user_id']);
                     Log::record("1店面补助");
+
                     file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
                         $order['user_id']."一级店面补助\n",FILE_APPEND);
+                    #
 
-                    if ($user_storefront['agency_id'] != 0) {#为0  系统直属店面
+                    if ($user_storefront['agency_id'] != 0) {#为0  店面直属代理商
                         $user_agent = User::get($user_storefront['agency_id']);
 
-                        $user_agent->setInc("account", ((Config::get(9)->value * $order['num'])
-                            - (Config::get(11)->value * $order['num'])));
-                        $account->setAccountRecord($order->agency_id, "店面补助直属代理奖励",
-                            11, 1, ((Config::get(9)->value * $order['num'])
-                                - (Config::get(11)->value * $order['num'])),$order['user_id']);
+                        $user_agent->setDec("account", Config::get(11)->value * $order['num']);
+                        $account->setAccountRecord($user_storefront->agency_id, "店面补助扣除代理商",
+                            11, 1, Config::get(11)->value * $order['num'],$order['shop_id']);
                         Log::record("1店面补助直属代理扣款");
                         file_put_contents("./log.txt",date("Y-m-d H:i:s",time())."
                         1店面补助直属代理扣款\n",FILE_APPEND);
@@ -99,20 +99,19 @@ class SubsidyService
                         不是1级店面\n",FILE_APPEND);
                 }
                 if ($user_storefront['level'] == "8") {#二级 补助50 直属代理商余额减去50
-                    $user_storefront->setInc("account", (Config::get(12)->value * $order['num']));
+                    $user_storefront->setInc("account", Config::get(12)->value * $order['num']);
                     $account->setAccountRecord($order->shop_id, "二级店面补助",
-                        9, 1, (Config::get(12)->value * $order['num']),$order['user_id']);
+                        9, 1, Config::get(12)->value * $order['num'],$order['user_id']);
                     Log::record("二级店面补助");
                     file_put_contents("./log.txt",date("Y-m-d H:i:s",time())." 二级店面补助\n",
                         FILE_APPEND);
 
-                    if ($user_storefront->agency_id != 0) {#为0  系统直属店面
+                    if ($user_storefront->agency_id != 0) {#店面直属代理商
                         $user_agent = User::get($user_storefront['agency_id']);
-                        $user_agent->setInc("account", ((Config::get(9)->value * $order['num'])
-                            - (Config::get(12)->value * $order['num'])));
-                        $account->setAccountRecord($order->agency_id, "店面补助直属代理奖励",
-                            11, 2, ((Config::get(9)->value * $order['num'])
-                                - (Config::get(12)->value * $order['num'])),$order['user_id']);
+                        $user_agent->setDec("account", Config::get(12)->value * $order['num']);
+                        $account->setAccountRecord($user_storefront->agency_id, "店面补助扣除代理商",
+                            11, 2, Config::get(12)->value * $order['num'],$order['shop_id']);
+
                         Log::record("2店面补助直属代理扣款");
                         file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
                             "2店面补助直属代理扣款\n",FILE_APPEND);
@@ -136,10 +135,10 @@ class SubsidyService
             file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
                 "--------------\n",FILE_APPEND);
             return "wancheng";
-            Db::commit();
-        } catch (Exception $e) {
-            Db::rollback();
-        }
+//            Db::commit();
+//        } catch (Exception $e) {
+//            Db::rollback();
+//        }
     }
 
     #理商伞下购货，额外补助200元/台（同级别不重复拿）
@@ -151,7 +150,7 @@ class SubsidyService
             if (in_array(User::get($user_list[$i])['level'], [3, 4, 5, 6])) {
                 User::get($user_list[$i])->setInc("account", (Config::get(9)->value * $num));
                 $account->setAccountRecord($sendid, "代理商伞下购货",
-                    11, 2, (Config::get(9)->value * $num - Config::get(12)->value * $num),$id);
+                    11, 2, Config::get(9)->value * $num,$id);
                 if ($account) {
                     return true;
                 }
