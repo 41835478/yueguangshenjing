@@ -81,7 +81,6 @@ class SubsidyService
 
                     file_put_contents("./log.txt",date("Y-m-d H:i:s",time()).
                         $order['user_id']."一级店面补助\n",FILE_APPEND);
-                    #
 
                     if ($user_storefront['agency_id'] != 0) {#为0  店面直属代理商
                         $user_agent = User::get($user_storefront['agency_id']);
