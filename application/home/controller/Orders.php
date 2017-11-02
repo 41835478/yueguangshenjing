@@ -185,8 +185,8 @@ class Orders extends Base
                 }
                 return false;
             }elseif($user->agency_id==0&&$user->agency_id!=''){//说明是平台的店面
-                if($this->checkStock($user->agency_id)){
-                    return $user->agency_id;
+                if($this->checkStock($shop_id)){
+                    return $shop_id;
                 }
                 return false;
             }
