@@ -16,7 +16,7 @@ class InstallFeeService extends Model
     public function index($order_id)
     {
         $order=model('admin/OrderModel')->get($order_id);
-        return $this->writeRecord($order->user_id,50);
+        return $this->writeRecord($order->user_id,50*$order->num);
     }
 
     public function writeRecord($user_id,$money)//写入记录
