@@ -171,14 +171,18 @@ class Orders extends Base
     public function checkAgentId($shop_id,$send_id)//在扫店面过来时，先检查该地区是否有代理商，如有则消耗该代理商的库存，
         //若没有则看该点面是否有指定代理商，若有则消耗其库存，若没有则是系统直属店面则消耗其自己的库存
     {
+        $user=model('admin/User')->get($shop_id);
         if($shop_id&&$send_id){//说明该订单在该地区有代理商
-            if($this->checkStock($send_id)){
-                return $send_id;
+            $current_id=$send_id;
+            if($user->agency_id==0){//说明是指定的店面
+                $current_id=$shop_id;
+            }
+            if($this->checkStock($current_id)){
+                return $current_id;
             }
             return false;
         }
         if($shop_id&&!$send_id){
-            $user=model('admin/User')->get($shop_id);
             if($user->agency_id){//说明该店面有代理商
                 if($this->checkStock($user->agency_id)){
                     return $user->agency_id;
