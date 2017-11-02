@@ -217,6 +217,7 @@ class Orders extends Base
                 $date['is_add']=2;
                 $date['info']='销售了'.$num.'台产品';
                 $date['num']=$num;
+                $date['pay_id']=$this->user_id;
                 $res=model('admin/RearviewRecordModel')->data($date)->save();
                 if($res){
                     return true;
