@@ -98,10 +98,11 @@
 
     });
     $("#addre").click(function(){
-        if(getPValue("shop") != ""){
-            window.location.href = "{:url('address/addressCreate')}?shop="+getPValue("shop");
-        }else{
+        if(getPValue("shop") == "undefined" || getPValue("shop") === undefined ||
+            getPValue("shop") == ""){
             window.location.href = "{:url('address/addressCreate')}";
+        }else{
+            window.location.href = "{:url('address/addressCreate')}?shop="+getPValue("shop");
         }
 
     });
