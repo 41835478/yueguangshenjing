@@ -282,9 +282,11 @@ class Orders extends Base
                 $user=model('admin/User')->get($this->user_id);
                 if(md5($date['pwd'])==$user->pay_pwd){
                     $res=$this->balancePay($order_id,$user);
-                    if($res){
+                    if($res&&$res!=5007){
                         Session::delete('order_id','home');
                         return json(['status'=>true,'message'=>'支付成功']);
+                    }else if($res==5007){
+                        $message='余额不足，请选择其他方式';
                     }else{
                         $message='支付失败';
                     }
@@ -301,7 +303,7 @@ class Orders extends Base
     {
         $order=model('admin/OrderModel')->get($id);
         if($user->account<$order->price){
-            return false;
+            return 5007;
         }else{//只有用户中的余额大于等于订单金额才可以购买
             Db::startTrans();
             try{
