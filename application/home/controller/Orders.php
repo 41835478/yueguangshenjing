@@ -174,7 +174,7 @@ class Orders extends Base
         $user=model('admin/User')->get($shop_id);
         if($shop_id&&$send_id){//说明该订单在该地区有代理商
             $current_id=$send_id;
-            if($user->agency_id==0){//说明是指定的店面
+            if($user->agency_id==0){//说明是系统指定的店面
                 $current_id=$shop_id;
             }
             if($this->checkStock($current_id)){
@@ -200,8 +200,10 @@ class Orders extends Base
     public function checkStock($id)//检验库存是否充足
     {
         $mod=model('admin/RearviewModel')->where(['uid'=>$id])->find();
-        if($mod->repertorys>0){
-            return true;
+        if($mod){
+            if($mod->repertorys>0){
+                return true;
+            }
         }
         return false;
     }
