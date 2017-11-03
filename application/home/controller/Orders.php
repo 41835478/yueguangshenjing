@@ -284,7 +284,7 @@ class Orders extends Base
                 $user=model('admin/User')->get($this->user_id);
                 if(md5($date['pwd'])==$user->pay_pwd){
                     $res=$this->balancePay($order_id,$user);
-                    if($res&&$res!=5007){
+                    if($res==5000){
                         Session::delete('order_id','home');
                         return json(['status'=>true,'message'=>'支付成功']);
                     }else if($res==5007){
@@ -305,7 +305,7 @@ class Orders extends Base
     {
         $order=model('admin/OrderModel')->get($id);
         if($user->account<$order->price){
-            return 5007;
+            return 5007;//余额不足
         }else{//只有用户中的余额大于等于订单金额才可以购买
             Db::startTrans();
             try{
@@ -320,7 +320,7 @@ class Orders extends Base
                             $res3=$serviceDb->index($id);
                             if($res3){//安装红包奖励
                                 Db::commit();
-                                return true;
+                                return 5000;//成功
                             }else{
                                 throw new Exception();
                             }
@@ -335,7 +335,7 @@ class Orders extends Base
                 }
             }catch (Exception $e){
                 Db::rollback();
-                return false;
+                return 5002;//失败
             }
         }
     }
