@@ -79,11 +79,17 @@ class Usersorder extends Base
 
 			$subsydy = new SubsidyService();
 			$subsydy->subsidy($order_id);
-
+          #理商伞下购货，额外补助200元/台（同级别不重复拿） user_id  商品数量
+			$subsydy->umbrella($order_id);
+          #根据店面等级进行补助  订单信息
+			 $subsydy->shopLevel($order_id);
+          #代理商发货奖励
+			$subsydy->daili($order_id);
+			
 			if($orderinfo){
-				return jsonp(['status'=>200,'message'=>'执行成功']);
-			}else{
-				return jsonp(['status'=>401,'message'=>'重试']);
+				return jsonp(['status'=>200,'message'=>'收货成功']);
+				}else{
+			return jsonp(['status'=>401,'message'=>'重试']);
 			}
 		}
 	}
@@ -126,7 +132,7 @@ class Usersorder extends Base
 		$user=User::where('id',$this->uid)->find();
 
 		if($user['user_pic']=='' || $user['nickname']==''){
-			exit('<script>alert("资料不全,请先完善资料");location.href = "/home/Users/index"</script>');
+			exit('<script>alert("资料不全,请先完善资料");location.href = "/home/Users/editdata"</script>');
 		}
 
 
