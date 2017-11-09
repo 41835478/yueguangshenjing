@@ -79,7 +79,7 @@ class Orders extends Base
             $res=$this->createOrder($id,$num,$date);
             if($res){
                 Session::delete('addre');
-                return json(['status'=>true,'message'=>'下单成功']);
+                return json(['status'=>true,'message'=>'下单成功','data'=>$res]);
             }
             return json(['status'=>false,'message'=>'下单失败']);
         }else{
@@ -155,7 +155,7 @@ class Orders extends Base
                     Session::delete('goods_id','home');
                     Session::delete('num','home');
                     Db::commit();
-                    return true;
+                    return $res;
                 }else{
                     throw new Exception();
                 }
@@ -246,22 +246,22 @@ class Orders extends Base
         }
     }
 
-    public function pay()//跳转支付页面
-    {
-        $totalMoney=0;
-        $getId=input('param.order_id',0,'intval');
-        if($getId){
-            $order_id=$getId;
-        }else{
-            $order_id=Session::get('order_id','home');
-        }
-        if($order_id){
-            $order=model('admin/OrderModel')->get($order_id);
-            $totalMoney=$order->price;
-        }
-        $user=model('admin/User')->get($this->user_id);
-        return view('orders/pay',['totalMoney'=>$totalMoney,'user'=>$user]);
-    }
+//    public function pay()//跳转支付页面
+//    {
+//        $totalMoney=0;
+//        $getId=input('param.order_id',0,'intval');
+////        if($getId){
+//            $order_id=$getId;
+////        }else{
+////            $order_id=Session::get('order_id','home');
+////        }
+//        if($order_id){
+//            $order=model('admin/OrderModel')->get($order_id);
+//            $totalMoney=$order->price;
+//        }
+//        $user=model('admin/User')->get($this->user_id);
+//        return view('orders/pay',['totalMoney'=>$totalMoney,'user'=>$user,'order_id'=>$order_id]);
+//    }
 
     public function getAddress($id)//获取地址
     {

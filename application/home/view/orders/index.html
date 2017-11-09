@@ -178,7 +178,7 @@
                     $(".loadingBox").css("display","none")
                     if(res.status){
                         sessionStorage.setItem('address',"");
-                        window.location.href="{:url('orders/pay')}";
+                        window.location.href="{:url('pay/pay')}?order_id="+res.data;
                     }else{
                         alert(res.message);
                     }
