@@ -392,7 +392,6 @@ n3ZDxxsEHhn+zZh0oAgtVQDx6ebwHVaCTVNhHMNeLmim1w==";
     public function notify_url()
     {
         $verify=$this->verifyNotify();
-        Log::record('测试日志信息');
         if($verify){
             $out_trade_no = $_POST['out_trade_no'];//商户订单号
 
@@ -402,7 +401,6 @@ n3ZDxxsEHhn+zZh0oAgtVQDx6ebwHVaCTVNhHMNeLmim1w==";
             // foreach($_GET as $k=>$v){
             //     file_put_contents('./log.txt',file_get_contents('./log.txt')."\n".'校验成功:'.$k.'->'.$v);
             // }
-            Log::record($total_amount);
             if ($trade_statue == 'TRADE_FINISHED' || $trade_statue == 'TRADE_SUCCESS') {
                 $order=model('admin/OrderModel')->where(['order_code'=>$out_trade_no])->find();
                 if($order&&$order->status==1) {//&&($order->price==$total_amount)
