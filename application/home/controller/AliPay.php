@@ -383,7 +383,17 @@ n3ZDxxsEHhn+zZh0oAgtVQDx6ebwHVaCTVNhHMNeLmim1w==";
      */
     public function return_url()
     {
-        $this->redirect(url('pay/paySuccess'));
+        $verify=$this->verifyReturn();
+        if($verify){
+            $trade_statue = $_POST['trade_status'];//支付结果
+            if ($trade_statue == 'TRADE_FINISHED' || $trade_statue == 'TRADE_SUCCESS') {
+                $this->redirect(url('pay/paySuccess'));
+            }else{
+                $this->redirect(url('users/index'));
+            }
+        }else{
+            $this->redirect(url('users/index'));
+        }
     }
 
     /**
@@ -412,18 +422,24 @@ n3ZDxxsEHhn+zZh0oAgtVQDx6ebwHVaCTVNhHMNeLmim1w==";
                         if ($order->save()) {
                             $res=$this->writeRecord($order->user_id,$total_amount);
                             if ($res) {
-                                $user=model('admin/User')->get($order->user_id);
-                                if($user->level!=2){
-                                    $user->level=2;
-                                    if($user->save()){
+                                $serviceDb=model('InstallFeeService','service');
+                                $res3=$serviceDb->index($order->id);
+                                if($res3){
+                                    $user=model('admin/User')->get($order->user_id);
+                                    if($user->level!=2){
+                                        $user->level=2;
+                                        if($user->save()){
+                                            Db::commit();
+                                            echo 'success';
+                                        }else{
+                                            throw new Exception();
+                                        }
+                                    }else{
                                         Db::commit();
                                         echo 'success';
-                                    }else{
-                                        throw new Exception();
                                     }
                                 }else{
-                                    Db::commit();
-                                    echo 'success';
+                                    throw new Exception();
                                 }
                             } else {
                                 throw new Exception();
