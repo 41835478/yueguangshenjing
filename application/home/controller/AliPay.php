@@ -385,7 +385,7 @@ n3ZDxxsEHhn+zZh0oAgtVQDx6ebwHVaCTVNhHMNeLmim1w==";
     {
         $verify=$this->verifyReturn();
         if($verify){
-            $trade_statue = $_POST['trade_status'];//支付结果
+            $trade_statue = $_GET['trade_status'];//支付结果
             if ($trade_statue == 'TRADE_FINISHED' || $trade_statue == 'TRADE_SUCCESS') {
                 $this->redirect(url('pay/paySuccess'));
             }else{
