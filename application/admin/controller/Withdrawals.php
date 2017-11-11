@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\User;
 use app\admin\model\WithdrawalsModel;
 use Service\AccountRecord;
 use think\Controller;
@@ -16,15 +17,18 @@ class Withdrawals extends Controller
     public function refuse($withdrawId)
     {
         $withdraw = WithdrawalsModel::get($withdrawId);
-        $withdraw->status = 3;
-        $withdraw->save();
         if($withdraw){
             $account = new AccountRecord();
-            $account->setAccountRecord($withdraw->user_id,"提现驳回",6,1,$withdraw->money);
-            if($account){
-                model('user')->setInc('account',$withdraw->money);
-                $Url=popBox('success','驳回成功!');
-                $this->redirect($Url);
+            $ob = $account->setAccountRecord($withdraw->user_id,"提现驳回",6,1,$withdraw->money);
+            if($ob){
+                $users = User::get($withdraw->user_id);
+                $ub = $users->setInc('account',$withdraw->money);
+                if($ub){
+                    $winOb = new WithdrawalsModel();
+                    $wob = $winOb->save(["status"=>3],["id"=>$withdrawId]);
+                    $Url=popBox('success','驳回成功!');
+                    $this->redirect($Url);
+                }
             }
         }
     }
@@ -48,7 +52,6 @@ class Withdrawals extends Controller
     public function allowWithdraw()//支付宝提现通过
     {
         $id=input('get.id');
-        halt($id);
         $withdraw=model('WithdrawalsModel')->get($id);
         if($withdraw&&($withdraw->status==1)&&($withdraw->reality_money)>0){
             $osn             = $withdraw->alipay_num;//$withDraw->out_biz_no//支付单号

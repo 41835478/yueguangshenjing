@@ -89,11 +89,15 @@ class Users extends Controller
             $Url = popBox("success","系统充值成功");
             $this->redirect($Url);
         }else{
+          	if($user->account < $input["num"]){
+                $Url = popBox("error","该用户余额不足,不能扣款!");
+                $this->redirect($Url);
+            }
             $user->setDec("account",$input["num"]);
-
+			
             $account->setAccountRecord($input["recharge_id"],"系统扣款",
                 AccountRecordModel::TYPE_EIGHT,2,$input["num"]);
-
+			
             $Url = popBox("success","系统扣款成功");
             $this->redirect($Url);
 
@@ -148,7 +152,7 @@ class Users extends Controller
                 $str .= "<tr style='cursor:pointer' onclick='childen({$vo['id']})'>";
                 $str .= "<td><a id='user_name' href='javascript:void(0)'>".$vo['id'].'</a></td>';
                 $str .= '<td>'.User::get($vo['pid'])["mobile"].'</td>';
-                $str .= '<td>'.$vo['name'].'</td>';
+                $str .= '<td>'.$vo['nickname'].'</td>';
                 $str .= '<td>'.$vo['mobile'].'</td>';
                 $str .= '<td>'.config('level')[$vo['level']].'</td>';
                 $str .= '<td>'.date("Y-m-d H:i:s",$vo['created_at']).'</td>';
@@ -214,6 +218,7 @@ class Users extends Controller
                 }
             }
             $input["agency_id"] = 0;
+            $this->jinhuo($input["id"]);
         }
 
         $user->save($input,["id"=>$input["id"]]);
