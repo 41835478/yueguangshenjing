@@ -361,10 +361,13 @@
 
         $(".pay_soon").click(function() {
             /*index==1微信支付   index==2支付宝支付  index==3余额支付*/
+            var sign='{$sign}';
             if(index == 1){
-                window.location.href = '';
+                //说明是微信端支付
+                if(sign==1){
+                    window.location.href = '{:url("wxpay/index",array("order_id"=>$order_id))}';
+                }
             }else if(index==2){
-                var sign='{$sign}';
                 //说明是微信端
                 if(sign==1){
                     $(".shareImg").css("display","block");
