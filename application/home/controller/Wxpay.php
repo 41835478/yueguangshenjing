@@ -23,7 +23,7 @@ class Wxpay extends Controller
                 $data['appid'] = config('APPID');
                 $data['mch_id'] = config('MCH_ID');
                 $data['attach'] = '微信支付';
-                $data['body'] = '爱无尚商品';
+                $data['body'] = '越光神镜';
                 $data['detail'] = '商品详情';
                 $data['nonce_str'] = time() . rand(10000, 99999);
                 $data['notify_url'] = config('WX_NOTIFY_URL');
